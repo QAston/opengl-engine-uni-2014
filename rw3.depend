@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1395819939 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\main.cpp
+	<stdlib.h>
+	<GL/glut.h>
+	<GL/gl.h>
+
+1395850364 source:c:\users\qaston\dropbox\workspace\pb\rw\proj\rw3\main.cpp
+	<stdlib.h>
+	<GL/glut.h>
+	<GL/gl.h>
+
