@@ -38,6 +38,7 @@
 		<Linker>
 			<Add library="glut" />
 			<Add library="opengl32" />
+			<Add library="glu32" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions>

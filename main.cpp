@@ -6,6 +6,11 @@ void display(void);
 void reshape (int w, int h);
 void specialInput(int key, int x, int y);
 
+const float deltaPosX = 0.1;
+const float deltaPosY = 0.1;
+
+float posX = 0;
+float posY = 0;
 
 int main(int argc, char** argv)
 {
@@ -16,7 +21,11 @@ int main(int argc, char** argv)
   glutKeyboardFunc(&keyboard);
   glutSpecialFunc(&specialInput);
   glutDisplayFunc(&display);
+  glutReshapeFunc(&reshape);
   glEnable(GL_DEPTH_TEST);
+  glShadeModel (GL_);
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glClearDepth(1.0f);
   glutMainLoop();
 
   return EXIT_SUCCESS;
@@ -41,12 +50,16 @@ void specialInput(int key, int /*x*/, int /*y*/)
   switch(key)
   {
     case GLUT_KEY_UP:
+        posY += deltaPosY;
       break;
     case GLUT_KEY_DOWN:
+        posY -= deltaPosY;
       break;
     case GLUT_KEY_LEFT:
+        posX -= deltaPosX;
       break;
     case GLUT_KEY_RIGHT:
+        posX += deltaPosX;
       break;
     default:
         return;
@@ -59,28 +72,21 @@ void display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glBegin(GL_LINE_LOOP);
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(-0.5f, -0.5f, 0.0f);
-    glVertex3f( 0.5f, -0.5f, 0.0f);
-    glVertex3f( 0.5f,  0.5f, 0.0f);
-    glVertex3f(-0.5f,  0.5f, 0.0f);
-  glEnd();
-  glBegin(GL_LINE_LOOP);
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(-0.5f, -0.5f, -1.0f);
-    glVertex3f( 0.5f, -0.5f, -1.0f);
-    glVertex3f( 0.5f,  0.5f, -1.0f);
-    glVertex3f(-0.5f,  0.5f, -1.0f);
-  glEnd();
+   glColor3f (1.0, 1.0, 1.0);
+   glLoadIdentity ();             /* clear the matrix */
+           /* viewing transformation  */
+   //gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+   glTranslatef(posX, posY, -5.0);
+   glutWireCube (1.0);
 
   glutSwapBuffers();
 }
 
 void reshape (int w, int h)
 {
-   /*glViewport (0, 0, (GLsizei) w, (GLsizei) h);
+   glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
-   glLoadIdentity ();
-   gluOrtho2D (0.0, (GLdouble) w, 0.0, (GLdouble) h);*/
+   glLoadIdentity();
+   gluPerspective(60.0, 1.0, 1.0, 20.0);
+   glMatrixMode (GL_MODELVIEW);
 }
