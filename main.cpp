@@ -1,5 +1,7 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include <GL/glut.h>
+#include <random>
+#include <chrono>
 
 void keyboard(unsigned char key, int x, int y);
 void display(void);
@@ -12,6 +14,24 @@ const float deltaPosY = 0.1;
 float posX = 0;
 float posY = 0;
 
+GLint cubeVerticles[] = {0, 0, 0,
+                          1, 0, 0,
+                          1, 1, 0,
+                          0, 1, 0,
+                          0, 0, 1,
+                          1, 0, 1,
+                          1, 1, 1,
+                          0, 1, 1};
+
+GLfloat cubeColors[24];
+
+GLubyte frontIndices[] = {4, 5, 6, 7};
+GLubyte rightIndices[] = {1, 2, 6, 5};
+GLubyte bottomIndices[] = {0, 1, 5, 4};
+GLubyte backIndices[] = {0, 3, 2, 1};
+GLubyte leftIndices[] = {0, 4, 7, 3};
+GLubyte topIndices[] = {2, 3, 7, 6};
+
 int main(int argc, char** argv)
 {
   glutInitWindowSize(800, 600);
@@ -23,9 +43,16 @@ int main(int argc, char** argv)
   glutDisplayFunc(&display);
   glutReshapeFunc(&reshape);
   glEnable(GL_DEPTH_TEST);
-  glShadeModel (GL_);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
+  // init colors
+    std::mt19937 generator;
+    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    std::uniform_real_distribution<float> distribution(0.0, 1.0);
+    for(int i = 0; i < 24; ++i)
+    {
+        cubeColors[i] = distribution(generator);
+    }
   glutMainLoop();
 
   return EXIT_SUCCESS;
@@ -41,7 +68,10 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
       break;
     case ' ':
       break;
+    default:
+        return;
   }
+  glutPostRedisplay();
 }
 
 // checks raw keyboard input
@@ -72,12 +102,23 @@ void display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   glColor3f (1.0, 1.0, 1.0);
-   glLoadIdentity ();             /* clear the matrix */
-           /* viewing transformation  */
-   //gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-   glTranslatef(posX, posY, -5.0);
-   glutWireCube (1.0);
+  glEnableClientState (GL_COLOR_ARRAY);
+  glEnableClientState (GL_VERTEX_ARRAY);
+  glColorPointer (3, GL_FLOAT, 0, cubeColors);
+  glVertexPointer (3, GL_INT, 0, cubeVerticles);
+   glPolygonMode(GL_FRONT, GL_FILL);
+   glPolygonMode(GL_BACK, GL_LINE);
+   glFrontFace(GL_CCW);
+
+   glLoadIdentity ();
+   glTranslatef(posX, posY, -3.0);
+
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, bottomIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, backIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, leftIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, topIndices);
 
   glutSwapBuffers();
 }
@@ -87,6 +128,6 @@ void reshape (int w, int h)
    glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
-   gluPerspective(60.0, 1.0, 1.0, 20.0);
+   gluPerspective(90.0, w/(float)h, 1.0, 20.0);
    glMatrixMode (GL_MODELVIEW);
 }
