@@ -60,7 +60,7 @@ int main(int argc, char** argv)
         cubeColors[i] = distribution(generator);
     }
   glutMainLoop();
-
+  alutExit();
   return EXIT_SUCCESS;
 }
 
