@@ -84,7 +84,7 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
       exit(EXIT_SUCCESS);
       break;
     case ' ':
-      //playFile("alert.wav");
+      alSource3f(alsource, AL_POSITION, posX, posY, 0);
       alSourcePlay (alsource);
       break;
     default:
@@ -172,30 +172,6 @@ void loadAudioFile(const char *fileName)
   alSourcei (alsource, AL_BUFFER, audioBuffer);
   alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
 }
-
-void playBuffer()
-{
-    ALint status;
-    ALenum error;
-     alSourcePlay (alsource);
-
-  /* Normally nothing should go wrong above, but one never knows... */
-  error = alGetError ();
-  if (error != ALUT_ERROR_NO_ERROR)
-  {
-      cerr << alGetString(error) << endl;
-      alutExit ();
-      exit (EXIT_FAILURE);
-  }
-
-  /* Check every 0.1 seconds if the sound is still playing. */
-  do
-  {
-      alutSleep (0.1f);
-      alGetSourcei (alsource, AL_SOURCE_STATE, &status);
-  }
-  while (status == AL_PLAYING);
-}   
 
 /* Funkcja ładująca teksturę z pliku png, korzysta z libpng. */
 bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
