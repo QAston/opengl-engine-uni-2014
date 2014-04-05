@@ -12,3 +12,12 @@ Wyswietlanie 2 tryby:
      na 5+ tekstury
 
 Oddać 8.04.2014
+
+
+Kompilacja na linuksie:
+g++ main.cpp -lGL -lGLU -lglut -lalut -lopenal -std=c++11
+
+Użyte biblioteki na linuksie:
+freealut 1.1.0
+freeglut 2.8.1
+openal-soft 1.15.1

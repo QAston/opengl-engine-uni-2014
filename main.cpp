@@ -70,6 +70,7 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
   switch (key)
   {
     case '\x1B':
+	  alutExit();
       exit(EXIT_SUCCESS);
       break;
     case ' ':
