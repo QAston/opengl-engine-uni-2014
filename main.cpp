@@ -15,7 +15,7 @@ void display(void);
 void reshape (int w, int h);
 void specialInput(int key, int x, int y);
 static void playFile(const char *filename);
-bool loadPngImage(char *name, int &outWidth, int &outHeight, 
+bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
 void loadAudioFile(const char *fileName);
 
@@ -24,6 +24,7 @@ const float deltaPosY = 0.1;
 
 float posX = 0;
 float posY = 0;
+float posZ = -3;
 
 GLint cubeVerticles[] = {0, 0, 0,
                           1, 0, 0,
@@ -46,6 +47,8 @@ GLubyte topIndices[] = {2, 3, 7, 6};
 ALuint alsource;
 ALuint audioBuffer;
 
+ALfloat listenerOrientation[6] = {0,0,-1, 0, 1, 0};
+
 int main(int argc, char** argv)
 {
   glutInitWindowSize(800, 600);
@@ -60,6 +63,9 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
+  alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
+  alListenerfv(AL_ORIENTATION, listenerOrientation);
+
   // init colors
     std::mt19937 generator;
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -84,7 +90,7 @@ void keyboard(unsigned char key, int /*x*/, int /*y*/)
       exit(EXIT_SUCCESS);
       break;
     case ' ':
-      alSource3f(alsource, AL_POSITION, posX, posY, 0);
+      alSource3f(alsource, AL_POSITION, posX, posY, posZ);
       alSourcePlay (alsource);
       break;
     default:
@@ -130,7 +136,7 @@ void display()
    glFrontFace(GL_CCW);
 
    glLoadIdentity ();
-   glTranslatef(posX, posY, -3.0);
+   glTranslatef(posX, posY, posZ);
 
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
@@ -180,10 +186,10 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
     unsigned int sig_read = 0;
     int color_type, interlace_type;
     FILE *fp;
- 
+
     if ((fp = fopen(name, "rb")) == NULL)
         return false;
- 
+
     /* Create and initialize the png_struct
      * with the desired error handler
      * functions.  If you want to use the
@@ -197,12 +203,12 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
      */
     png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,
                                      NULL, NULL, NULL);
- 
+
     if (png_ptr == NULL) {
         fclose(fp);
         return false;
     }
- 
+
     /* Allocate/initialize the memory
      * for image information.  REQUIRED. */
     info_ptr = png_create_info_struct(png_ptr);
@@ -211,7 +217,7 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
         png_destroy_read_struct(&png_ptr, NULL, NULL);
         return false;
     }
- 
+
     /* Set error handling if you are
      * using the setjmp/longjmp method
      * (this is the normal method of
@@ -230,15 +236,15 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
          * problem reading the file */
         return false;
     }
- 
+
     /* Set up the output control if
      * you are using standard C streams */
     png_init_io(png_ptr, fp);
- 
+
     /* If we have already
      * read some of the signature */
     png_set_sig_bytes(png_ptr, sig_read);
- 
+
     /*
      * If you have enough memory to read
      * in the entire image at once, and
@@ -259,33 +265,33 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
      *  expand a palette into RGB
      */
     png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_EXPAND, NULL);
- 
+
     png_uint_32 width, height;
     int bit_depth;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type,
                  &interlace_type, NULL, NULL);
     outWidth = width;
     outHeight = height;
- 
+
     unsigned int row_bytes = png_get_rowbytes(png_ptr, info_ptr);
     *outData = (unsigned char*) malloc(row_bytes * outHeight);
- 
+
     png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
- 
+
     for (int i = 0; i < outHeight; i++) {
         // note that png is ordered top to
         // bottom, but OpenGL expect it bottom to top
         // so the order or swapped
         memcpy(*outData+(row_bytes * (outHeight-1-i)), row_pointers[i], row_bytes);
     }
- 
+
     /* Clean up after the read,
      * and free any memory allocated */
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
- 
+
     /* Close the file */
     fclose(fp);
- 
+
     /* That's it */
     return true;
 }
