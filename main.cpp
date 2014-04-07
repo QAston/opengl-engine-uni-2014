@@ -18,6 +18,7 @@ static void playFile(const char *filename);
 bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
 void loadAudioFile(const char *fileName);
+void initTexture(void);
 
 const float deltaPosX = 0.1;
 const float deltaPosY = 0.1;
@@ -49,8 +50,20 @@ ALuint audioBuffer;
 
 ALfloat listenerOrientation[6] = {0,0,-1, 0, 1, 0};
 
+bool texturing = false;
+GLubyte *textureImage;
+GLfloat texturePoints[] = {0.25, 0.66,
+                           0.50, 0.66,
+                           0.50, 0.33,
+                           0.25, 0.33,
+                           0, 0,
+                          1, 0,
+                          1, 1,
+                          0, 1};
+
 int main(int argc, char** argv)
 {
+  
   glutInitWindowSize(800, 600);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInit(&argc, argv);
@@ -63,6 +76,12 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
+  if (argc > 1) 
+  {
+      texturing = true;
+      initTexture();
+  }
+  
   alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
   alListenerfv(AL_ORIENTATION, listenerOrientation);
 
@@ -127,16 +146,23 @@ void display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glEnableClientState (GL_COLOR_ARRAY);
-  glEnableClientState (GL_VERTEX_ARRAY);
-  glColorPointer (3, GL_FLOAT, 0, cubeColors);
-  glVertexPointer (3, GL_INT, 0, cubeVerticles);
-   glPolygonMode(GL_FRONT, GL_FILL);
-   glPolygonMode(GL_BACK, GL_LINE);
-   glFrontFace(GL_CCW);
+    glEnableClientState (GL_VERTEX_ARRAY);
+    glVertexPointer (3, GL_INT, 0, cubeVerticles);
+    if(texturing)
+    {
+        
+        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
+    } else {
+        glEnableClientState (GL_COLOR_ARRAY);
+        glColorPointer (3, GL_FLOAT, 0, cubeColors);
+    }
+    glPolygonMode(GL_FRONT, GL_FILL);
+    glPolygonMode(GL_BACK, GL_LINE);
+    glFrontFace(GL_CCW);
 
-   glLoadIdentity ();
-   glTranslatef(posX, posY, posZ);
+    glLoadIdentity ();
+    glTranslatef(posX, posY, posZ);
 
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
@@ -145,7 +171,8 @@ void display()
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, leftIndices);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, topIndices);
 
-  glutSwapBuffers();
+   glutSwapBuffers();
+  
 }
 
 void reshape (int w, int h)
@@ -179,7 +206,7 @@ void loadAudioFile(const char *fileName)
   alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
 }
 
-/* Funkcja ładująca teksturę z pliku png, korzysta z libpng. */
+// Function loading texture from png file, uses libpng. 
 bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
     png_structp png_ptr;
     png_infop info_ptr;
@@ -294,4 +321,32 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
 
     /* That's it */
     return true;
+}
+
+// Loads texture and makes openGL use it.
+void initTexture(void) {
+    
+    // The following two lines enable semi transparent
+    glEnable(GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ 
+    int width, height;
+    bool hasAlpha;
+    char filename[] = "logo.png";
+    bool success = loadPngImage(filename, width, height, hasAlpha, &textureImage);
+    if (!success) {
+        cerr << "Unable to load png file" << endl;
+        return;
+    }
+    cout << "Image loaded " << width << " " << height << " alpha " << hasAlpha << std::endl;
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, width,
+                 height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
+                 textureImage);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_FLAT);
 }
