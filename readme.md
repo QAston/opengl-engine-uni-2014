@@ -1,3 +1,24 @@
+Kamera fpsowa - WSAD + mysz
+mozna dorobic wznoszenie
+
+gluLookAt - ocena nizej
+sin/cos - ocena nizej
+
+tylko wylacznie na macierzach - 5
+
+Mv = Wc ^-1* Wo
+ModelView
+Wo - macierz swiatowa obiektu zlozenia przeksztalcen elem. orientujacych obiekt
+
+Wo = To * Rox *Roy
+Wc - macierz swiatowa kamery
+Wc = Tc*Rcx*Rcy
+V = Wc^-1 = Rcx^t*Rcy^t*Tc^-1
+Nie trzeba uzywac wzorow sinusowych, wektory kierunkowe sa kolumnami macierzy swiatowej
+
+
+STARE:
+
 Podstawowe tryby wyświetlania
 Dźwięk przestrzenny openal
 
