@@ -19,6 +19,8 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
 void loadAudioFile(const char *fileName);
 void initTexture(void);
+void mousePassive(int x, int y);
+void mouseMotion(int x, int y);
 
 const float deltaPosX = 0.1;
 const float deltaPosY = 0.1;
@@ -61,6 +63,12 @@ GLfloat texturePoints[] = {0.25, 0.66,
                           1, 1,
                           0, 1};
 
+float rotateX = 0;
+float rotateY = 0;
+ 
+int mouseX;
+int mouseY;
+                           
 int main(int argc, char** argv)
 {
   
@@ -73,6 +81,8 @@ int main(int argc, char** argv)
   glutSpecialFunc(&specialInput);
   glutDisplayFunc(&display);
   glutReshapeFunc(&reshape);
+  glutMotionFunc(mouseMotion);
+  glutPassiveMotionFunc(mousePassive);
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
@@ -163,6 +173,8 @@ void display()
 
     glLoadIdentity ();
     glTranslatef(posX, posY, posZ);
+    glRotatef(rotateX, 0,1,0);
+    glRotatef(rotateY, 1,0,0);
 
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
@@ -349,4 +361,20 @@ void initTexture(void) {
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_FLAT);
+}
+
+void mousePassive(int x, int y)
+{
+    mouseX = x;
+    mouseY = y;
+}
+ 
+void mouseMotion(int x, int y)
+{
+    const float SPEED = 2;
+ 
+    rotateX += (mouseX-x)/SPEED;
+    rotateY += (mouseY-y)/SPEED;
+    mousePassive(x, y);
+    glutPostRedisplay();
 }
