@@ -1,12 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-
+// interface
 class Camera
 {
     public:
-        Camera();
-        virtual ~Camera();
+        virtual ~Camera(){};
     protected:
     private:
 };
