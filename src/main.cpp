@@ -196,7 +196,6 @@ void reshape (int w, int h)
 
 void loadAudioFile(const char *fileName)
 {
-  //ALuint source;
   ALenum error;
 
   /* Create an AL buffer from the given sound file. */
@@ -340,7 +339,6 @@ void initTexture(void) {
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     int width, height;
-    bool hasAlpha;
     char filename[] = "logo.png";
     bool success = loadPngImage(filename, width, height, &textureImage);
     if (!success) {
@@ -350,7 +348,7 @@ void initTexture(void) {
     cout << "Image loaded " << width << " " << height << std::endl;
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, width,
-                 height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
+                 height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  textureImage);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
