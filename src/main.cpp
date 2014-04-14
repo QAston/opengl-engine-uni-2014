@@ -216,7 +216,7 @@ void loadAudioFile(const char *fileName)
 }
 
 // Function loading texture from png file, uses libpng.
-bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
+bool loadPngImage(char *name, int &outWidth, int &outHeight, GLubyte **outData) {
     png_structp png_ptr;
     png_infop info_ptr;
     unsigned int sig_read = 0;
@@ -342,12 +342,12 @@ void initTexture(void) {
     int width, height;
     bool hasAlpha;
     char filename[] = "logo.png";
-    bool success = loadPngImage(filename, width, height, hasAlpha, &textureImage);
+    bool success = loadPngImage(filename, width, height, &textureImage);
     if (!success) {
         cerr << "Unable to load png file" << endl;
         return;
     }
-    cout << "Image loaded " << width << " " << height << " alpha " << hasAlpha << std::endl;
+    cout << "Image loaded " << width << " " << height << std::endl;
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, width,
                  height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE,
