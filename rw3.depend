@@ -29,3 +29,22 @@
 	<png.h>
 	<cstring>
 
+1397491941 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\main.cpp
+	<cstdlib>
+	<GL/glut.h>
+	<AL/alut.h>
+	<random>
+	<chrono>
+	<iostream>
+	<png.h>
+	<cstring>
+
+1397505556 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\fpscamera.cpp
+	"fpscamera.h"
+
+1397505581 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\fpscamera.h
+	"camera.h"
+	<GL/glut.h>
+
+1397505623 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\camera.h
+

@@ -13,7 +13,6 @@ void keyboard(unsigned char key, int x, int y);
 void display(void);
 void reshape (int w, int h);
 void specialInput(int key, int x, int y);
-static void playFile(const char *filename);
 bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
 void loadAudioFile(const char *fileName);
@@ -199,7 +198,6 @@ void loadAudioFile(const char *fileName)
 {
   //ALuint source;
   ALenum error;
-  ALint status;
 
   /* Create an AL buffer from the given sound file. */
   audioBuffer = alutCreateBufferFromFile (fileName);
