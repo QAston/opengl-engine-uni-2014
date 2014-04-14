@@ -5,7 +5,6 @@
 #include <chrono>
 #include <iostream>
 #include <png.h>
-// cstring potrzebny dla memcpy w funkcji loadPngImage
 #include <cstring>
 
 using namespace std;
@@ -65,13 +64,13 @@ GLfloat texturePoints[] = {0.25, 0.66,
 
 float rotateX = 0;
 float rotateY = 0;
- 
+
 int mouseX;
 int mouseY;
-                           
+
 int main(int argc, char** argv)
 {
-  
+
   glutInitWindowSize(800, 600);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInit(&argc, argv);
@@ -86,12 +85,12 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
-  if (argc > 1) 
+  if (argc > 1)
   {
       texturing = true;
       initTexture();
   }
-  
+
   alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
   alListenerfv(AL_ORIENTATION, listenerOrientation);
 
@@ -160,7 +159,7 @@ void display()
     glVertexPointer (3, GL_INT, 0, cubeVerticles);
     if(texturing)
     {
-        
+
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
     } else {
@@ -184,7 +183,7 @@ void display()
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, topIndices);
 
    glutSwapBuffers();
-  
+
 }
 
 void reshape (int w, int h)
@@ -218,7 +217,7 @@ void loadAudioFile(const char *fileName)
   alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
 }
 
-// Function loading texture from png file, uses libpng. 
+// Function loading texture from png file, uses libpng.
 bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
     png_structp png_ptr;
     png_infop info_ptr;
@@ -337,11 +336,11 @@ bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, 
 
 // Loads texture and makes openGL use it.
 void initTexture(void) {
-    
+
     // The following two lines enable semi transparent
     glEnable(GL_BLEND);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
- 
+
     int width, height;
     bool hasAlpha;
     char filename[] = "logo.png";
@@ -368,11 +367,11 @@ void mousePassive(int x, int y)
     mouseX = x;
     mouseY = y;
 }
- 
+
 void mouseMotion(int x, int y)
 {
     const float SPEED = 2;
- 
+
     rotateX += (mouseX-x)/SPEED;
     rotateY += (mouseY-y)/SPEED;
     mousePassive(x, y);

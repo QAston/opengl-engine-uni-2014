@@ -14,3 +14,18 @@
 	<png.h>
 	<cstring>
 
+1397491881 source:c:\users\qaston\dropbox\workspace\pb\rw\proj\rw3\src\camera.cpp
+	"camera.h"
+
+1397491881 c:\users\qaston\dropbox\workspace\pb\rw\proj\rw3\include\camera.h
+
+1397491941 source:c:\users\qaston\dropbox\workspace\pb\rw\proj\rw3\src\main.cpp
+	<cstdlib>
+	<GL/glut.h>
+	<AL/alut.h>
+	<random>
+	<chrono>
+	<iostream>
+	<png.h>
+	<cstring>
+
