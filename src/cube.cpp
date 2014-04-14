@@ -42,7 +42,7 @@ void Cube::draw()
     glPolygonMode(GL_BACK, GL_LINE);
     glFrontFace(GL_CCW);
 
-    glLoadIdentity ();
+    //glLoadIdentity ();
     glTranslatef(_posX, _posY, _posZ);
     glRotatef(rotateX, 0,1,0);
     glRotatef(rotateY, 1,0,0);

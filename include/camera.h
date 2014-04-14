@@ -6,6 +6,7 @@ class Camera
 {
     public:
         virtual ~Camera(){};
+        virtual void glLoadRevWorldMatrix() = 0;
     protected:
     private:
 };

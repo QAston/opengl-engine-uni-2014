@@ -6,10 +6,10 @@ class InputListener
 {
     public:
         virtual ~InputListener() {}
-        virtual void specialInput(int key, int /*x*/, int /*y*/);
-        virtual void keyboard(unsigned char key, int /*x*/, int /*y*/);
-        virtual void mousePassive(int x, int y);
-        virtual void mouseMotion(int x, int y);
+        virtual void specialInput(int key, int /*x*/, int /*y*/) = 0;
+        virtual void keyboard(unsigned char key, int /*x*/, int /*y*/) = 0;
+        virtual void mousePassive(int x, int y) = 0;
+        virtual void mouseMotion(int x, int y) = 0;
     protected:
     private:
 };

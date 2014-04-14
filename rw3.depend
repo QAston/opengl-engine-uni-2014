@@ -29,7 +29,7 @@
 	<png.h>
 	<cstring>
 
-1397511743 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\main.cpp
+1397515083 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\main.cpp
 	<cstdlib>
 	<GL/glut.h>
 	<AL/alut.h>
@@ -40,15 +40,17 @@
 	<cstring>
 	<memory>
 	"cube.h"
-
-1397505556 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\fpscamera.cpp
 	"fpscamera.h"
 
-1397505581 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\fpscamera.h
+1397515040 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\fpscamera.cpp
+	"fpscamera.h"
+
+1397515116 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\fpscamera.h
 	"camera.h"
+	"inputlistener.h"
 	<GL/glut.h>
 
-1397505623 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\camera.h
+1397512555 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\camera.h
 
 1397510399 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\displaymanagerglut.cpp
 	"displaymanagerglut.h"
@@ -63,7 +65,7 @@
 
 1397506929 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\drawable.h
 
-1397511653 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\cube.cpp
+1397515024 source:c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\src\cube.cpp
 	"cube.h"
 	<random>
 	<chrono>
@@ -71,4 +73,6 @@
 1397511453 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\cube.h
 	<GL/glut.h>
 	"drawable.h"
+
+1397515105 c:\users\dariusz\dropbox\workspace\pb\rw\proj\rw3\include\inputlistener.h
 

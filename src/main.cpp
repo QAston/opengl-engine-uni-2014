@@ -9,6 +9,7 @@
 
 #include <memory>
 #include "cube.h"
+#include "fpscamera.h"
 
 using namespace std;
 
@@ -72,6 +73,7 @@ int mouseY;
 
 shared_ptr<Cube> cube1;
 shared_ptr<Cube> cube2;
+shared_ptr<Camera> camera;
 
 int main(int argc, char** argv)
 {
@@ -110,6 +112,7 @@ int main(int argc, char** argv)
   loadAudioFile("alert.wav");
   cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
   cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
+  camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
   glutMainLoop();
   alutExit();
   return EXIT_SUCCESS;
@@ -162,31 +165,10 @@ void display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glEnableClientState (GL_VERTEX_ARRAY);
-    glVertexPointer (3, GL_INT, 0, cubeVerticles);
-    if(texturing)
-    {
-        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
-    } else {
-        glEnableClientState (GL_COLOR_ARRAY);
-        glColorPointer (3, GL_FLOAT, 0, cubeColors);
-    }
-    glPolygonMode(GL_FRONT, GL_FILL);
-    glPolygonMode(GL_BACK, GL_LINE);
-    glFrontFace(GL_CCW);
-
-    glLoadIdentity ();
-    glTranslatef(posX, posY, posZ);
-    glRotatef(rotateX, 0,1,0);
-    glRotatef(rotateY, 1,0,0);
-
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, bottomIndices);
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, backIndices);
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, leftIndices);
-    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, topIndices);
+    camera->glLoadRevWorldMatrix();
+    cube1->draw();
+    camera->glLoadRevWorldMatrix();
+    cube2->draw();
 
    glutSwapBuffers();
 
