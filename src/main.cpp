@@ -7,6 +7,9 @@
 #include <png.h>
 #include <cstring>
 
+#include <memory>
+#include "cube.h"
+
 using namespace std;
 
 void keyboard(unsigned char key, int x, int y);
@@ -67,6 +70,9 @@ float rotateY = 0;
 int mouseX;
 int mouseY;
 
+shared_ptr<Cube> cube1;
+shared_ptr<Cube> cube2;
+
 int main(int argc, char** argv)
 {
 
@@ -102,6 +108,8 @@ int main(int argc, char** argv)
         cubeColors[i] = distribution(generator);
     }
   loadAudioFile("alert.wav");
+  cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
+  cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
   glutMainLoop();
   alutExit();
   return EXIT_SUCCESS;
@@ -158,7 +166,6 @@ void display()
     glVertexPointer (3, GL_INT, 0, cubeVerticles);
     if(texturing)
     {
-
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
     } else {
