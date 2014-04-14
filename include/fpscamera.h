@@ -4,6 +4,8 @@
 #include "camera.h"
 #include "inputlistener.h"
 #include <GL/glut.h>
+#include <memory>
+using namespace std;
 
 
 class FPSCamera : public Camera
@@ -12,6 +14,22 @@ class FPSCamera : public Camera
         FPSCamera(float x, float y, float z, float rX, float rY);
         ~FPSCamera() override;
         void glLoadRevWorldMatrix() override;
+
+        class Input : public InputListener
+        {
+        public:
+            Input(shared_ptr<FPSCamera> camera);
+            void specialInput(int key, int /*x*/, int /*y*/) override;
+            void keyboard(unsigned char key, int /*x*/, int /*y*/) override;
+            void mousePassive(int x, int y) override;
+            void mouseMotion(int x, int y) override;
+        private:
+            shared_ptr<FPSCamera> _camera;
+
+            int _mouseX;
+            int _mouseY;
+            bool init;
+        };
     protected:
     private:
         GLfloat _posX;

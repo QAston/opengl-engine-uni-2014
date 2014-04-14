@@ -46,7 +46,18 @@
 			<Add library="libpng" />
 		</Linker>
 		<Unit filename="include/camera.h" />
-		<Unit filename="src/camera.cpp" />
+		<Unit filename="include/cube.h" />
+		<Unit filename="include/displaymanager.h" />
+		<Unit filename="include/displaymanagerglut.h" />
+		<Unit filename="include/drawable.h" />
+		<Unit filename="include/fpscamera.h" />
+		<Unit filename="include/inputlistener.h" />
+		<Unit filename="include/inputmanager.h" />
+		<Unit filename="include/inputmanagerglut.h" />
+		<Unit filename="src/cube.cpp" />
+		<Unit filename="src/displaymanagerglut.cpp" />
+		<Unit filename="src/fpscamera.cpp" />
+		<Unit filename="src/inputmanagerglut.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
