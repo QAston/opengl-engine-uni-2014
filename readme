@@ -1,3 +1,21 @@
+ŁADOWANIE OBJ:
+ma działać na vbo (vertex buffer object) lub na tablicach wierzchołków
+ładowanie materiałów
+eksport wektorów normalnych i współrzędnych tekstur
+w samym obj nie ma materiałów, są identyfikatory materiałów
+nazwa materiału definiuje teksturę
+nie trzeba parsować pliku .mtl
+nazwa tekstury to nazwa materiału
+
+można wyeksportować kostkę, żeby zobaczyć jak wygląda struktura pliku
+jedyna trudność jest taka, że przy vbo zakładana jest taka sama długość atrybutów, a
+w obj są np. 3 listy o różnej długości
+
+będzie można stosować jeden indeks dla wszystkich list
+oddać za dwa tygodnie
+
+FPS:
+
 Kamera fpsowa - WSAD + mysz
 mozna dorobic wznoszenie
 
