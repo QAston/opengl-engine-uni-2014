@@ -451,3 +451,375 @@
 	"../geometric.hpp"
 	<limits>
 
+1397539247 source:/home/maciej/rw/3-glut/rw3/src/cube.cpp
+	"cube.h"
+	<random>
+	<chrono>
+
+1397509035 /home/maciej/rw/3-glut/rw3/include/cube.h
+	<GL/glut.h>
+	"drawable.h"
+
+1397509030 /home/maciej/rw/3-glut/rw3/include/drawable.h
+
+1397509035 source:/home/maciej/rw/3-glut/rw3/src/displaymanagerglut.cpp
+	"displaymanagerglut.h"
+
+1397509035 /home/maciej/rw/3-glut/rw3/include/displaymanagerglut.h
+	<memory>
+	"displaymanager.h"
+
+1397509035 /home/maciej/rw/3-glut/rw3/include/displaymanager.h
+	"drawable.h"
+	"camera.h"
+
+1397539247 /home/maciej/rw/3-glut/rw3/include/camera.h
+
+1397546143 source:/home/maciej/rw/3-glut/rw3/src/fpscamera.cpp
+	"fpscamera.h"
+	<cmath>
+	"glm/mat4x4.hpp"
+	"glm/gtc/matrix_transform.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/include/fpscamera.h
+	"camera.h"
+	"inputlistener.h"
+	<GL/glut.h>
+	<memory>
+	"glm/mat4x4.hpp"
+
+1397539247 /home/maciej/rw/3-glut/rw3/include/inputlistener.h
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat4x4.hpp
+	"detail/type_mat4x4.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x4.hpp
+	"../fwd.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/fwd.hpp
+	"detail/type_int.hpp"
+	"detail/type_float.hpp"
+	"detail/type_vec.hpp"
+	"detail/type_mat.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_int.hpp
+	"setup.hpp"
+	<cstdint>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/setup.hpp
+	<cassert>
+	<cuda.h>
+	<intrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<smmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_float.hpp
+	"setup.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec.hpp
+	"precision.hpp"
+	"type_int.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/precision.hpp
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat.hpp
+	"precision.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec4.hpp
+	"setup.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/_swizzle.hpp
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/_swizzle_func.hpp
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec4.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x4.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/gtc/matrix_transform.hpp
+	"../mat4x4.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"matrix_transform.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/vec2.hpp
+	"detail/type_vec2.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec2.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec2.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/vec3.hpp
+	"detail/type_vec3.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec3.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec3.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/vec4.hpp
+	"detail/type_vec4.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/gtc/matrix_transform.inl
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/geometric.hpp
+	"detail/func_geometric.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_geometric.hpp
+	"type_vec3.hpp"
+	"func_geometric.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_geometric.inl
+	"func_exponential.hpp"
+	"func_common.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_float.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_exponential.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<cmath>
+	"func_exponential.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec1.hpp
+	"../fwd.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_vec1.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_exponential.inl
+	"func_vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cassert>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_vector_relational.hpp
+	"precision.hpp"
+	"setup.hpp"
+	"func_vector_relational.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_vector_relational.inl
+	<limits>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/_vectorize.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_common.hpp
+	"setup.hpp"
+	"precision.hpp"
+	"type_int.hpp"
+	"_fixes.hpp"
+	"func_common.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/_fixes.hpp
+	<cmath>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_common.inl
+	"func_vector_relational.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/trigonometric.hpp
+	"detail/func_trigonometric.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_trigonometric.hpp
+	"func_trigonometric.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/matrix.hpp
+	"detail/func_matrix.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_matrix.hpp
+	"../detail/precision.hpp"
+	"../detail/setup.hpp"
+	"../detail/type_mat.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	"func_matrix.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat2x2.hpp
+	"detail/type_mat2x2.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x2.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x2.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat2x3.hpp
+	"detail/type_mat2x3.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x3.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x3.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x3.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat2x4.hpp
+	"detail/type_mat2x4.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x4.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x4.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat2x4.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat3x2.hpp
+	"detail/type_mat3x2.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x2.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x2.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat3x3.hpp
+	"detail/type_mat3x3.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x3.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x3.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat3x4.hpp
+	"detail/type_mat3x4.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x4.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x4.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat3x4.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat4x2.hpp
+	"detail/type_mat4x2.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x2.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x2.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/mat4x3.hpp
+	"detail/type_mat4x3.hpp"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x3.inl"
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/type_mat4x3.inl
+
+1397546143 /home/maciej/rw/3-glut/rw3/dep/glm/glm/detail/func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+
+1397546143 source:/home/maciej/rw/3-glut/rw3/src/inputmanagerglut.cpp
+	"inputmanagerglut.h"
+	<functional>
+	<GL/glut.h>
+
+1397539247 /home/maciej/rw/3-glut/rw3/include/inputmanagerglut.h
+	"inputmanager.h"
+	<list>
+
+1397539247 /home/maciej/rw/3-glut/rw3/include/inputmanager.h
+	"inputlistener.h"
+	<memory>
+
+1397546143 source:/home/maciej/rw/3-glut/rw3/src/main.cpp
+	<cstdlib>
+	<GL/glut.h>
+	<AL/alut.h>
+	<random>
+	<chrono>
+	<iostream>
+	<png.h>
+	<cstring>
+	<memory>
+	"cube.h"
+	"fpscamera.h"
+	"inputmanagerglut.h"
+
