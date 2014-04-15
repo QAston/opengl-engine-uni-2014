@@ -1,4 +1,7 @@
 #include "fpscamera.h"
+#include <cmath>
+#include "glm/mat4x4.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 FPSCamera::FPSCamera(float x, float y, float z, float rX, float rY)
 {
@@ -20,6 +23,14 @@ void FPSCamera::glLoadRevWorldMatrix()
     glRotatef(-_rotX, 1,0,0);
     glRotatef(-_rotY, 0,1,0);
     glTranslatef(-_posX, -_posY, -_posZ);
+}
+
+glm::mat4 FPSCamera::getWorldMatrix()
+{
+    glm::mat4 trans = glm::translate(glm::mat4(1.0f), glm::vec3(_posX, _posY, _posZ));
+    glm::mat4 rotX = glm::rotate(trans, _rotX, glm::vec3(1.0f, 0.0f,  0.0f));
+    glm::mat4 rotY = glm::rotate(rotX, _rotY, glm::vec3(0.0f, 1.0f,  0.0f));
+    return rotY;
 }
 
 // checks ascii input
@@ -50,21 +61,26 @@ FPSCamera::Input::Input(shared_ptr<FPSCamera> camera)
 // checks raw keyboard input
 void FPSCamera::Input::specialInput(int key, int /*x*/, int /*y*/)
 {
-  const float deltaPosX = 0.1;
-  const float deltaPosZ = 0.1;
+  const float deltaPos = 0.1;
+
+  glm::mat4 world = _camera->getWorldMatrix();
   switch(key)
   {
     case GLUT_KEY_UP:
-        _camera->_posZ += deltaPosZ;
+        _camera->_posX -= world[2][0] * deltaPos;
+        _camera->_posZ -= world[2][2] * deltaPos;
       break;
     case GLUT_KEY_DOWN:
-        _camera->_posZ -= deltaPosZ;
+        _camera->_posX += world[2][0] * deltaPos;
+        _camera->_posZ += world[2][2] * deltaPos;
       break;
     case GLUT_KEY_LEFT:
-        _camera->_posX -= deltaPosX;
+        _camera->_posX -= world[0][0] * deltaPos;
+        _camera->_posZ -= world[0][2] * deltaPos;
       break;
     case GLUT_KEY_RIGHT:
-        _camera->_posX += deltaPosX;
+        _camera->_posX += world[0][0] * deltaPos;
+        _camera->_posZ += world[0][2] * deltaPos;
       break;
     default:
         return;

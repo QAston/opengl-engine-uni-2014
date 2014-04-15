@@ -29,8 +29,6 @@ void InputManagerGLUT::unregisterObject(shared_ptr<InputListener>object)
     _objects.remove(object);
 }
 
-
-
 void InputManagerGLUT::_keyboard(unsigned char key, int x, int y)
 {
     for(auto lis : _singleton->_objects)

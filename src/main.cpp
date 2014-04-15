@@ -88,6 +88,7 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
+  glutWarpPointer(400, 300);
   if (argc > 1)
   {
       texturing = true;

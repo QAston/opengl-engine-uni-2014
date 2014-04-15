@@ -5,6 +5,8 @@
 #include "inputlistener.h"
 #include <GL/glut.h>
 #include <memory>
+#include "glm/mat4x4.hpp"
+
 using namespace std;
 
 
@@ -14,6 +16,7 @@ class FPSCamera : public Camera
         FPSCamera(float x, float y, float z, float rX, float rY);
         ~FPSCamera() override;
         void glLoadRevWorldMatrix() override;
+        glm::mat4 getWorldMatrix();
 
         class Input : public InputListener
         {
