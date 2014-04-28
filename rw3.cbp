@@ -32,6 +32,9 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-march=core2" />
+			<Add option="-fexpensive-optimizations" />
+			<Add option="-O3" />
 			<Add option="-std=c++11" />
 			<Add option="-Wfatal-errors" />
 			<Add option="-Wextra" />
@@ -56,11 +59,15 @@
 		<Unit filename="include/inputlistener.h" />
 		<Unit filename="include/inputmanager.h" />
 		<Unit filename="include/inputmanagerglut.h" />
+		<Unit filename="include/loadedobject.h" />
+		<Unit filename="include/objloader.h" />
 		<Unit filename="src/cube.cpp" />
 		<Unit filename="src/displaymanagerglut.cpp" />
 		<Unit filename="src/fpscamera.cpp" />
 		<Unit filename="src/inputmanagerglut.cpp" />
+		<Unit filename="src/loadedobject.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/objloader.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

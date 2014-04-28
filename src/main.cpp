@@ -11,6 +11,7 @@
 #include "cube.h"
 #include "fpscamera.h"
 #include "inputmanagerglut.h"
+#include "objloader.h"
 
 using namespace std;
 
@@ -107,6 +108,7 @@ int main(int argc, char** argv)
         cubeColors[i] = distribution(generator);
     }
   loadAudioFile("alert.wav");
+  loadObjFile("objFiles/untitled2cubes.obj");
   cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
   cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
   camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);

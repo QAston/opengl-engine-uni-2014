@@ -823,3 +823,386 @@
 	"fpscamera.h"
 	"inputmanagerglut.h"
 
+1398507082 source:/home/maciej/rw/projektRW/src/cube.cpp
+	"cube.h"
+	<random>
+	<chrono>
+
+1398507082 /home/maciej/rw/projektRW/include/cube.h
+	<GL/glut.h>
+	"drawable.h"
+
+1398507082 /home/maciej/rw/projektRW/include/drawable.h
+
+1398507082 source:/home/maciej/rw/projektRW/src/displaymanagerglut.cpp
+	"displaymanagerglut.h"
+
+1398507082 /home/maciej/rw/projektRW/include/displaymanagerglut.h
+	<memory>
+	"displaymanager.h"
+
+1398507082 /home/maciej/rw/projektRW/include/displaymanager.h
+	"drawable.h"
+	"camera.h"
+
+1398507082 /home/maciej/rw/projektRW/include/camera.h
+
+1398507082 source:/home/maciej/rw/projektRW/src/fpscamera.cpp
+	"fpscamera.h"
+	<cmath>
+	"glm/mat4x4.hpp"
+	"glm/gtc/matrix_transform.hpp"
+
+1398507082 /home/maciej/rw/projektRW/include/fpscamera.h
+	"camera.h"
+	"inputlistener.h"
+	<GL/glut.h>
+	<memory>
+	"glm/mat4x4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/include/inputlistener.h
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat4x4.hpp
+	"detail/type_mat4x4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x4.hpp
+	"../fwd.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/fwd.hpp
+	"detail/type_int.hpp"
+	"detail/type_float.hpp"
+	"detail/type_vec.hpp"
+	"detail/type_mat.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_int.hpp
+	"setup.hpp"
+	<cstdint>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/setup.hpp
+	<cassert>
+	<cuda.h>
+	<intrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<smmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_float.hpp
+	"setup.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec.hpp
+	"precision.hpp"
+	"type_int.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/precision.hpp
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat.hpp
+	"precision.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec4.hpp
+	"setup.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/_swizzle.hpp
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/_swizzle_func.hpp
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec4.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x4.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/gtc/matrix_transform.hpp
+	"../mat4x4.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"matrix_transform.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/vec2.hpp
+	"detail/type_vec2.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec2.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec2.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/vec3.hpp
+	"detail/type_vec3.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec3.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec3.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/vec4.hpp
+	"detail/type_vec4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/gtc/matrix_transform.inl
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/geometric.hpp
+	"detail/func_geometric.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_geometric.hpp
+	"type_vec3.hpp"
+	"func_geometric.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_geometric.inl
+	"func_exponential.hpp"
+	"func_common.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_float.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_exponential.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<cmath>
+	"func_exponential.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec1.hpp
+	"../fwd.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_vec1.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_exponential.inl
+	"func_vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cassert>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_vector_relational.hpp
+	"precision.hpp"
+	"setup.hpp"
+	"func_vector_relational.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_vector_relational.inl
+	<limits>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/_vectorize.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_common.hpp
+	"setup.hpp"
+	"precision.hpp"
+	"type_int.hpp"
+	"_fixes.hpp"
+	"func_common.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/_fixes.hpp
+	<cmath>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_common.inl
+	"func_vector_relational.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/trigonometric.hpp
+	"detail/func_trigonometric.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_trigonometric.hpp
+	"func_trigonometric.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/matrix.hpp
+	"detail/func_matrix.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_matrix.hpp
+	"../detail/precision.hpp"
+	"../detail/setup.hpp"
+	"../detail/type_mat.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	"func_matrix.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat2x2.hpp
+	"detail/type_mat2x2.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x2.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x2.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat2x3.hpp
+	"detail/type_mat2x3.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x3.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x3.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x3.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat2x4.hpp
+	"detail/type_mat2x4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x4.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat2x4.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat2x4.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat3x2.hpp
+	"detail/type_mat3x2.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x2.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x2.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat3x3.hpp
+	"detail/type_mat3x3.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x3.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x3.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat3x4.hpp
+	"detail/type_mat3x4.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x4.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat3x4.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat3x4.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat4x2.hpp
+	"detail/type_mat4x2.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x2.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x2.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/mat4x3.hpp
+	"detail/type_mat4x3.hpp"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	"type_mat4x3.inl"
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/type_mat4x3.inl
+
+1398507082 /home/maciej/rw/projektRW/dep/glm/glm/detail/func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+
+1398507082 source:/home/maciej/rw/projektRW/src/inputmanagerglut.cpp
+	"inputmanagerglut.h"
+	<functional>
+	<GL/glut.h>
+
+1398507082 /home/maciej/rw/projektRW/include/inputmanagerglut.h
+	"inputmanager.h"
+	<list>
+
+1398507082 /home/maciej/rw/projektRW/include/inputmanager.h
+	"inputlistener.h"
+	<memory>
+
+1398528696 source:/home/maciej/rw/projektRW/src/main.cpp
+	<cstdlib>
+	<GL/glut.h>
+	<AL/alut.h>
+	<random>
+	<chrono>
+	<iostream>
+	<png.h>
+	<cstring>
+	<memory>
+	"cube.h"
+	"fpscamera.h"
+	"inputmanagerglut.h"
+	"objloader.h"
+
+1398530491 /home/maciej/rw/projektRW/include/objloader.h
+
+1398529569 source:/home/maciej/rw/projektRW/src/objloader.cpp
+	"objloader.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	<vector>
+	<array>
+
