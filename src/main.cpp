@@ -72,7 +72,7 @@ float rotateY = 0;
 int mouseX;
 int mouseY;
 
-shared_ptr<Cube> cube1;
+shared_ptr<Drawable> cube1;
 shared_ptr<Cube> cube2;
 shared_ptr<FPSCamera> camera;
 shared_ptr<FPSCamera::Input> cameraInput;
@@ -110,8 +110,10 @@ int main(int argc, char** argv)
         cubeColors[i] = distribution(generator);
     }
   loadAudioFile("alert.wav");
-  vector<LoadedObject> objects = loadObjFile("objFiles/untitled2cubes.obj");
-  cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
+  vector<shared_ptr<Drawable>> objects = loadObjFile("objFiles/untitled2cubes.obj");
+  cout << "UWQAAGA: ilość obiektów" << objects.size() << endl;
+  cube1 = objects[0];
+  //cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
   cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
   camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
   inputManager = make_shared<InputManagerGLUT>();

@@ -32,13 +32,24 @@ LoadedObject::~LoadedObject()
 
 void LoadedObject::draw()
 {
+    GLfloat cubeColors[24] = { 0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5
+    };
     glEnableClientState (GL_VERTEX_ARRAY);
-    glVertexPointer (3, GL_INT, 0, &vertici);
+    glVertexPointer (3, GL_INT, 0, vertici.data());
     /*if(texturing)
     {
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
     } else */
+    glEnableClientState (GL_COLOR_ARRAY);
+    glColorPointer (3, GL_FLOAT, 0, cubeColors);
     glPolygonMode(GL_FRONT, GL_FILL);
     glPolygonMode(GL_BACK, GL_LINE);
     glFrontFace(GL_CCW);
@@ -51,7 +62,7 @@ void LoadedObject::draw()
     vector<array<GLubyte,4>>::iterator facesIterator;
     for (facesIterator = this->faces.begin(); facesIterator != faces.end(); facesIterator++)
     {
-        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, &*facesIterator);
+        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, (*facesIterator).data());
     }
 
     glDisableClientState (GL_COLOR_ARRAY);

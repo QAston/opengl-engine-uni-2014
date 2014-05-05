@@ -1181,7 +1181,7 @@
 	"inputlistener.h"
 	<memory>
 
-1398528696 source:/home/maciej/rw/projektRW/src/main.cpp
+1399321830 source:/home/maciej/rw/projektRW/src/main.cpp
 	<cstdlib>
 	<GL/glut.h>
 	<AL/alut.h>
@@ -1190,17 +1190,20 @@
 	<iostream>
 	<png.h>
 	<cstring>
+	<vector>
 	<memory>
 	"cube.h"
 	"fpscamera.h"
 	"inputmanagerglut.h"
 	"objloader.h"
+	"loadedobject.h"
 
-1399317875 /home/maciej/rw/projektRW/include/objloader.h
+1399320184 /home/maciej/rw/projektRW/include/objloader.h
 	"loadedobject.h"
 	<vector>
+	<memory>
 
-1399317791 source:/home/maciej/rw/projektRW/src/objloader.cpp
+1399322514 source:/home/maciej/rw/projektRW/src/objloader.cpp
 	"objloader.h"
 	<iostream>
 	<fstream>
@@ -1208,7 +1211,7 @@
 	<vector>
 	<array>
 
-1399317701 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
+1399322029 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
 	"loadedobject.h"
 	<iostream>
 

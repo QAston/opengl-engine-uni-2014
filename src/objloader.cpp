@@ -7,13 +7,13 @@
 
 using namespace std;
 
-vector<LoadedObject> loadObjFile(const char* path)
+vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 {
     fstream file;
     file.open(path, ios::in);
 
     /// Structure containing all loaded objects.
-    vector<LoadedObject> objects;
+    vector<shared_ptr<Drawable>> objects;
 
     if (!file.is_open())
     {
@@ -28,6 +28,10 @@ vector<LoadedObject> loadObjFile(const char* path)
     /// Faces of a single object.
     vector<array<int, 4>> faces;
 
+    /// Obj files do not reset vertex index when new object is being described, so this
+    /// value will be subtracted.
+    int faceIndexDiff = 0;
+
     while (getline(file, line))
     {
         switch(line[0])
@@ -41,8 +45,9 @@ vector<LoadedObject> loadObjFile(const char* path)
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    objects.push_back(LoadedObject(verts, faces));
+                    objects.push_back(make_shared<LoadedObject>(verts, faces));
                     verts.clear();
+                    faceIndexDiff += faces.size();
                     faces.clear();
                 }
                 break;
@@ -70,19 +75,19 @@ vector<LoadedObject> loadObjFile(const char* path)
             case 'f':
             // faces - cztery int z numerem wierzchołka.
             // "f 5 6 2 1"
-                string f, f1, f2, f3, f4;
+                array<string,5> f;
                 stringstream sstr(line);
-                sstr >> f >> f1 >> f2 >> f3 >> f4;
+                sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
                 array<int, 4> face;
-                face[0] = stoi(f1);
-                face[1] = stoi(f2);
-                face[2] = stoi(f3);
-                face[3] = stoi(f4);
+                for (int i=0; i<4; ++i)
+                    face[i] = stoi(f[i+1]) - faceIndexDiff;
                 faces.push_back(face);
         }
         cout << line << endl;
     }
-    cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
+    // Adding one final object.
+    objects.push_back(make_shared<LoadedObject>(verts, faces));
+    //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
     file.close();
     return objects;
 }
