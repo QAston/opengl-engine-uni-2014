@@ -14,13 +14,14 @@ using namespace std;
 class LoadedObject : public Drawable
 {
     public:
-        LoadedObject(vector<array<double,3>> vertizzi);
+        LoadedObject(vector<array<double,3>> vertizzi, vector<array<int,4>> faces);
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
         void draw();
     protected:
     private:
         vector<GLdouble> vertici;
+        vector<array<GLubyte,4>> faces;
 };
 
 #endif // LOADEDOBJECT_H

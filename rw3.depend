@@ -1196,13 +1196,25 @@
 	"inputmanagerglut.h"
 	"objloader.h"
 
-1398530491 /home/maciej/rw/projektRW/include/objloader.h
+1399317875 /home/maciej/rw/projektRW/include/objloader.h
+	"loadedobject.h"
+	<vector>
 
-1398529569 source:/home/maciej/rw/projektRW/src/objloader.cpp
+1399317791 source:/home/maciej/rw/projektRW/src/objloader.cpp
 	"objloader.h"
 	<iostream>
 	<fstream>
 	<sstream>
+	<vector>
+	<array>
+
+1399317701 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
+	"loadedobject.h"
+	<iostream>
+
+1399313197 /home/maciej/rw/projektRW/include/loadedobject.h
+	"drawable.h"
+	<GL/glut.h>
 	<vector>
 	<array>
 

@@ -1,10 +1,14 @@
 #ifndef OBJLOADER_H
 #define OBJLOADER_H
 
+#include "loadedobject.h"
+#include <vector>
+
 /**
  * Loads .obj file.
- * @param path Path to .obj file
+ * @param path Path to .obj file.
+ * @return loaded objects.
  */
-void loadObjFile(const char* path);
+vector<LoadedObject> loadObjFile(const char* path);
 
 #endif // OBJLOADER_H
