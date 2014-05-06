@@ -1,3 +1,16 @@
+IMPORT scen graficznych:
+import plików własnych, w formacie wysokopoziomowym, na poziomie obiektów
+opracować własny format tekstowy opisu sceny, może być na xml, tj x3d.
+Wsparcie dla zagnieżdżania, struktury drzewiastej w xml (relacje ojciec-dziecko),
+potrzebne do następnego zadania, obrót ojcem obraca też dzieci.
+
+obiekt nazwa
+pos 1 1 0
+kąt(eulera)
+współczynnik skalowania
+model_low [ścieżka do obj]
+model_high[ścieżka do obj]
+
 ŁADOWANIE OBJ:
 ma działać na vbo (vertex buffer object) lub na tablicach wierzchołków
 ładowanie materiałów
