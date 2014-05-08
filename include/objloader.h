@@ -13,4 +13,9 @@
  */
 vector<shared_ptr<Drawable>> loadObjFile(const char* path);
 
+/**
+ * Helper function. Strips "//2" from "24//3" in face declaration line.
+ */
+string stripFaceIndex(string input);
+
 #endif // OBJLOADER_H

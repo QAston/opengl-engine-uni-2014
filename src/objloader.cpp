@@ -54,17 +54,24 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                     faces.clear();
                 }
                 break;
-            case 'v': {
-            // wierzchołki
-            // "v 1.000000 -1.000000 -1.000000"
-                string v, v1, v2, v3;
-                stringstream sstr(line);
-                sstr >> v >> v1 >> v2 >> v3;
-                array<double,3> coords;
-                coords[0] = stod(v1);
-                coords[1] = stod(v2);
-                coords[2] = stod(v3);
-                verts.push_back(coords);
+            case 'v':
+                if (line[1] == ' ')
+                {
+                    // wierzchołki
+                    // "v 1.000000 -1.000000 -1.000000"
+                    string v, v1, v2, v3;
+                    stringstream sstr(line);
+                    sstr >> v >> v1 >> v2 >> v3;
+                    array<double,3> coords;
+                    coords[0] = stod(v1);
+                    coords[1] = stod(v2);
+                    coords[2] = stod(v3);
+                    verts.push_back(coords);
+                }
+                else
+                {
+                    // normal vectors
+                    // "vn "
                 }
                 break;
             case 'u':
@@ -83,7 +90,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
                 array<int, 4> face;
                 for (int i=0; i<4; ++i)
-                    face[i] = stoi(f[i+1]) - vertexIndexDiff - 1;
+                    face[i] = stoi(stripFaceIndex(f[i+1])) - vertexIndexDiff - 1;
                 faces.push_back(face);
         }
         cout << line << endl;
@@ -96,4 +103,10 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
     file.close();
     return objects;
+}
+
+string stripFaceIndex(string input)
+{
+    int slashPos = input.find('/');
+    return input.substr(0, slashPos);
 }
