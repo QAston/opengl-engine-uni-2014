@@ -14,7 +14,7 @@ model_high[ścieżka do obj]
 ŁADOWANIE OBJ:
 ma działać na vbo (vertex buffer object) lub na tablicach wierzchołków
 ładowanie materiałów
-eksport wektorów normalnych i współrzędnych tekstur
+W blenderze trzeba zaznaczyć eksport wektorów normalnych i współrzędnych tekstur
 w samym obj nie ma materiałów, są identyfikatory materiałów
 nazwa materiału definiuje teksturę
 nie trzeba parsować pliku .mtl

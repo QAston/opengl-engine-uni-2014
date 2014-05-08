@@ -32,7 +32,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 
     /// Obj files do not reset vertex index when new object is being described, so this
     /// value will be subtracted.
-    int faceIndexDiff = 0;
+    int vertexIndexDiff = 0;
 
     while (getline(file, line))
     {
@@ -47,11 +47,10 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    LoadedObject *obj2 = new LoadedObject(verts, faces);
                     shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces);
                     objects.push_back(obj);
+                    vertexIndexDiff += verts.size();
                     verts.clear();
-                    faceIndexDiff += faces.size();
                     faces.clear();
                 }
                 break;
@@ -84,7 +83,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
                 array<int, 4> face;
                 for (int i=0; i<4; ++i)
-                    face[i] = stoi(f[i+1]) - faceIndexDiff - 1;
+                    face[i] = stoi(f[i+1]) - vertexIndexDiff - 1;
                 faces.push_back(face);
         }
         cout << line << endl;

@@ -17,38 +17,12 @@
 
 using namespace std;
 
-void keyboard(unsigned char key, int x, int y);
 void display(void);
 void reshape (int w, int h);
-void specialInput(int key, int x, int y);
 bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
 void loadAudioFile(const char *fileName);
 void initTexture(void);
-void mousePassive(int x, int y);
-void mouseMotion(int x, int y);
-
-float posX = 0;
-float posY = 0;
-float posZ = -3;
-
-GLint cubeVerticles[] = {0, 0, 0,
-                          1, 0, 0,
-                          1, 1, 0,
-                          0, 1, 0,
-                          0, 0, 1,
-                          1, 0, 1,
-                          1, 1, 1,
-                          0, 1, 1};
-
-GLfloat cubeColors[24];
-
-GLubyte frontIndices[] = {4, 5, 6, 7};
-GLubyte rightIndices[] = {1, 2, 6, 5};
-GLubyte bottomIndices[] = {0, 1, 5, 4};
-GLubyte backIndices[] = {0, 3, 2, 1};
-GLubyte leftIndices[] = {0, 4, 7, 3};
-GLubyte topIndices[] = {2, 3, 7, 6};
 
 ALuint alsource;
 ALuint audioBuffer;
@@ -57,14 +31,6 @@ ALfloat listenerOrientation[6] = {0,0,-1, 0, 1, 0};
 
 bool texturing = false;
 GLubyte *textureImage;
-GLfloat texturePoints[] = {0.25, 0.66,
-                           0.50, 0.66,
-                           0.50, 0.33,
-                           0.25, 0.33,
-                           0, 0,
-                          1, 0,
-                          1, 1,
-                          0, 1};
 
 float rotateX = 0;
 float rotateY = 0;
@@ -72,8 +38,7 @@ float rotateY = 0;
 int mouseX;
 int mouseY;
 
-shared_ptr<Drawable> cube1;
-shared_ptr<Cube> cube2;
+vector<shared_ptr<Drawable>> objects;
 shared_ptr<FPSCamera> camera;
 shared_ptr<FPSCamera::Input> cameraInput;
 shared_ptr<InputManager> inputManager;
@@ -101,20 +66,12 @@ int main(int argc, char** argv)
   alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
   alListenerfv(AL_ORIENTATION, listenerOrientation);
 
-  // init colors
-    std::mt19937 generator;
-    generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    std::uniform_real_distribution<float> distribution(0.0, 1.0);
-    for(int i = 0; i < 24; ++i)
-    {
-        cubeColors[i] = distribution(generator);
-    }
   loadAudioFile("alert.wav");
-  vector<shared_ptr<Drawable>> objects = loadObjFile("objFiles/untitled2cubes.obj");
-  cout << "UWQAAGA: ilość obiektów" << objects.size() << endl;
-  cube1 = objects[0];
-  //cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
-  cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
+  objects = loadObjFile("objFiles/untitled2cubes.obj");
+  shared_ptr<Drawable> cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
+  shared_ptr<Drawable> cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
+  objects.push_back(cube1);
+  objects.push_back(cube2);
   camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
   inputManager = make_shared<InputManagerGLUT>();
   cameraInput = make_shared<FPSCamera::Input>(camera);
@@ -126,15 +83,14 @@ int main(int argc, char** argv)
 
 void display()
 {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    camera->glLoadRevWorldMatrix();
-    cube1->draw();
-    camera->glLoadRevWorldMatrix();
-    cube2->draw();
-
-   glutSwapBuffers();
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    vector<shared_ptr<Drawable>>::iterator it;
+    for(it = objects.begin(); it != objects.end(); ++it)
+    {
+        camera->glLoadRevWorldMatrix();
+        (*it)->draw();
+    }
+    glutSwapBuffers();
 }
 
 void reshape (int w, int h)

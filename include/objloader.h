@@ -7,6 +7,7 @@
 
 /**
  * Loads .obj file.
+ * @todo Import normal vectors, textures.
  * @param path Path to .obj file.
  * @return loaded objects.
  */
