@@ -1203,7 +1203,7 @@
 	<vector>
 	<memory>
 
-1399322514 source:/home/maciej/rw/projektRW/src/objloader.cpp
+1399568841 source:/home/maciej/rw/projektRW/src/objloader.cpp
 	"objloader.h"
 	<iostream>
 	<fstream>
@@ -1211,11 +1211,11 @@
 	<vector>
 	<array>
 
-1399322029 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
+1399569819 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
 	"loadedobject.h"
 	<iostream>
 
-1399313197 /home/maciej/rw/projektRW/include/loadedobject.h
+1399569035 /home/maciej/rw/projektRW/include/loadedobject.h
 	"drawable.h"
 	<GL/glut.h>
 	<vector>

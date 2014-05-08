@@ -14,7 +14,7 @@ using namespace std;
 class LoadedObject : public Drawable
 {
     public:
-        LoadedObject(vector<array<double,3>> vertizzi, vector<array<int,4>> faces);
+        LoadedObject(const vector<array<double,3>> &vertizzi, const vector<array<int,4>> &facess);
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
         void draw();

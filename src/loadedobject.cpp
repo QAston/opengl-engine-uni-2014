@@ -3,24 +3,24 @@
 
 using namespace std;
 
-LoadedObject::LoadedObject(vector<array<double,3>> vertizzi, vector<array<int,4>> faces)
+LoadedObject::LoadedObject(const vector<array<double,3>> &vertizzi, const vector<array<int,4>> &facess)
 {
-    vector<array<double,3>>::iterator it;
-    vector<array<int,4>>::iterator fit;
+    vector<array<double,3>>::const_iterator it;
+    vector<array<int,4>>::const_iterator fit;
 
     for (it=vertizzi.begin(); it != vertizzi.end(); it++)
     {
-        this->vertici.push_back((*it)[0]);
-        this->vertici.push_back((*it)[1]);
-        this->vertici.push_back((*it)[2]);
+        this->vertici.push_back((GLdouble)((*it)[0]));
+        this->vertici.push_back((GLdouble)((*it)[1]));
+        this->vertici.push_back((GLdouble)((*it)[2]));
     }
-    for (fit=faces.begin(); fit != faces.end(); fit++)
+    for (fit=facess.begin(); fit != facess.end(); fit++)
     {
         array<GLubyte,4> tmp;
-        tmp[0] = (GLubyte)(*it)[0];
-        tmp[1] = (GLubyte)(*it)[1];
-        tmp[2] = (GLubyte)(*it)[2];
-        tmp[3] = (GLubyte)(*it)[3];
+        tmp[0] = (GLubyte)(*fit)[0];
+        tmp[1] = (GLubyte)(*fit)[1];
+        tmp[2] = (GLubyte)(*fit)[2];
+        tmp[3] = (GLubyte)(*fit)[3];
         this->faces.push_back(tmp);
     }
 }
@@ -41,8 +41,10 @@ void LoadedObject::draw()
     0.5, 0.5, 0.5,
     0.5, 0.5, 0.5
     };
+
     glEnableClientState (GL_VERTEX_ARRAY);
-    glVertexPointer (3, GL_INT, 0, vertici.data());
+    glVertexPointer (3, GL_DOUBLE, 0, vertici.data());
+
     /*if(texturing)
     {
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);

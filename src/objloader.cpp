@@ -24,9 +24,11 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 
     /// Vertices of a single object.
     vector<array<double,3>> verts;
+    verts.clear();
 
     /// Faces of a single object.
     vector<array<int, 4>> faces;
+    faces.clear();
 
     /// Obj files do not reset vertex index when new object is being described, so this
     /// value will be subtracted.
@@ -45,7 +47,9 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    objects.push_back(make_shared<LoadedObject>(verts, faces));
+                    LoadedObject *obj2 = new LoadedObject(verts, faces);
+                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces);
+                    objects.push_back(obj);
                     verts.clear();
                     faceIndexDiff += faces.size();
                     faces.clear();
@@ -57,7 +61,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 string v, v1, v2, v3;
                 stringstream sstr(line);
                 sstr >> v >> v1 >> v2 >> v3;
-                array<double, 3> coords;
+                array<double,3> coords;
                 coords[0] = stod(v1);
                 coords[1] = stod(v2);
                 coords[2] = stod(v3);
@@ -80,13 +84,16 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
                 array<int, 4> face;
                 for (int i=0; i<4; ++i)
-                    face[i] = stoi(f[i+1]) - faceIndexDiff;
+                    face[i] = stoi(f[i+1]) - faceIndexDiff - 1;
                 faces.push_back(face);
         }
         cout << line << endl;
     }
     // Adding one final object.
-    objects.push_back(make_shared<LoadedObject>(verts, faces));
+    if (!verts.empty())
+    {
+        objects.push_back(make_shared<LoadedObject>(verts, faces));
+    }
     //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
     file.close();
     return objects;
