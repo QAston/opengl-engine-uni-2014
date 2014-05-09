@@ -24,11 +24,12 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 
     /// Vertices of a single object.
     vector<array<double,3>> verts;
-    verts.clear();
 
     /// Faces of a single object.
     vector<array<int, 4>> faces;
-    faces.clear();
+
+    /// Normal vectors.
+    vector<array<double,3>> normals;
 
     /// Obj files do not reset vertex index when new object is being described, so this
     /// value will be subtracted.
@@ -47,11 +48,12 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces);
+                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, normals);
                     objects.push_back(obj);
                     vertexIndexDiff += verts.size();
                     verts.clear();
                     faces.clear();
+                    normals.clear();
                 }
                 break;
             case 'v':
@@ -72,6 +74,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 {
                     // normal vectors
                     // "vn "
+                    normals.push_back(extractNormal(line));
                 }
                 break;
             case 'u':
@@ -98,7 +101,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     // Adding one final object.
     if (!verts.empty())
     {
-        objects.push_back(make_shared<LoadedObject>(verts, faces));
+        objects.push_back(make_shared<LoadedObject>(verts, faces, normals));
     }
     //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
     file.close();
@@ -109,4 +112,16 @@ string stripFaceIndex(string input)
 {
     int slashPos = input.find('/');
     return input.substr(0, slashPos);
+}
+
+array<double,3> extractNormal(string input)
+{
+    string v, v1, v2, v3;
+    stringstream sstr(input);
+    sstr >> v >> v1 >> v2 >> v3;
+    array<double,3> normal;
+    normal[0] = stod(v1);
+    normal[1] = stod(v2);
+    normal[2] = stod(v3);
+    return normal;
 }

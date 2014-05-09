@@ -14,7 +14,11 @@ using namespace std;
 class LoadedObject : public Drawable
 {
     public:
-        LoadedObject(const vector<array<double,3>> &vertizzi, const vector<array<int,4>> &facess);
+        LoadedObject(
+            const vector<array<double,3>> &vertizzi,
+            const vector<array<int,4>> &facess,
+            const vector<array<double,3>> &normals
+        );
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
         void draw();
@@ -22,6 +26,7 @@ class LoadedObject : public Drawable
     private:
         vector<GLdouble> vertici;
         vector<array<GLubyte,4>> faces;
+        vector<array<GLdouble,3>> normals;
 };
 
 #endif // LOADEDOBJECT_H

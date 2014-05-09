@@ -3,7 +3,10 @@
 
 using namespace std;
 
-LoadedObject::LoadedObject(const vector<array<double,3>> &vertizzi, const vector<array<int,4>> &facess)
+LoadedObject::LoadedObject(
+    const vector<array<double,3>> &vertizzi,
+    const vector<array<int,4>> &facess,
+    const vector<array<double,3>> &normals)
 {
     vector<array<double,3>>::const_iterator it;
     vector<array<int,4>>::const_iterator fit;
@@ -23,6 +26,7 @@ LoadedObject::LoadedObject(const vector<array<double,3>> &vertizzi, const vector
         tmp[3] = (GLubyte)(*fit)[3];
         this->faces.push_back(tmp);
     }
+    this->normals = normals;
 }
 
 LoadedObject::~LoadedObject()
@@ -32,15 +36,7 @@ LoadedObject::~LoadedObject()
 
 void LoadedObject::draw()
 {
-    GLfloat cubeColors[24] = { 0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5,
-    0.5, 0.5, 0.5
-    };
+    vector<GLfloat> cubeColors(this->vertici.size(), 0.5);
 
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, vertici.data());
@@ -51,11 +47,13 @@ void LoadedObject::draw()
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
     } else */
     glEnableClientState (GL_COLOR_ARRAY);
-    glColorPointer (3, GL_FLOAT, 0, cubeColors);
+    glColorPointer (3, GL_FLOAT, 0, cubeColors.data());
     glPolygonMode(GL_FRONT, GL_FILL);
     glPolygonMode(GL_BACK, GL_LINE);
     glFrontFace(GL_CCW);
 
+    glEnableClientState (GL_NORMAL_ARRAY);
+    glNormalPointer (3, GL_DOUBLE, normals.data());
     //glLoadIdentity ();
     //glTranslatef(_posX, _posY, _posZ);
     //glRotatef(rotateX, 0,1,0);
@@ -67,6 +65,7 @@ void LoadedObject::draw()
         glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, (*facesIterator).data());
     }
 
-    glDisableClientState (GL_COLOR_ARRAY);
-    glDisableClientState (GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
