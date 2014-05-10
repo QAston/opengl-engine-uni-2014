@@ -32,15 +32,13 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-march=core2" />
-			<Add option="-fexpensive-optimizations" />
-			<Add option="-O3" />
+			<Add option="-Wmissing-include-dirs" />
 			<Add option="-std=c++11" />
-			<Add option="-Wfatal-errors" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="dep/glm" />
+			<Add directory="dep/tinyobjloader" />
 		</Compiler>
 		<Linker>
 			<Add library="glut" />

@@ -1181,7 +1181,7 @@
 	"inputlistener.h"
 	<memory>
 
-1399572847 source:/home/maciej/rw/projektRW/src/main.cpp
+1399579810 source:/home/maciej/rw/projektRW/src/main.cpp
 	<cstdlib>
 	<GL/glut.h>
 	<AL/alut.h>
@@ -1198,26 +1198,46 @@
 	"objloader.h"
 	"loadedobject.h"
 
-1399579669 /home/maciej/rw/projektRW/include/objloader.h
+1399639283 /home/maciej/rw/projektRW/include/objloader.h
 	"loadedobject.h"
 	<vector>
 	<memory>
 
-1399579649 source:/home/maciej/rw/projektRW/src/objloader.cpp
+1399744985 source:/home/maciej/rw/projektRW/src/objloader.cpp
 	"objloader.h"
 	<iostream>
 	<fstream>
 	<sstream>
 	<vector>
 	<array>
+	"tiny_obj_loader.h"
 
-1399570090 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
+1399639822 source:/home/maciej/rw/projektRW/src/loadedobject.cpp
 	"loadedobject.h"
 	<iostream>
 
-1399569035 /home/maciej/rw/projektRW/include/loadedobject.h
+1399639196 /home/maciej/rw/projektRW/include/loadedobject.h
 	"drawable.h"
 	<GL/glut.h>
 	<vector>
 	<array>
+
+1399741822 /home/maciej/rw/projektRW/dep/glmaterial/glmaterial/glm.h
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1399660679 /home/maciej/rw/projektRW/include/glm.h
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1399641573 /home/maciej/rw/projektRW/include/glmint.h
+
+1399744474 /home/maciej/rw/projektRW/dep/tinyobjloader/tiny_obj_loader.h
+	<string>
+	<vector>
+	<map>
 

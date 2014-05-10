@@ -5,12 +5,13 @@ Wsparcie dla zagnieżdżania, struktury drzewiastej w xml (relacje ojciec-dzieck
 potrzebne do następnego zadania, obrót ojcem obraca też dzieci.
 
 obiekt nazwa
-pos 1 1 0
-kąt(eulera)
-współczynnik skalowania
-model_low [ścieżka do obj]
-model_high[ścieżka do obj]
+pos 1 1 0 (translacja)
+kąt(eulera) (rotacja)
+współczynnik skalowania (skalowanie)
+model_low_poly [ścieżka do obj]
+model_high_poly [ścieżka do obj]
 
+modele low/high są chyba na 5.
 ŁADOWANIE OBJ:
 ma działać na vbo (vertex buffer object) lub na tablicach wierzchołków
 ładowanie materiałów

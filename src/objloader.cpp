@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <array>
+#include "tiny_obj_loader.cpp"
 
 using namespace std;
 
@@ -34,6 +35,10 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     /// Obj files do not reset vertex index when new object is being described, so this
     /// value will be subtracted.
     int vertexIndexDiff = 0;
+
+    tinyobj::MaterialFileReader r("objFiles/graniastoslupy-normal.mtl");
+    //glmReadMTL(NULL, "objFiles/graniastoslupy-normal.mtl");
+
 
     while (getline(file, line))
     {
