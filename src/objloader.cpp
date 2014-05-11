@@ -37,8 +37,9 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     int vertexIndexDiff = 0;
 
     tinyobj::MaterialFileReader r("objFiles/graniastoslupy-normal.mtl");
-    //glmReadMTL(NULL, "objFiles/graniastoslupy-normal.mtl");
-
+    std::map<std::string, tinyobj::material_t> material_map;
+    tinyobj::material_t material;
+    bool is_material_seted = false;
 
     while (getline(file, line))
     {
@@ -48,6 +49,8 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
             // komentarz zaczynający się na '#'
                 continue;
                 break;
+            case 'm':
+            // "mtllib path"
             case 'o':
             // "o [nazwa_obiektu]", po tej linijce opisywane są wierzchołki
                 // Do nothing on first occurence of 'o'.
@@ -82,10 +85,16 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                     normals.push_back(extractNormal(line));
                 }
                 break;
-            case 'u':
+            case 'u': {
             // "usemtl [material]"
-                // "usemtl" zawsze następuje po "v ..."
-                //objects.push_back(LoadedObject);
+                string namebuf = line.substr(7);
+                if (material_map.find(namebuf) != material_map.end()) {
+                    material = material_map[namebuf];
+                    is_material_seted = true;
+                } else {
+                    // { error!! material not found }
+                    //InitMaterial(material);
+                }}
                 break;
             case 's':
             // "s [off]"
@@ -101,7 +110,7 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                     face[i] = stoi(stripFaceIndex(f[i+1])) - vertexIndexDiff - 1;
                 faces.push_back(face);
         }
-        cout << line << endl;
+        //cout << line << endl;
     }
     // Adding one final object.
     if (!verts.empty())

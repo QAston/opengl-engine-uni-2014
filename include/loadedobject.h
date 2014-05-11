@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <vector>
 #include <array>
+#include "tiny_obj_loader.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ class LoadedObject : public Drawable
         vector<array<GLubyte,4>> faces;
         vector<array<GLdouble,3>> normals;
         vector<GLfloat> colors;
+        tinyobj::material_t material;
 };
 
 #endif // LOADEDOBJECT_H
