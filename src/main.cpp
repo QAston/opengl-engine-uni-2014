@@ -54,6 +54,8 @@ int main(int argc, char** argv)
   glutDisplayFunc(&display);
   glutReshapeFunc(&reshape);
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_NORMALIZE);
+  glEnable(GL_AUTO_NORMAL);
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClearDepth(1.0f);
   glutWarpPointer(400, 300);

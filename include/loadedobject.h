@@ -27,6 +27,7 @@ class LoadedObject : public Drawable
         vector<GLdouble> vertici;
         vector<array<GLubyte,4>> faces;
         vector<array<GLdouble,3>> normals;
+        vector<GLfloat> colors;
 };
 
 #endif // LOADEDOBJECT_H

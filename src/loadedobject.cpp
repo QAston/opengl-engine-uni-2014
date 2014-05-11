@@ -26,7 +26,9 @@ LoadedObject::LoadedObject(
         tmp[3] = (GLubyte)(*fit)[3];
         this->faces.push_back(tmp);
     }
-    this->normals = normals;
+    //TODO FIX THIS!!!!
+    this->normals = vector<array<GLdouble,3>>(this->vertici.size(), {1.0, 0.0, 0.0});
+    this->colors = vector<GLfloat>(this->vertici.size(), 0.5);
 }
 
 LoadedObject::~LoadedObject()
@@ -36,7 +38,9 @@ LoadedObject::~LoadedObject()
 
 void LoadedObject::draw()
 {
-    vector<GLfloat> cubeColors(this->vertici.size(), 0.5);
+    //
+    glEnableClientState (GL_NORMAL_ARRAY);
+    glNormalPointer (GL_DOUBLE, 0, normals.data());
 
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, vertici.data());
@@ -47,13 +51,11 @@ void LoadedObject::draw()
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
     } else */
     glEnableClientState (GL_COLOR_ARRAY);
-    glColorPointer (3, GL_FLOAT, 0, cubeColors.data());
+    glColorPointer (3, GL_FLOAT, 0, colors.data());
     glPolygonMode(GL_FRONT, GL_FILL);
     glPolygonMode(GL_BACK, GL_LINE);
     glFrontFace(GL_CCW);
 
-    glEnableClientState (GL_NORMAL_ARRAY);
-    glNormalPointer (3, GL_DOUBLE, normals.data());
     //glLoadIdentity ();
     //glTranslatef(_posX, _posY, _posZ);
     //glRotatef(rotateX, 0,1,0);
