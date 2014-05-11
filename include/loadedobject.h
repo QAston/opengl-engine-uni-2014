@@ -16,8 +16,8 @@ class LoadedObject : public Drawable
 {
     public:
         LoadedObject(
-            const vector<array<double,3>> &vertizzi,
-            const vector<array<int,4>> &facess,
+            const vector<array<double,3>> &vertici,
+            const vector<array<int,4>> &faces,
             const vector<array<double,3>> &normals,
             tinyobj::material_t material
         );
@@ -26,11 +26,11 @@ class LoadedObject : public Drawable
         void draw();
     protected:
     private:
-        vector<GLdouble> vertici;
-        vector<array<GLubyte,4>> faces;
-        vector<array<GLdouble,3>> normals;
-        vector<GLfloat> colors;
-        tinyobj::material_t material;
+        vector<GLdouble> _vertici;
+        vector<array<GLubyte,4>> _faces;
+        vector<array<GLdouble,3>> _normals;
+        vector<GLfloat> _colors;
+        tinyobj::material_t _material;
 };
 
 #endif // LOADEDOBJECT_H

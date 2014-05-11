@@ -69,7 +69,7 @@ int main(int argc, char** argv)
   alListenerfv(AL_ORIENTATION, listenerOrientation);
 
   loadAudioFile("alert.wav");
-  objects = loadObjFile("objFiles/graniastoslupy-normal.obj");
+  objects = loadObjFile("objFiles/redcubeobj.obj");
   shared_ptr<Drawable> cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
   shared_ptr<Drawable> cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
   objects.push_back(cube1);
