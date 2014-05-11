@@ -10,13 +10,13 @@ using namespace std;
 
 vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 {
-    fstream file;
-    file.open(path, ios::in);
+    fstream objFile;
+    objFile.open(path, ios::in);
 
     /// Structure containing all loaded objects.
     vector<shared_ptr<Drawable>> objects;
 
-    if (!file.is_open())
+    if (!objFile.is_open())
     {
         cerr << "Error: failed to open obj file: " << path << endl;
         return objects;
@@ -36,12 +36,13 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     /// value will be subtracted.
     int vertexIndexDiff = 0;
 
-    tinyobj::MaterialFileReader r("objFiles/graniastoslupy-normal.mtl");
     std::map<std::string, tinyobj::material_t> material_map;
-    tinyobj::material_t material;
-    bool is_material_seted = false;
+    fstream mtlFile;
 
-    while (getline(file, line))
+    tinyobj::material_t material;
+    bool isMaterialSet = false;
+
+    while (getline(objFile, line))
     {
         switch(line[0])
         {
@@ -49,14 +50,22 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
             // komentarz zaczynający się na '#'
                 continue;
                 break;
-            case 'm':
+            case 'm': {
             // "mtllib path"
+                    string mtlFileName = line.substr(7);
+                    mtlFile.open("objFiles/" + mtlFileName, ios::in);
+                    string err = tinyobj::LoadMtl(material_map, mtlFile);
+                    if (err != "")
+                        cerr << "Error with loading mtl file" + err << endl;
+                    mtlFile.close();
+                }
+                break;
             case 'o':
             // "o [nazwa_obiektu]", po tej linijce opisywane są wierzchołki
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, normals);
+                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, normals, material);
                     objects.push_back(obj);
                     vertexIndexDiff += verts.size();
                     verts.clear();
@@ -90,10 +99,10 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 string namebuf = line.substr(7);
                 if (material_map.find(namebuf) != material_map.end()) {
                     material = material_map[namebuf];
-                    is_material_seted = true;
+                    isMaterialSet = true;
                 } else {
-                    // { error!! material not found }
-                    //InitMaterial(material);
+                    cerr << "Error: material " + namebuf + "not found" << endl;
+                    tinyobj::InitMaterial(material);
                 }}
                 break;
             case 's':
@@ -115,10 +124,10 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     // Adding one final object.
     if (!verts.empty())
     {
-        objects.push_back(make_shared<LoadedObject>(verts, faces, normals));
+        objects.push_back(make_shared<LoadedObject>(verts, faces, normals, material));
     }
     //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
-    file.close();
+    objFile.close();
     return objects;
 }
 

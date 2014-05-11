@@ -18,7 +18,8 @@ class LoadedObject : public Drawable
         LoadedObject(
             const vector<array<double,3>> &vertizzi,
             const vector<array<int,4>> &facess,
-            const vector<array<double,3>> &normals
+            const vector<array<double,3>> &normals,
+            tinyobj::material_t material
         );
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();

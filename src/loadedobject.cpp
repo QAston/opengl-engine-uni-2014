@@ -6,7 +6,8 @@ using namespace std;
 LoadedObject::LoadedObject(
     const vector<array<double,3>> &vertizzi,
     const vector<array<int,4>> &facess,
-    const vector<array<double,3>> &normals)
+    const vector<array<double,3>> &normals,
+    tinyobj::material_t material)
 {
     vector<array<double,3>>::const_iterator it;
     vector<array<int,4>>::const_iterator fit;
