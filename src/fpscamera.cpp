@@ -39,12 +39,7 @@ void FPSCamera::Input::keyboard(unsigned char key, int /*x*/, int /*y*/)
   switch (key)
   {
     case '\x1B':
-	  //alutExit();
       exit(EXIT_SUCCESS);
-      break;
-    case ' ':
-      //alSource3f(alsource, AL_POSITION, posX, posY, posZ);
-      //alSourcePlay (alsource);
       break;
     default:
         return;
@@ -86,7 +81,7 @@ void FPSCamera::Input::specialInput(int key, int /*x*/, int /*y*/)
         return;
   }
 
-  glutPostRedisplay();
+    positionChanged();
 }
 
 void FPSCamera::Input::mousePassive(int y, int x)
@@ -104,7 +99,7 @@ void FPSCamera::Input::mousePassive(int y, int x)
 
     _mouseX = x;
     _mouseY = y;
-    glutPostRedisplay();
+    positionChanged();
 }
 
 void FPSCamera::Input::mouseMotion(int x, int y)
@@ -112,4 +107,19 @@ void FPSCamera::Input::mouseMotion(int x, int y)
 
     mousePassive(x, y);
 
+}
+
+void FPSCamera::Input::positionChanged()
+{
+      glm::mat4 world = _camera->getWorldMatrix();
+      alListener3f(AL_POSITION, _camera->_posX,  _camera->_posY,  _camera->_posZ);
+
+      _listenerOrientation[0] = world[2][0];
+      _listenerOrientation[1] = world[2][1];
+      _listenerOrientation[2] = world[2][2];
+      _listenerOrientation[3] = world[1][0];
+      _listenerOrientation[4] = world[1][1];
+      _listenerOrientation[5] = world[1][2];
+     alListenerfv(AL_ORIENTATION, _listenerOrientation);
+     glutPostRedisplay();
 }

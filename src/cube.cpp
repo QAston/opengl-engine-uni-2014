@@ -2,14 +2,13 @@
 #include <random>
 #include <chrono>
 
-Cube::Cube(float x, float y, float z, float rX, float rY)
+Cube::Cube(ScenePos pos)
 {
-    this->rotateX = rX;
-    this->rotateY = rY;
-    this->_posX = x;
-    this->_posY = y;
-    this->_posZ = z;
-
+    this->rotateX = pos.getRotX();
+    this->rotateY = pos.getRotY();
+    this->_posX = pos.getPosX();
+    this->_posY = pos.getPosY();
+    this->_posZ = pos.getPosZ();
 
   // init colors
     std::mt19937 generator;
@@ -56,4 +55,30 @@ void Cube::draw()
 
     glDisableClientState (GL_COLOR_ARRAY);
     glDisableClientState (GL_VERTEX_ARRAY);
+}
+
+Cube::Input::Input(Cube* cube, SoundSource* sound)
+{
+    this->_sound = sound;
+}
+
+void Cube::Input::specialInput(int key, int /*x*/, int /*y*/)
+{
+}
+
+void Cube::Input::mousePassive(int y, int x)
+{
+}
+
+void Cube::Input::mouseMotion(int x, int y)
+{
+}
+
+void Cube::Input::keyboard(unsigned char key, int /*x*/, int /*y*/)
+{
+  switch (key)
+  {
+    case ' ':
+      _sound->play();
+  }
 }

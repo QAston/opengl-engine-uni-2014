@@ -14,85 +14,65 @@
 #include "inputmanagerglut.h"
 #include "objloader.h"
 #include "loadedobject.h"
+#include "displaymanagerglut.h"
+#include "unique.h"
+#include "soundsourceglut.h"
+#include "scenepos.h"
 
 using namespace std;
 
-void display(void);
 void reshape (int w, int h);
 bool loadPngImage(char *name, int &outWidth, int &outHeight,
                   bool &outHasAlpha, GLubyte **outData);
-void loadAudioFile(const char *fileName);
+ALuint loadAudioFile(const char *fileName);
 void initTexture(void);
-
-ALuint alsource;
-ALuint audioBuffer;
-
-ALfloat listenerOrientation[6] = {0,0,-1, 0, 1, 0};
 
 bool texturing = false;
 GLubyte *textureImage;
 
-float rotateX = 0;
-float rotateY = 0;
-
-int mouseX;
-int mouseY;
-
-vector<shared_ptr<Drawable>> objects;
-shared_ptr<FPSCamera> camera;
-shared_ptr<FPSCamera::Input> cameraInput;
-shared_ptr<InputManager> inputManager;
-
 int main(int argc, char** argv)
 {
+    // wire up the entire system
+  glutInit(&argc, argv);
+  alutInit(&argc, argv);
 
   glutInitWindowSize(800, 600);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-  glutInit(&argc, argv);
-  alutInit(&argc, argv);
+
   /*int mainWindow = */glutCreateWindow("RW5");
-  glutDisplayFunc(&display);
-  glutReshapeFunc(&reshape);
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_NORMALIZE);
-  glEnable(GL_AUTO_NORMAL);
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  glClearDepth(1.0f);
-  glutWarpPointer(400, 300);
   if (argc > 1)
   {
       texturing = true;
       initTexture();
   }
+      glutWarpPointer(400, 300);
+      glutReshapeFunc(&reshape);
 
-  alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
-  alListenerfv(AL_ORIENTATION, listenerOrientation);
+  ALuint alert = loadAudioFile("alert.wav");
 
-  loadAudioFile("alert.wav");
-  objects = loadObjFile("objFiles/redcubeobj.obj");
-  shared_ptr<Drawable> cube1 = make_shared<Cube>(3, 0, -3, 0, 0);
-  shared_ptr<Drawable> cube2 = make_shared<Cube>(0, 0, -3, 0, 0);
-  objects.push_back(cube1);
-  objects.push_back(cube2);
-  camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
-  inputManager = make_shared<InputManagerGLUT>();
-  cameraInput = make_shared<FPSCamera::Input>(camera);
+  unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
+  vector<shared_ptr<Drawable>> objects = loadObjFile("objFiles/redcubeobj.obj");
+  ScenePos posCube1 = ScenePos(3, 0, -3, 0, 0);
+  objects.push_back(make_shared<Cube>(posCube1));
+  objects.push_back(make_shared<Cube>(ScenePos(0, 0, -3, 0, 0)));
+  cubeSound->setPosition(posCube1);
+
+  shared_ptr<Cube::Input> cubeSoundInput = make_shared<Cube::Input>(nullptr, cubeSound.get());
+
+  shared_ptr<FPSCamera> camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
+  InputManager* inputManager = InputManagerGLUT::get();
+  DisplayManager* displayManager = DisplayManagerGLUT::get();
+  displayManager->init(camera);
+  shared_ptr<FPSCamera::Input> cameraInput = make_shared<FPSCamera::Input>(camera);
   inputManager->registerObject(cameraInput);
+  inputManager->registerObject(cubeSoundInput);
+  for(shared_ptr<Drawable> obj: objects)
+  {
+        displayManager->registerObject(obj);
+  }
   glutMainLoop();
   alutExit();
   return EXIT_SUCCESS;
-}
-
-void display()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    vector<shared_ptr<Drawable>>::iterator it;
-    for(it = objects.begin(); it != objects.end(); ++it)
-    {
-        camera->glLoadRevWorldMatrix();
-        (*it)->draw();
-    }
-    glutSwapBuffers();
 }
 
 void reshape (int w, int h)
@@ -104,12 +84,12 @@ void reshape (int w, int h)
    glMatrixMode (GL_MODELVIEW);
 }
 
-void loadAudioFile(const char *fileName)
+ALuint loadAudioFile(const char *fileName)
 {
   ALenum error;
 
   /* Create an AL buffer from the given sound file. */
-  audioBuffer = alutCreateBufferFromFile (fileName);
+  ALuint audioBuffer = alutCreateBufferFromFile (fileName);
   if (audioBuffer == AL_NONE)
   {
       error = alutGetError ();
@@ -117,11 +97,7 @@ void loadAudioFile(const char *fileName)
       alutExit ();
       exit (EXIT_FAILURE);
   }
-
-  /* Generate a single source, attach the buffer to it and start playing. */
-  alGenSources (1, &alsource);
-  alSourcei (alsource, AL_BUFFER, audioBuffer);
-  alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
+  return audioBuffer;
 }
 
 // Function loading texture from png file, uses libpng.

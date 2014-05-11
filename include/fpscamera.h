@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "inputlistener.h"
 #include <GL/glut.h>
+#include <AL/alut.h>
 #include <memory>
 #include "glm/mat4x4.hpp"
 
@@ -27,7 +28,11 @@ class FPSCamera : public Camera
             void mousePassive(int x, int y) override;
             void mouseMotion(int x, int y) override;
         private:
+            void positionChanged();
+
             shared_ptr<FPSCamera> _camera;
+            ALfloat _listenerOrientation[6];
+
 
             int _mouseX;
             int _mouseY;

@@ -2,6 +2,7 @@
 #define DISPLAYMANAGERGLUT_H
 
 #include <memory>
+#include <list>
 using namespace std;
 
 #include "displaymanager.h"
@@ -10,12 +11,18 @@ using namespace std;
 class DisplayManagerGLUT : public DisplayManager
 {
     public:
-        void init(weak_ptr<Camera>);
-        void registerObject(weak_ptr<Drawable>);
-        void unregisterObject(weak_ptr<Drawable>);
+        static DisplayManagerGLUT* get();
+        void init(shared_ptr<Camera>);
+        void registerObject(shared_ptr<Drawable>);
+        void unregisterObject(shared_ptr<Drawable>);
+        void render();
         ~DisplayManagerGLUT();
     protected:
     private:
+        DisplayManagerGLUT();
+        static void display();
+        shared_ptr<Camera> camera;
+        list<shared_ptr<Drawable>> objects;
 
 };
 

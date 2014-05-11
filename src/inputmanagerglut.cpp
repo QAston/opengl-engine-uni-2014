@@ -5,13 +5,21 @@
 
 InputManagerGLUT* _singleton = nullptr;
 
+InputManagerGLUT* InputManagerGLUT::get()
+{
+    if (_singleton == nullptr)
+    {
+        _singleton = new InputManagerGLUT();
+    }
+    return _singleton;
+}
+
 InputManagerGLUT::InputManagerGLUT()
 {
   glutKeyboardFunc(InputManagerGLUT::_keyboard);
   glutSpecialFunc(InputManagerGLUT::_specialInput);
   glutMotionFunc(InputManagerGLUT::_mouseMotion);
   glutPassiveMotionFunc(InputManagerGLUT::_mousePassive);
-  _singleton = this;
 }
 
 InputManagerGLUT::~InputManagerGLUT()
