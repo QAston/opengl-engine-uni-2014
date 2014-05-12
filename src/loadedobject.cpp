@@ -107,5 +107,12 @@ void LoadedObject::draw()
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisable(GL_BLEND);
+
+    // set GL state for non-textured objects
+    if(_textureImage != NULL)
+    {
+        glDisable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glShadeModel(GL_SMOOTH);
+    }
 }

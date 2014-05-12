@@ -85,7 +85,8 @@ ALuint loadAudioFile(const char *fileName)
   if (audioBuffer == AL_NONE)
   {
       error = alutGetError ();
-      cerr <<  "Error loading file: " << alutGetErrorString(error) << endl;
+      cerr <<  "Error loading audio file " << fileName << ": " <<
+        alutGetErrorString(error) << endl;
       alutExit ();
       exit (EXIT_FAILURE);
   }
