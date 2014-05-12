@@ -4,8 +4,9 @@
 
 Cube::Cube(ScenePos pos)
 {
+    this->rotateZ = pos.getRotZ();
     this->rotateX = pos.getRotX();
-    this->rotateY = pos.getRotY();
+    this->rotateZP = pos.getRotZP();
     this->_posX = pos.getPosX();
     this->_posY = pos.getPosY();
     this->_posZ = pos.getPosZ();
@@ -43,8 +44,10 @@ void Cube::draw()
 
     //glLoadIdentity ();
     glTranslatef(_posX, _posY, _posZ);
-    glRotatef(rotateX, 0,1,0);
-    glRotatef(rotateY, 1,0,0);
+    glRotatef(rotateZ, 0,0,1);
+    glRotatef(rotateX, 1,0,0);
+    glRotatef(rotateZP, 0,0,1);
+
 
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);

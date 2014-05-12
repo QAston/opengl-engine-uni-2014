@@ -16,8 +16,9 @@ class Cube : public Drawable
         float _posX;
         float _posY;
         float _posZ;
+        float rotateZ;
         float rotateX;
-        float rotateY;
+        float rotateZP;
 
         GLint cubeVerticles[24] = {0, 0, 0,
                                   1, 0, 0,

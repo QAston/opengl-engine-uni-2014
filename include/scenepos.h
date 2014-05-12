@@ -6,19 +6,21 @@
 class ScenePos
 {
     public:
-        ScenePos(float x, float y, float z, float rx, float ry)
+        ScenePos(float x, float y, float z, float rz = 0, float rx = 0, float rzp = 0)
         {
             _posX = x;
             _posY = y;
             _posZ = z;
+            _rotZ = rz;
             _rotX = rx;
-            _rotY = ry;
+            _rotZP = rzp;
         }
         float getPosX() { return _posX; }
         float getPosY() { return _posY; }
         float getPosZ() { return _posZ; }
+        float getRotZ() { return _rotZ; }
         float getRotX() { return _rotX; }
-        float getRotY() { return _rotY; }
+        float getRotZP() { return _rotZP; }
         glm::mat4 calcMatrix();
 
         void translate(float x, float y, float z);
@@ -29,8 +31,9 @@ class ScenePos
         float _posX;
         float _posY;
         float _posZ;
+        float _rotZ;
         float _rotX;
-        float _rotY;
+        float _rotZP;
 };
 
 #endif // SCENEPOS_H

@@ -18,6 +18,7 @@
 #include "unique.h"
 #include "soundsourceglut.h"
 #include "scenepos.h"
+#include "sceneloader.h"
 
 using namespace std;
 
