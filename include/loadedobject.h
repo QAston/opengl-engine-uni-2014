@@ -19,7 +19,9 @@ class LoadedObject : public Drawable
             const vector<array<double,3>> &vertici,
             const vector<array<int,4>> &faces,
             const vector<array<double,3>> &normals,
-            tinyobj::material_t material
+            tinyobj::material_t material,
+            const vector<array<double,2>> &texCoords,
+            bool smooth = false
         );
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
@@ -31,6 +33,11 @@ class LoadedObject : public Drawable
         vector<array<GLdouble,3>> _normals;
         vector<GLfloat> _colors;
         tinyobj::material_t _material;
+        vector<array<double,2>> _texCoords;
+
+        GLubyte *_textureImage = NULL;
+        int _texWidth = 0, _texHeight = 0;
+        bool _smooth;
 };
 
 #endif // LOADEDOBJECT_H
