@@ -320,7 +320,7 @@ GLubyte* initTexture(const char* filename)
     int width, height;
     GLubyte *textureImage;
     textureImage = loadPngImage(filename, width, height);
-    if ((*textureImage) == NULL)
+    if (textureImage == NULL)
     {
         cerr << "Unable to load png file :" << filename << endl;
         return NULL;

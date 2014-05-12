@@ -31,9 +31,7 @@ LoadedObject::LoadedObject(
         tmp[3] = (GLubyte)(*fit)[3];
         _faces.push_back(tmp);
     }
-    //TODO FIX THIS!!!!
     _normals = normals;
-    //_normals = vector<array<GLdouble,3>>(_vertici.size(), {1.0, 0.0, 0.0});
     _material = material;
     _texCoords = texCoords;
 
@@ -60,9 +58,6 @@ void LoadedObject::draw()
 
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, _vertici.data());
-
-    glEnableClientState (GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer (2, GL_DOUBLE, 0, _texCoords.data());
     //} else
     //glEnableClientState (GL_COLOR_ARRAY);
     //glColorPointer (3, GL_FLOAT, 0, _colors.data());
@@ -86,6 +81,8 @@ void LoadedObject::draw()
 
     if(_textureImage != NULL)
     {
+        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer (2, GL_DOUBLE, 0, _texCoords.data());
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, 3, _texWidth,
                      _texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -99,22 +96,22 @@ void LoadedObject::draw()
     if (!_smooth)
         glShadeModel(GL_FLAT);
 
-    vector<array<GLubyte,4>>::iterator facesIterator;
-    for (facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
+    for (auto facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
     {
-        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, (*facesIterator).data());
+        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, facesIterator->data());
     }
 
     //glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
 
     // set GL state for non-textured objects
     if(_textureImage != NULL)
     {
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
     glShadeModel(GL_SMOOTH);
 }
