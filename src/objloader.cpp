@@ -29,15 +29,21 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
     /// Faces of a single object.
     vector<array<int, 4>> faces;
 
-    /// Normal vectors.
+    /// All normals in a file.
     vector<array<double,3>> normals;
+    /// Normals to be put into an object.
+    vector<array<double,3>> objnormals;
 
-    /// Texture coordinates.
+    /// All texture coordinates.
     vector<array<double,2>> texCoords;
+    /// Texture coordinates to be put into an object.
+    vector<array<double,2>> objtexCoords;
 
     /// Obj files do not reset vertex index when new object is being described, so this
     /// value will be subtracted.
     int vertexIndexDiff = 0;
+
+    bool isSmooth = true;
 
     std::map<std::string, tinyobj::material_t> material_map;
     fstream mtlFile;
@@ -68,12 +74,14 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 // Do nothing on first occurence of 'o'.
                 if (!verts.empty())
                 {
-                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, normals, material, texCoords);
+                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, objnormals,
+                        material, objtexCoords, isSmooth);
                     objects.push_back(obj);
                     vertexIndexDiff += verts.size();
                     verts.clear();
                     faces.clear();
-                    normals.clear();
+                    objnormals.clear();
+                    objtexCoords.clear();
                 }
                 break;
             case 'v':
@@ -113,40 +121,69 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
                 }}
                 break;
             case 's':
+            // smooth shade model
             // "s [off]"
+                if (line == "s off")
+                    isSmooth = false;
                 break;
             case 'f':
-            // faces - cztery int z numerem wierzchołka.
+            // faces: Gdy nie ma vt i vn
+            // cztery int z numerem wierzchołka.
             // "f 5 6 2 1"
+            // W przeciwnym wypadku "f vertexIndex/texcoordindex/normalindex ..."
                 array<string,5> f;
                 stringstream sstr(line);
                 sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
                 array<int, 4> face;
+                int normalIndex = -1;
                 for (int i=0; i<4; ++i)
                 {
                     if (f[i+1] != "")
-                        face[i] = stoi(stripFaceIndex(f[i+1])) - vertexIndexDiff - 1;
+                    {
+                        array<int,3> vals = stripFaceIndex(f[i+1]);
+                        face[i] = vals[0] - vertexIndexDiff - 1;
+                        if (vals[1] > 0)
+                            objtexCoords.push_back(texCoords[vals[1]-1]);
+                        normalIndex = vals[2];
+                    }
                     else
                         face[i] = face[i-1];
                 }
                 faces.push_back(face);
+                if (normalIndex > 0)
+                    objnormals.push_back(normals[normalIndex-1]);
         }
         cout << line << endl;
     }
     // Adding one final object.
     if (!verts.empty())
     {
-        objects.push_back(make_shared<LoadedObject>(verts, faces, normals, material, texCoords));
+        objects.push_back(make_shared<LoadedObject>(verts, faces, objnormals, material, objtexCoords, isSmooth));
     }
     //cout << "Ilość wczytanych obiektów: " << objects.size() << endl;
     objFile.close();
     return objects;
 }
 
-string stripFaceIndex(string input)
+array<int,3> stripFaceIndex(string input)
 {
     int slashPos = input.find('/');
-    return input.substr(0, slashPos);
+    array<int,3> values;
+    /// vertexIndex
+    values[0] = stoi(input.substr(0, slashPos));
+    input = input.substr(slashPos+1);
+    int nextslashPos = input.find('/');
+    /// textureCoordIndex
+    if (input.substr(0, nextslashPos) != "")
+        values[1] = stoi(input.substr(0, nextslashPos));
+    else
+        values[1] = -1;
+    /// normalIndex
+    if (input.substr(nextslashPos+1) != "")
+        values[2] = stoi(input.substr(nextslashPos+1));
+    else
+        values[2] = -1;
+    return values;
 }
 
 array<double,3> extractNormal(string input)

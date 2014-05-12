@@ -20,9 +20,13 @@
 vector<shared_ptr<Drawable>> loadObjFile(const char* path);
 
 /**
- * Helper function. Strips "//2" from "24//3" in face declaration line.
+ * Helper function. Extracts vertexIndex, textureCoordIndex and normalIndex from line
+ * and returns them as an array of ints.
+ * Examples: "43/1/81" returns {43, 1, 81}
+ * "2//3" returns {2, -1, 3}
+ * "1" returns {1, -1, -1}
  */
-string stripFaceIndex(string input);
+array<int,3> stripFaceIndex(string input);
 
 /**
  * Extracts a single normal vector form input line

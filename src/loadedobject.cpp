@@ -9,7 +9,8 @@ LoadedObject::LoadedObject(
     const vector<array<int,4>> &faces,
     const vector<array<double,3>> &normals,
     tinyobj::material_t material,
-    const vector<array<double,2>> &texCoords)
+    const vector<array<double,2>> &texCoords,
+    bool smooth)
 {
     vector<array<double,3>>::const_iterator it;
     vector<array<int,4>>::const_iterator fit;
@@ -31,8 +32,8 @@ LoadedObject::LoadedObject(
         _faces.push_back(tmp);
     }
     //TODO FIX THIS!!!!
-    _normals = vector<array<GLdouble,3>>(_vertici.size(), {1.0, 0.0, 0.0});
-    _colors = vector<GLfloat>(_vertici.size(), 0.5);
+    _normals = normals;
+    //_normals = vector<array<GLdouble,3>>(_vertici.size(), {1.0, 0.0, 0.0});
     _material = material;
     _texCoords = texCoords;
 
@@ -44,7 +45,7 @@ LoadedObject::LoadedObject(
         else
             cout << "Image loaded. Width: " << _texWidth << " Height: " << _texHeight << endl;
     }
-
+    _smooth = smooth;
 }
 
 LoadedObject::~LoadedObject()
@@ -94,8 +95,9 @@ void LoadedObject::draw()
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glEnable(GL_TEXTURE_2D);
-        glShadeModel(GL_FLAT);
     }
+    if (!_smooth)
+        glShadeModel(GL_FLAT);
 
     vector<array<GLubyte,4>>::iterator facesIterator;
     for (facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
@@ -113,6 +115,6 @@ void LoadedObject::draw()
     {
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
-        glShadeModel(GL_SMOOTH);
     }
+    glShadeModel(GL_SMOOTH);
 }
