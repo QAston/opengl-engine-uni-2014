@@ -288,7 +288,7 @@ GLubyte* initTexture(const char* filename)
         cerr << "Unable to load png file :" << filename << endl;
         return NULL;
     }
-    cout << "Image loaded " << width << " " << height << endl;
+    cout << "Image loaded. Width: " << width << " Height: " << height << endl;
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, width,
                  height, 0, GL_RGB, GL_UNSIGNED_BYTE,

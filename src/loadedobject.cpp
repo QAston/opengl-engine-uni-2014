@@ -20,6 +20,7 @@ LoadedObject::LoadedObject(
         _vertici.push_back((GLdouble)((*it)[1]));
         _vertici.push_back((GLdouble)((*it)[2]));
     }
+
     for (fit=faces.begin(); fit != faces.end(); fit++)
     {
         array<GLubyte,4> tmp;
@@ -34,6 +35,15 @@ LoadedObject::LoadedObject(
     _colors = vector<GLfloat>(_vertici.size(), 0.5);
     _material = material;
     _texCoords = texCoords;
+
+    if (_material.diffuse_texname != "")
+    {
+        _textureImage = loadPngImage(_material.diffuse_texname.c_str(), _texWidth, _texHeight);
+        if (_textureImage == NULL)
+            cerr << "Unable to load png file :" << _material.diffuse_texname << endl;
+        else
+            cout << "Image loaded. Width: " << _texWidth << " Height: " << _texHeight << endl;
+    }
 
 }
 
@@ -70,14 +80,22 @@ void LoadedObject::draw()
     glMaterialfv(GL_FRONT, GL_EMISSION, _material.emission);
     glMaterialf(GL_FRONT, GL_SHININESS, _material.shininess);
 
-    // from glm sourcecode; works
+
     glColor3fv(_material.diffuse);
 
-    // doesn't work
-    //glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-
-    if (_material.diffuse_texname != "")
-        _textureImage = initTexture(_material.diffuse_texname.c_str());
+    if(_textureImage != NULL)
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, _texWidth,
+                     _texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                     _textureImage);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glEnable(GL_TEXTURE_2D);
+        glShadeModel(GL_FLAT);
+    }
 
     vector<array<GLubyte,4>>::iterator facesIterator;
     for (facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)

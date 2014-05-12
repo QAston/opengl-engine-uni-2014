@@ -33,7 +33,9 @@ class LoadedObject : public Drawable
         vector<GLfloat> _colors;
         tinyobj::material_t _material;
         vector<array<double,2>> _texCoords;
+
         GLubyte *_textureImage = NULL;
+        int _texWidth = 0, _texHeight = 0;
 };
 
 #endif // LOADEDOBJECT_H
