@@ -1,5 +1,6 @@
 #include "loadedobject.h"
 #include <iostream>
+#include "objloader.h"
 
 using namespace std;
 
@@ -7,7 +8,8 @@ LoadedObject::LoadedObject(
     const vector<array<double,3>> &vertici,
     const vector<array<int,4>> &faces,
     const vector<array<double,3>> &normals,
-    tinyobj::material_t material)
+    tinyobj::material_t material,
+    const vector<array<double,2>> &texCoords)
 {
     vector<array<double,3>>::const_iterator it;
     vector<array<int,4>>::const_iterator fit;
@@ -31,6 +33,7 @@ LoadedObject::LoadedObject(
     _normals = vector<array<GLdouble,3>>(_vertici.size(), {1.0, 0.0, 0.0});
     _colors = vector<GLfloat>(_vertici.size(), 0.5);
     _material = material;
+    _texCoords = texCoords;
 
 }
 
@@ -47,11 +50,9 @@ void LoadedObject::draw()
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, _vertici.data());
 
-    /*if(texturing)
-    {
-        glEnableClientState (GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
-    } else */
+    glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer (2, GL_DOUBLE, 0, _texCoords.data());
+    //} else
     //glEnableClientState (GL_COLOR_ARRAY);
     //glColorPointer (3, GL_FLOAT, 0, _colors.data());
     glPolygonMode(GL_FRONT, GL_FILL);
@@ -75,6 +76,9 @@ void LoadedObject::draw()
     // doesn't work
     //glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 
+    if (_material.diffuse_texname != "")
+        _textureImage = initTexture(_material.diffuse_texname.c_str());
+
     vector<array<GLubyte,4>>::iterator facesIterator;
     for (facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
     {
@@ -84,4 +88,6 @@ void LoadedObject::draw()
     //glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_BLEND);
 }
