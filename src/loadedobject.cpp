@@ -56,6 +56,9 @@ void LoadedObject::draw()
     glEnableClientState (GL_NORMAL_ARRAY);
     glNormalPointer (GL_DOUBLE, 0, _normals.data());
 
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, _vertici.data());
     //} else
@@ -69,7 +72,7 @@ void LoadedObject::draw()
     //glTranslatef(_posX, _posY, _posZ);
     //glRotatef(rotateX, 0,1,0);
     //glRotatef(rotateY, 1,0,0);
-
+glShadeModel(GL_SMOOTH);
     glMaterialfv(GL_FRONT, GL_AMBIENT, _material.ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, _material.diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, _material.specular);
@@ -93,8 +96,6 @@ void LoadedObject::draw()
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glEnable(GL_TEXTURE_2D);
     }
-    if (!_smooth)
-        glShadeModel(GL_FLAT);
 
     for (auto facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
     {
@@ -113,5 +114,6 @@ void LoadedObject::draw()
         glDisable(GL_TEXTURE_2D);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
-    glShadeModel(GL_SMOOTH);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
 }

@@ -11,7 +11,8 @@ współczynnik skalowania (skalowanie)
 model_low_poly [ścieżka do obj]
 model_high_poly [ścieżka do obj]
 
-modele low/high są chyba na 5.
+Na 5: Hierarchiczny models scen
+
 ŁADOWANIE OBJ:
 ma działać na vbo (vertex buffer object) lub na tablicach wierzchołków
 ładowanie materiałów
