@@ -1,0 +1,21 @@
+{
+    // wszystkie pola są opcjonalne
+    "name": "szczalki", // domyslnie <noname>
+    "pos": [1,0,1], // domyslnie [0,0,0] z - przod/tyl x - lewo/prawo, y - gora/dol
+    "rot": [0,0,0], // domyslnie [0,0,0]
+    "scale": [1,1,1], // domyslnie [1,1,1]
+    "models": [
+        "objFiles/arrow.obj" // sciezki wzgledem uruchomionego programu do plikow obj, moze byc wiele
+    ],
+    "objs": [ // podobiekty, transformacje na nich sa robione na podstawie macierzy rodzica
+        {
+            "name": "green",
+            "pos": [1,0,1],
+            "rot": [0,0,0],
+            "scale": [1,1,1],
+            "models": [
+                "objFiles/arrow_green.obj"
+            ]
+        }
+    ]
+}

@@ -175,6 +175,7 @@ SceneObject* loadScene(const char* filename)
 	if (!reader.Parse<0>(inputStream, handler) || handler.loadedObject == nullptr)
     {
         cerr << "Error: failed to open scene file: " << filename << endl;
+        exit(0);
         return nullptr;
     }
     fclose(file);

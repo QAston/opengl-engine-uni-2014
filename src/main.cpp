@@ -42,11 +42,11 @@ int main(int argc, char** argv)
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
   list<shared_ptr<Drawable>> objects;
-  shared_ptr<Drawable> scene{ loadScene("objFiles/scene.json")};
+  shared_ptr<Drawable> scene{ loadScene("objFiles/arrows.json")};
   ScenePos posCube1 = ScenePos(0, 0, 0, 0, 0);
-  objects.push_back(scene);
-  objects.push_back(make_shared<Cube>(posCube1));
-  cubeSound->setPosition(posCube1);
+   objects.push_back(scene);
+  //objects.push_back(make_shared<Cube>(posCube1));
+  //cubeSound->setPosition(posCube1);
 
   shared_ptr<Cube::Input> cubeSoundInput = make_shared<Cube::Input>(nullptr, cubeSound.get());
 
