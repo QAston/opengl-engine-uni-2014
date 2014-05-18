@@ -53,8 +53,11 @@ LoadedObject::~LoadedObject()
 
 void LoadedObject::draw()
 {
-    glEnableClientState (GL_NORMAL_ARRAY);
-    glNormalPointer (GL_DOUBLE, 0, _normals.data());
+    if (_normals.size() > 0)
+    {
+        glEnableClientState (GL_NORMAL_ARRAY);
+        glNormalPointer (GL_DOUBLE, 0, _normals.data());
+    }
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -104,7 +107,8 @@ glShadeModel(GL_SMOOTH);
 
     //glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_NORMAL_ARRAY);
+    if (_normals.size() > 0)
+        glDisableClientState(GL_NORMAL_ARRAY);
 
 
     // set GL state for non-textured objects

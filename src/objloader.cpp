@@ -168,21 +168,25 @@ vector<shared_ptr<Drawable>> loadObjFile(const char* path)
 array<int,3> stripFaceIndex(string input)
 {
     int slashPos = input.find('/');
-    array<int,3> values;
+    array<int,3> values{{-1, -1, -1}};
     /// vertexIndex
     values[0] = stoi(input.substr(0, slashPos));
+    // no more values found
+    if (slashPos == -1)
+        return values;
+
     input = input.substr(slashPos+1);
     int nextslashPos = input.find('/');
     /// textureCoordIndex
     if (input.substr(0, nextslashPos) != "")
         values[1] = stoi(input.substr(0, nextslashPos));
-    else
-        values[1] = -1;
+
+    // no more values found
+    if (nextslashPos == -1)
+        return values;
     /// normalIndex
     if (input.substr(nextslashPos+1) != "")
         values[2] = stoi(input.substr(nextslashPos+1));
-    else
-        values[2] = -1;
     return values;
 }
 
