@@ -39,6 +39,7 @@
 			<Add option="-fexceptions" />
 			<Add directory="dep/glm" />
 			<Add directory="dep/tinyobjloader" />
+			<Add directory="dep/rapidjson/include/rapidjson" />
 		</Compiler>
 		<Linker>
 			<Add library="glut" />
@@ -59,6 +60,12 @@
 		<Unit filename="include/inputmanagerglut.h" />
 		<Unit filename="include/loadedobject.h" />
 		<Unit filename="include/objloader.h" />
+		<Unit filename="include/sceneloader.h" />
+		<Unit filename="include/sceneobject.h" />
+		<Unit filename="include/scenepos.h" />
+		<Unit filename="include/soundsource.h" />
+		<Unit filename="include/soundsourceglut.h" />
+		<Unit filename="include/unique.h" />
 		<Unit filename="src/cube.cpp" />
 		<Unit filename="src/displaymanagerglut.cpp" />
 		<Unit filename="src/fpscamera.cpp" />
@@ -66,6 +73,9 @@
 		<Unit filename="src/loadedobject.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/objloader.cpp" />
+		<Unit filename="src/sceneloader.cpp" />
+		<Unit filename="src/sceneobject.cpp" />
+		<Unit filename="src/soundsourceglut.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

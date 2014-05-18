@@ -11,8 +11,6 @@
 #include "cube.h"
 #include "fpscamera.h"
 #include "inputmanagerglut.h"
-#include "objloader.h"
-#include "loadedobject.h"
 #include "displaymanagerglut.h"
 #include "unique.h"
 #include "soundsourceglut.h"
@@ -43,8 +41,10 @@ int main(int argc, char** argv)
   ALuint alert = loadAudioFile("alert.wav");
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
-  vector<shared_ptr<Drawable>> objects = loadObjFile("objFiles/texturedcube.obj");
+  list<shared_ptr<Drawable>> objects;
+  shared_ptr<Drawable> scene{ loadScene("objFiles/scene.json")};
   ScenePos posCube1 = ScenePos(3, 0, -3, 0, 0);
+  objects.push_back(scene);
   objects.push_back(make_shared<Cube>(posCube1));
   objects.push_back(make_shared<Cube>(ScenePos(0, 0, -3, 0, 0)));
   cubeSound->setPosition(posCube1);
