@@ -1,15 +1,17 @@
 {
     "name": "scene",
-    "pos": [0,0,0],
+    "pos": [2,2,2],
     "rot": [0,0,0],
-    "scale": [1,1,1],
+    "scale": [0.1,0.1,0.1],
     "objs": [
         {
             "name": "obj1",
-            "pos": [0,0,0],
-            "rot": [0,0,0],
-            "scale": [1,1,1],
+            "pos": [-1,-1,-1],
+            "rot": [45,0,0],
+            "scale": [10,10,10],
             "models": [
+                "objFiles/texturedcube.obj"
+
             ]
         }
     ],

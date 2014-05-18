@@ -1,5 +1,5 @@
 #include "sceneloader.h"
-
+#include "objloader.h"
 #include "reader.h"
 #include "document.h"
 #include "filestream.h"
@@ -7,6 +7,7 @@
 #include <cassert>
 #include <stack>
 #include <cstdio>
+#include <iostream>
 
 using namespace rapidjson;
 
@@ -108,7 +109,25 @@ struct SceneHandler {
 	    // can now build sceneobject
         SceneData* data = objs.top();
         objs.pop();
-        SceneObject* sceneObj = nullptr;//new SceneObject();
+        vector<shared_ptr<Drawable>> models;
+        for (auto& m: data->models)
+        {
+            for(auto d: loadObjFile(m.c_str()))
+            {
+                models.push_back(d);
+            }
+        }
+
+        vector<shared_ptr<SceneObject>> subObjs;
+        for (auto s: data->subobjects)
+        {
+            shared_ptr<SceneObject> sp{s};
+            subObjs.push_back(sp);
+        }
+
+        SceneObject* sceneObj = new SceneObject(data->objectName,
+                                                ScenePos(data->pos[0], data->pos[1],data->pos[2], data->rot[0], data->rot[1], data->rot[2]), data->scale,
+                                                models, subObjs);
 
         if (objs.empty())
         {
