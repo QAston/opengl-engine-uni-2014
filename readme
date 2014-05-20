@@ -1,3 +1,39 @@
+ANIMACJE:
+skrypt - opis klatek kluczowych
+w pliku tekstowym
+
+klatka kluczowa:parametry,
+klatka kluczowa:parametry,
+...
+parametry takie jak w blenderze
+klatki kluczowe okreslone znacznikiem czasu
+
+w danym miejscu na osi czasu możemy rozlokować klatki kluczowe
+t1, t2, t3, t4
+dla każdej klatki definiujemy parametry obiektu tj pozycja, skala kąt
+
+ladowac plik opisujący sekwencję klatek kluczowych,
+silnik ma interpolowac pozycje dla pozostalych klatek
+sciezke do pliku animacji dodac do pliku opisu sceny - parametr obiektu z pliku opisu sceny
+
+interpolacja:
+p(t) = 1-a * p(t_i) + a* p(t_(i+1))
+dla
+t_i <= t <= t_(i+1)
+
+a = (t-t_i)/(t_(i+1) - t_i)
+
+dla chwili t znajdujemy klatki sąsiadujące t_i, t_i+1, z tego liczymy alfa i liczymy dla niego p(t)
+
+t, ti, ti+1 - parametry czasu w klatce kluczowej i, i+1
+
+sekwencja dowolna, start animacji dowolny, można zapętlac albo i nie
+czasy w klatkach to czasy względem startu animacji
+
+dodatkowo można pokombinować z innym rodzajem interpolacji (np szescienna)
+
+na 2 tygodnie zadanie 20.05
+
 IMPORT scen graficznych:
 import plików własnych, w formacie wysokopoziomowym, na poziomie obiektów
 opracować własny format tekstowy opisu sceny, może być na xml, tj x3d.
