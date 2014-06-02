@@ -16,11 +16,11 @@ using namespace std;
 class SceneObject : public Drawable
 {
     public:
-        SceneObject(string name, ScenePos pos, array<GLdouble, 3> angle, vector<shared_ptr<Drawable>> models, vector<shared_ptr<SceneObject>> subObjects)
+        SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<Drawable>> models, vector<shared_ptr<SceneObject>> subObjects)
         {
             this->_name = name;
             this->pos = pos;
-            this->angle = angle;
+            this->scale = scale;
             this->models = models;
             this->subObjects = subObjects;
         }
@@ -30,7 +30,7 @@ class SceneObject : public Drawable
     private:
         string _name = string("<noname>");
         ScenePos pos = ScenePos(0, 0, 0, 0, 0, 0);
-        array<GLdouble, 3> angle;
+        array<GLdouble, 3> scale;
         vector<shared_ptr<Drawable>> models;
         vector<shared_ptr<SceneObject>> subObjects;
 };

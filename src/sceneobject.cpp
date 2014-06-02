@@ -13,7 +13,7 @@ void SceneObject::draw()
     glRotatef(pos.getRotZ(), 0,0,1);
     glRotatef(pos.getRotX(), 1,0,0);
     glRotatef(pos.getRotZP(), 0,0,1);
-    glScalef(angle[0], angle[1], angle[2]);
+    glScalef(scale[0], scale[1], scale[2]);
 
     glPushMatrix();
     for(auto mItr = models.begin(); mItr != models.end(); ++mItr)
