@@ -1,9 +1,9 @@
 #include "keyframe.h"
 
-KeyFrame::KeyFrame(int time, ScenePos pos)
+KeyFrame::KeyFrame(int time, ObjectDesc desc)
 {
     _time = time;
-    _scenepos = pos;
+    _desc = desc;
 }
 
 KeyFrame::~KeyFrame()

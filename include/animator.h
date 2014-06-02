@@ -5,7 +5,7 @@
 class Animator
 {
     public:
-        virtual ~Animator() = 0;
+        virtual ~Animator() {};
         virtual ObjectDesc getStateFor(int ms) = 0;
     protected:
     private:

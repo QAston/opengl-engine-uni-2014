@@ -7,7 +7,7 @@
 struct ObjectDesc
 {
     ScenePos pos;
-    array<double, 3> scale;
+    std::array<double, 3> scale;
 };
 
 #endif // OBJECTDESC_H
