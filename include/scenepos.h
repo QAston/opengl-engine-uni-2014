@@ -6,7 +6,7 @@
 class ScenePos
 {
     public:
-        ScenePos(float x, float y, float z, float rz = 0, float rx = 0, float rzp = 0)
+        ScenePos(float x = 0, float y = 0, float z = 0, float rz = 0, float rx = 0, float rzp = 0)
         {
             _posX = x;
             _posY = y;
