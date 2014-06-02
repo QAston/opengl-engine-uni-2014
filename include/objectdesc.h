@@ -4,6 +4,8 @@
 #include "scenepos.h"
 #include <array>
 
+using namespace std;
+
 struct ObjectDesc
 {
     ScenePos pos;
