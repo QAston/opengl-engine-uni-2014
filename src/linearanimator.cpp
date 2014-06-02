@@ -4,9 +4,15 @@
 #include "filestream.h"
 #include <iostream>
 
-LinearAnimator::LinearAnimator(vector<SimpleAnimEntry> entries)
+LinearAnimator::LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries)
 {
-    this->_entries = entries;
+    this->_entries = std::move(entries);
+}
+
+ObjectDesc LinearAnimator::getStateFor(int ms)
+{
+    ObjectDesc d;
+    return d;
 }
 
 LinearAnimator::~LinearAnimator()

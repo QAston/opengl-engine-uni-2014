@@ -8,6 +8,8 @@
 #include <stack>
 #include <cstdio>
 #include <iostream>
+#include "linearanimator.h"
+#include "constanimator.h"
 
 using namespace rapidjson;
 
@@ -27,6 +29,7 @@ struct SceneData
 
     vector<SceneObject*> subobjects;
     vector<string> models;
+    string animationFile = "";
 };
 
 struct SceneHandler {
@@ -83,6 +86,11 @@ struct SceneHandler {
             objs.top()->objectName = string(str, len);
             objs.top()->nextReadFieldName = true;
         }
+        else if(objs.top()->readingObject && objs.top()->currentFieldName == "animation")
+        {
+            objs.top()->animationFile = string(str, len);
+            objs.top()->nextReadFieldName = true;
+        }
         else if(!objs.top()->readingObject && objs.top()->currentFieldName == "models")
         {
             objs.top()->models.push_back(string(str, len));
@@ -125,8 +133,23 @@ struct SceneHandler {
             subObjs.push_back(sp);
         }
 
+        ScenePos pos = ScenePos(data->pos[0], data->pos[1],data->pos[2], data->rot[0], data->rot[1], data->rot[2]);
+        unique_ptr<Animator> animator;
+
+        if (data->animationFile == "")
+        {
+            ObjectDesc desc;
+            desc.pos = pos;
+            desc.scale = data->scale;
+            animator = make_unique<ConstAnimator>(desc);
+        }
+        else
+        {
+            animator = make_unique<LinearAnimator>(loadAnimEntries(data->animationFile.c_str()));
+        }
+
         SceneObject* sceneObj = new SceneObject(data->objectName,
-                                                ScenePos(data->pos[0], data->pos[1],data->pos[2], data->rot[0], data->rot[1], data->rot[2]), data->scale,
+                                                pos, data->scale,
                                                 models, subObjs);
 
         if (objs.empty())

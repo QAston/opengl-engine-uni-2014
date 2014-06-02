@@ -55,6 +55,7 @@ void DisplayManagerGLUT::unregisterObject(shared_ptr<Drawable> drawable)
     objects.remove(drawable);
 }
 
+/*
 list<AnimationFrame> DisplayManagerGLUT::createAnimationFrames(const KeyFrame &kf1, const KeyFrame &kf2)
 {
     int frameCount = (kf2._time - kf1._time)*_framerate;
@@ -64,7 +65,7 @@ list<AnimationFrame> DisplayManagerGLUT::createAnimationFrames(const KeyFrame &k
         AnimationFrame *frame = new AnimationFrame();
         frames.push_back(*frame);
     }
-}
+}*/
 
 DisplayManagerGLUT::~DisplayManagerGLUT()
 {
