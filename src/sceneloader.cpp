@@ -150,7 +150,7 @@ struct SceneHandler {
 
         SceneObject* sceneObj = new SceneObject(data->objectName,
                                                 pos, data->scale,
-                                                models, subObjs);
+                                                models, subObjs, std::move(animator));
 
         if (objs.empty())
         {

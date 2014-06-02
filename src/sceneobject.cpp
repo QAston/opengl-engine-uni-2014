@@ -6,6 +6,17 @@ SceneObject::~SceneObject()
     //dtor
 }
 
+void SceneObject::update(int msElapsed)
+{
+    ObjectDesc desc = _animator->getStateFor(msElapsed);
+    this->pos = desc.pos;
+    this->scale = desc.scale;
+    for(auto sItr = subObjects.begin(); sItr != subObjects.end(); ++sItr)
+    {
+        (*sItr)->update(msElapsed);
+    }
+}
+
 void SceneObject::draw()
 {
     // calculate base matrix for all subobjects
