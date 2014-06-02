@@ -15,6 +15,7 @@
             "models": [
                 "objFiles/arrow_green.obj"
             ],
+            "animation": "objFiles/keyframes.json",
             "objs": [
             {
                 "name": "green",

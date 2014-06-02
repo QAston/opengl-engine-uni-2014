@@ -34,13 +34,13 @@ struct AnimLoader {
 
 	void Null() { assert(false&& "invalid null in json file"); }
 	void Bool(bool) { assert(false&& "invalid bool in json file"); }
-	void Int(int n) { Num(n); }
-	void Uint(unsigned n) { Num(n); }
-	void Int64(int64_t n) { Num(n); }
-	void Uint64(uint64_t n) { Num(n); }
+	void Int(int n) { Integer(n); }
+	void Uint(unsigned n) { Integer(n); }
+	void Int64(int64_t n) { Integer(n); }
+	void Uint64(uint64_t n) { Integer(n); }
 	void Double(double n ) { Num(n); }
 
-	void Num(double n)
+	void Integer(uint64_t n)
 	{
         if (currentFieldName == "pos")
         {
@@ -57,6 +57,27 @@ struct AnimLoader {
         else if (currentFieldName == "time")
         {
             current.time = n;
+        }
+        else
+        {
+            assert(false&& "invalid number in json file");
+        }
+        nextReadFieldName = true;
+	}
+
+	void Num(double n)
+	{
+        if (currentFieldName == "pos")
+        {
+            current.pos[numberArrayIndex++] = n;
+        }
+        else if (currentFieldName == "rot")
+        {
+            current.rot[numberArrayIndex++] = n;
+        }
+        else if (currentFieldName == "scale")
+        {
+            current.scale[numberArrayIndex++] = n;
         }
         else
         {
@@ -117,7 +138,7 @@ unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename)
     AnimLoader handler;
     FILE* file = fopen(filename, "r");
     if (file == nullptr)
-        return unique_ptr<vector<SimpleAnimEntry>>();
+        return nullptr;
 
 	FileStream inputStream(file);
 

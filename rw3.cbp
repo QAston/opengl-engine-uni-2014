@@ -50,6 +50,8 @@
 			<Add library="libpng" />
 		</Linker>
 		<Unit filename="include/camera.h" />
+		<Unit filename="include/concreteanimator.h" />
+		<Unit filename="include/constanimator.h" />
 		<Unit filename="include/cube.h" />
 		<Unit filename="include/displaymanager.h" />
 		<Unit filename="include/displaymanagerglut.h" />
@@ -58,6 +60,7 @@
 		<Unit filename="include/inputlistener.h" />
 		<Unit filename="include/inputmanager.h" />
 		<Unit filename="include/inputmanagerglut.h" />
+		<Unit filename="include/linearanimator.h" />
 		<Unit filename="include/loadedobject.h" />
 		<Unit filename="include/objloader.h" />
 		<Unit filename="include/sceneloader.h" />
@@ -70,6 +73,7 @@
 		<Unit filename="src/displaymanagerglut.cpp" />
 		<Unit filename="src/fpscamera.cpp" />
 		<Unit filename="src/inputmanagerglut.cpp" />
+		<Unit filename="src/linearanimator.cpp" />
 		<Unit filename="src/loadedobject.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/objloader.cpp" />
