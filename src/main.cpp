@@ -16,6 +16,7 @@
 #include "soundsourceglut.h"
 #include "scenepos.h"
 #include "sceneloader.h"
+#include "objectmanagerglut.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ int main(int argc, char** argv)
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
   list<shared_ptr<Drawable>> objects;
-  shared_ptr<Drawable> scene{ loadScene("objFiles/arrows.json")};
+  shared_ptr<SceneObject> scene{ loadScene("objFiles/arrows.json")};
   ScenePos posCube1 = ScenePos(0, 0, 0, 0, 0);
    objects.push_back(scene);
   //objects.push_back(make_shared<Cube>(posCube1));
@@ -53,11 +54,16 @@ int main(int argc, char** argv)
   shared_ptr<FPSCamera> camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
   InputManager* inputManager = InputManagerGLUT::get();
   DisplayManager* displayManager = DisplayManagerGLUT::get();
+  ObjectManager* objectManager = ObjectManagerGLUT::get();
   displayManager->init(camera);
   shared_ptr<FPSCamera::Input> cameraInput = make_shared<FPSCamera::Input>(camera);
 
   inputManager->registerObject(cameraInput);
   inputManager->registerObject(cubeSoundInput);
+
+  objectManager->registerObject(scene);
+
+
   for(shared_ptr<Drawable> obj: objects)
   {
         displayManager->registerObject(obj);

@@ -2,7 +2,6 @@
 #define KEYFRAME_H
 
 #include "scenepos.h"
-#include "animationframe.h"
 #include "objectdesc.h"
 
 class KeyFrame
