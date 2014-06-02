@@ -100,17 +100,10 @@ struct AnimLoader {
 	}
 	void StartObject()
 	{
-	    if (currentFieldName == "")
-        {
-            current.pos = {{0,0,0}};
-            current.rot = {{0,0,0}};
-            current.scale = {{1,1,1}};
-            current.time = 0;
-        }
-        else
-        {
-            assert(false&& "invalid object in json file");
-        }
+        current.pos = {{0,0,0}};
+        current.rot = {{0,0,0}};
+        current.scale = {{1,1,1}};
+        current.time = 0;
 	}
 	void EndObject(int s)
 	{
@@ -147,6 +140,8 @@ unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename)
 	if (!reader.Parse<0>(inputStream, handler))
     {
         std::cerr << "Error: failed to open anim file: " << filename << std::endl;
+        std::cerr << reader.GetParseError() << std::endl;
+
         exit(0);
         return nullptr;
     }
