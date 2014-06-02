@@ -12,6 +12,32 @@ LinearAnimator::LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries)
 ObjectDesc LinearAnimator::getStateFor(int ms)
 {
     ObjectDesc d;
+    SimpleAnimEntry entryi, entryi1;
+
+    // Searching for t_i and t_i+1
+    int t_i, t_i1;
+    for (auto it = _entries->begin(); it != _entries->end(); it++)
+    {
+        if (ms > it->time)
+        {
+            entryi = *it;
+            entryi1 = *(std::next(it, 1));
+            t_i = it->time;
+            t_i1 = std::next(it, 1)->time;
+        }
+    }
+    double a = (ms-t_i)/(t_i1 - t_i);
+    // p(t) = 1-a * p(t_i) + a* p(t_(i+1))
+    d.pos = ScenePos( 1-a * entryi.pos[0] + a * entryi1.pos[0],
+        1-a * entryi.pos[1] + a * entryi1.pos[1],
+        1-a * entryi.pos[2] + a * entryi1.pos[2],
+        1-a * entryi.rot[0] + a * entryi1.rot[0],
+        1-a * entryi.rot[1] + a * entryi1.rot[1],
+        1-a * entryi.rot[2] + a * entryi1.rot[2]);
+
+    d.scale[0] = 1-a * entryi.scale[0] + a * entryi.scale[0];
+    d.scale[1] = 1-a * entryi.scale[1] + a * entryi.scale[1];
+    d.scale[2] = 1-a * entryi.scale[2] + a * entryi.scale[2];
     return d;
 }
 
