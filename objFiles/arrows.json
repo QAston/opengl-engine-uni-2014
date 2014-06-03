@@ -6,6 +6,7 @@
     "models": [
         "objFiles/arrow.obj"
     ],
+    "animation": "objFiles/keyframes.json",
     "objs": [
         {
             "name": "green",
@@ -36,7 +37,6 @@
             "models": [
                 "objFiles/arrow_blue.obj"
             ],
-            "animation": "objFiles/keyframes.json",
             "objs": [
             {
                 "name": "green",

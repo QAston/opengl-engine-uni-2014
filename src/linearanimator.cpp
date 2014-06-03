@@ -13,19 +13,20 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
 {
     ObjectDesc d;
     SimpleAnimEntry entryi, entryi1;
-    cout << "state for " << ms <<endl;
 
+    bool found = false;
     // Searching for t_i and t_i+1
     int t_i, t_i1;
     for (auto it = _entries->begin(); it != _entries->end(); it++)
     {
         auto next = std::next(it, 1);
-        if (next != _entries->end() && ms >= it->time && next->time <= ms)
+        if (next != _entries->end() && ms >= it->time && next->time >= ms)
         {
             entryi = *it;
             t_i = it->time;
             entryi1 = *(std::next(it, 1));
             t_i1 = std::next(it, 1)->time;
+            found = true;
             break;
         }
         else if (next == _entries->end())
@@ -34,6 +35,13 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
             d.scale = it->scale;
             return d;
         }
+    }
+    if (!found)
+    {
+        auto it = _entries->begin();
+        d.pos = ScenePos(it->pos[0], it->pos[1], it->pos[2], it->rot[0], it->rot[1], it->rot[2]);
+        d.scale = it->scale;
+        return d;
     }
     double a = (double)(ms-t_i)/(double)(t_i1 - t_i);
     // p(t) = 1-a * p(t_i) + a* p(t_(i+1))
