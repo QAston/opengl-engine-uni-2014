@@ -1,3 +1,23 @@
+DETEKCJA KOLIZJI:
+w oparciu o bryły brzegowe
+bryły brzegowe mają być wyświetlane wokół obiektów
+dla wybranych obiektów brzegowych mają być zdefiniowane bryły brzegowe
+bryły brzegowe mają być wyświetlane za pomocą siatki drucianej
+po naciśnięciu jakiegoś klawisza wizualizacja ma być włączona
+
+przemieszczanie jakiegoś obiektu na scenie, żeby zobaczyć że kolizja działa
+
+najprościej: cofnąć obiekt na poprzednią pozycję w wypadku kolizji
+
+na różne oceny:
+kolizja na sferach - na 3
+-współrzędne środków sfery
+||p1-p2||^2 <= r1+r2
+
+kolizja w oparciu o bryły AA BB statyczne - na 4
+
+kolizja w oparciu o bryły AA BB dynamiczne - na 5
+
 ANIMACJE:
 skrypt - opis klatek kluczowych
 w pliku tekstowym
