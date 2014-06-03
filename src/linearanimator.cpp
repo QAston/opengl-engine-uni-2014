@@ -19,17 +19,20 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
     int t_i, t_i1;
     for (auto it = _entries->begin(); it != _entries->end(); it++)
     {
-        if (ms > it->time)
+        auto next = std::next(it, 1);
+        if (next != _entries->end() && ms >= it->time && next->time <= ms)
         {
             entryi = *it;
             t_i = it->time;
             entryi1 = *(std::next(it, 1));
             t_i1 = std::next(it, 1)->time;
-            if (std::next(it, 1) == _entries->end())
-            {
-                entryi1 = entryi;
-                t_i1 = t_i;
-            }
+            break;
+        }
+        else if (next == _entries->end())
+        {
+            d.pos = ScenePos(it->pos[0], it->pos[1], it->pos[2], it->rot[0], it->rot[1], it->rot[2]);
+            d.scale = it->scale;
+            return d;
         }
     }
     double a = (double)(ms-t_i)/(double)(t_i1 - t_i);
