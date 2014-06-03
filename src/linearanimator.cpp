@@ -13,6 +13,7 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
 {
     ObjectDesc d;
     SimpleAnimEntry entryi, entryi1;
+    cout << "state for " << ms <<endl;
 
     // Searching for t_i and t_i+1
     int t_i, t_i1;
@@ -28,16 +29,16 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
     }
     double a = (double)(ms-t_i)/(double)(t_i1 - t_i);
     // p(t) = 1-a * p(t_i) + a* p(t_(i+1))
-    d.pos = ScenePos( 1-a * entryi.pos[0] + a * entryi1.pos[0],
-        1-a * entryi.pos[1] + a * entryi1.pos[1],
-        1-a * entryi.pos[2] + a * entryi1.pos[2],
-        1-a * entryi.rot[0] + a * entryi1.rot[0],
-        1-a * entryi.rot[1] + a * entryi1.rot[1],
-        1-a * entryi.rot[2] + a * entryi1.rot[2]);
+    d.pos = ScenePos( (1-a) * entryi.pos[0] + a * entryi1.pos[0],
+        (1-a) * entryi.pos[1] + a * entryi1.pos[1],
+        (1-a) * entryi.pos[2] + a * entryi1.pos[2],
+        (1-a) * entryi.rot[0] + a * entryi1.rot[0],
+        (1-a) * entryi.rot[1] + a * entryi1.rot[1],
+        (1-a) * entryi.rot[2] + a * entryi1.rot[2]);
 
-    d.scale[0] = 1-a * entryi.scale[0] + a * entryi.scale[0];
-    d.scale[1] = 1-a * entryi.scale[1] + a * entryi.scale[1];
-    d.scale[2] = 1-a * entryi.scale[2] + a * entryi.scale[2];
+    d.scale[0] = (1-a) * entryi.scale[0] + a * entryi.scale[0];
+    d.scale[1] = (1-a) * entryi.scale[1] + a * entryi.scale[1];
+    d.scale[2] = (1-a) * entryi.scale[2] + a * entryi.scale[2];
     return d;
 }
 
