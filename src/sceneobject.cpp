@@ -15,6 +15,7 @@ void SceneObject::update(int msElapsed)
     {
         (*sItr)->update(msElapsed);
     }
+    glutPostRedisplay();
 }
 
 void SceneObject::draw()
