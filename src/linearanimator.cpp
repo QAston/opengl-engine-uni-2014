@@ -26,7 +26,7 @@ ObjectDesc LinearAnimator::getStateFor(int ms)
             t_i1 = std::next(it, 1)->time;
         }
     }
-    double a = (ms-t_i)/(t_i1 - t_i);
+    double a = (double)(ms-t_i)/(double)(t_i1 - t_i);
     // p(t) = 1-a * p(t_i) + a* p(t_(i+1))
     d.pos = ScenePos( 1-a * entryi.pos[0] + a * entryi1.pos[0],
         1-a * entryi.pos[1] + a * entryi1.pos[1],
