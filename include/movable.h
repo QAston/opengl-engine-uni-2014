@@ -8,7 +8,8 @@ class Movable
 {
     public:
         virtual ~Movable() {}
-        virtual ScenePos* getMovementTransposition() = 0;
+        virtual ScenePos getMovementTransposition() = 0;
+        virtual void moveTo(ScenePos pos) = 0;
     protected:
     private:
 };

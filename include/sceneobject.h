@@ -32,7 +32,8 @@ class SceneObject : public Drawable, public GameObject, public Movable
         virtual ~SceneObject();
         void draw() override;
         void update(int) override;
-        ScenePos* getMovementTransposition() override { return &movementTransposition; }
+        ScenePos getMovementTransposition() override { return movementTransposition; }
+        void moveTo(ScenePos pos) override {movementTransposition = pos;}
     protected:
     private:
         string _name = string("<noname>");

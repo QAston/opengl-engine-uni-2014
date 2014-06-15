@@ -17,23 +17,25 @@ void Mover::keyboard(unsigned char key, int /*x*/, int /*y*/)
   const float deltaPos = 0.1;
   const float deltaRot = 1;
 
-  ScenePos* pos = _object->getMovementTransposition();
+  ScenePos pos = _object->getMovementTransposition();
 
     switch(key)
     {
     case 'w':
-        pos->moveForward(deltaPos);
+        pos.moveForward(deltaPos);
         break;
     case 's':
-        pos->moveForward(-deltaPos);
+        pos.moveForward(-deltaPos);
         break;
     case 'a':
-        pos->rotate(-deltaRot);
+        pos.rotate(-deltaRot);
         break;
     case 'd':
-        pos->rotate(deltaRot);
+        pos.rotate(deltaRot);
         break;
     }
+
+    _object->moveTo(pos);
 
     positionChanged();
 }
