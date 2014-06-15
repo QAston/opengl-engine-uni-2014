@@ -1,6 +1,8 @@
 #include "loadedobject.h"
 #include <iostream>
 #include "objloader.h"
+#include <glm/glm.hpp>
+#include <algorithm>
 
 using namespace std;
 
@@ -12,15 +14,9 @@ LoadedObject::LoadedObject(
     const vector<array<double,2>> &texCoords,
     bool smooth)
 {
-    vector<array<double,3>>::const_iterator it;
     vector<array<int,4>>::const_iterator fit;
 
-    for (it=vertici.begin(); it != vertici.end(); it++)
-    {
-        _vertici.push_back((GLdouble)((*it)[0]));
-        _vertici.push_back((GLdouble)((*it)[1]));
-        _vertici.push_back((GLdouble)((*it)[2]));
-    }
+    _vertici = vertici;
 
     for (fit=faces.begin(); fit != faces.end(); fit++)
     {
@@ -51,6 +47,39 @@ LoadedObject::~LoadedObject()
     //dtor
 }
 
+std::array<double,6> LoadedObject::getBounds(glm::mat4 trans)
+{
+    std::array<double,6> ret{0,0,0,0,0,0};
+    if (_normals.size() > 0)
+    {
+        // init with first point
+        {
+            auto it=_vertici.begin();
+            glm::vec4 pos = glm::vec4(glm:: vec3((*it)[0], (*it)[1], (*it)[2]), 1.0f);
+            glm::vec4 point = trans * pos;
+            ret[0] = point[0];
+            ret[1] = point[1];
+            ret[2] = point[2];
+            ret[3] = point[0];
+            ret[4] = point[1];
+            ret[5] = point[2];
+        }
+        for (auto it=_vertici.begin(); it != _vertici.end(); it++)
+        {
+            glm::vec4 pos = glm::vec4(glm:: vec3((*it)[0], (*it)[1], (*it)[2]), 1.0f);
+            glm::vec4 point = trans * pos;
+            ret[0] = std::min(point[0], ret[0]);
+            ret[1] = std::min(point[1], ret[1]);
+            ret[2] = std::min(point[2], ret[2]);
+            ret[3] = std::max(point[0], ret[3]);
+            ret[4] = std::max(point[1], ret[4]);
+            ret[5] = std::max(point[2], ret[5]);
+        }
+    }
+
+    return ret;
+}
+
 void LoadedObject::draw()
 {
     if (_normals.size() > 0)
@@ -63,7 +92,7 @@ void LoadedObject::draw()
     glEnable(GL_LIGHT0);
 
     glEnableClientState (GL_VERTEX_ARRAY);
-    glVertexPointer (3, GL_DOUBLE, 0, _vertici.data());
+    glVertexPointer (3, GL_DOUBLE, 0, (double*)_vertici.data());
     //} else
     //glEnableClientState (GL_COLOR_ARRAY);
     //glColorPointer (3, GL_FLOAT, 0, _colors.data());

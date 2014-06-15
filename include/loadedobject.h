@@ -6,13 +6,14 @@
 #include <vector>
 #include <array>
 #include "tiny_obj_loader.h"
+#include "boundedobject.h"
 
 using namespace std;
 
 /**
  * Class used for drawing objects loaded from .obj file.
  */
-class LoadedObject : public Drawable
+class LoadedObject : public Drawable, public BoundedObject
 {
     public:
         LoadedObject(
@@ -26,9 +27,10 @@ class LoadedObject : public Drawable
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
         void draw();
+        std::array<double,6> getBounds(glm::mat4 trans) override;
     protected:
     private:
-        vector<GLdouble> _vertici;
+        vector<array<GLdouble,3>> _vertici;
         vector<array<GLubyte,4>> _faces;
         vector<array<GLdouble,3>> _normals;
         vector<GLfloat> _colors;
