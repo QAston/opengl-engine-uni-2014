@@ -1,5 +1,5 @@
 DETEKCJA KOLIZJI:
-w oparciu o bryły brzegowe
+w oparciu o bryły brzegowe (BB)
 bryły brzegowe mają być wyświetlane wokół obiektów
 dla wybranych obiektów brzegowych mają być zdefiniowane bryły brzegowe
 bryły brzegowe mają być wyświetlane za pomocą siatki drucianej
@@ -17,6 +17,19 @@ kolizja na sferach - na 3
 kolizja w oparciu o bryły AA BB statyczne - na 4
 
 kolizja w oparciu o bryły AA BB dynamiczne - na 5
+
+dynamiczne - po obrocie obiektu BB ma być zmieniony (wygenerowany od nowa albo obrócony razem z obiektem)
+drzew ósemkowych robić nie trzeba
+
+aabb polega na wybraniu max i min xyz we współrzędnych rzeczywistych
+i porównaniu
+b_max.x > min.x  &&
+  b_max.y > min.y  &&
+  b_max.z > min.z  &&
+  b_min.x < max.x  &&
+  b_min.y < max.y  &&
+  b_min.z < max.z;
+
 
 ANIMACJE:
 skrypt - opis klatek kluczowych
