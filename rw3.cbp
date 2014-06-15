@@ -43,14 +43,13 @@
 		</Compiler>
 		<Linker>
 			<Add library="glut" />
-			<Add library="GL" />
-			<Add library="GLU" />
+			<Add library="opengl32" />
+			<Add library="GLU32" />
 			<Add library="alut" />
 			<Add library="openal" />
 			<Add library="libpng" />
 		</Linker>
 		<Unit filename="include/camera.h" />
-		<Unit filename="include/concreteanimator.h" />
 		<Unit filename="include/constanimator.h" />
 		<Unit filename="include/cube.h" />
 		<Unit filename="include/displaymanager.h" />
@@ -62,6 +61,7 @@
 		<Unit filename="include/inputmanagerglut.h" />
 		<Unit filename="include/linearanimator.h" />
 		<Unit filename="include/loadedobject.h" />
+		<Unit filename="include/objectmanagerglut.h" />
 		<Unit filename="include/objloader.h" />
 		<Unit filename="include/sceneloader.h" />
 		<Unit filename="include/sceneobject.h" />
@@ -76,6 +76,7 @@
 		<Unit filename="src/linearanimator.cpp" />
 		<Unit filename="src/loadedobject.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/objectmanagerglut.cpp" />
 		<Unit filename="src/objloader.cpp" />
 		<Unit filename="src/sceneloader.cpp" />
 		<Unit filename="src/sceneobject.cpp" />

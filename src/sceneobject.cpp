@@ -21,6 +21,10 @@ void SceneObject::update(int msElapsed)
 void SceneObject::draw()
 {
     // calculate base matrix for all subobjects
+    glTranslatef(movementTransposition.getPosX(), movementTransposition.getPosY(), movementTransposition.getPosZ());
+    glRotatef(movementTransposition.getRotZ(), 0,0,1);
+    glRotatef(movementTransposition.getRotX(), 1,0,0);
+    glRotatef(movementTransposition.getRotZP(), 0,0,1);
     glTranslatef(pos.getPosX(), pos.getPosY(), pos.getPosZ());
     glRotatef(pos.getRotZ(), 0,0,1);
     glRotatef(pos.getRotX(), 1,0,0);
@@ -45,3 +49,4 @@ void SceneObject::draw()
     }
     glPopMatrix();
 }
+

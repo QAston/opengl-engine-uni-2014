@@ -21,11 +21,11 @@ class ScenePos
         float getRotZ() { return _rotZ; }
         float getRotX() { return _rotX; }
         float getRotZP() { return _rotZP; }
-        glm::mat4 calcMatrix();
+        glm::mat4 getWorldMatrix();
 
         void translate(float x, float y, float z);
-        void rotateX(float x);
-        void rotateY(float y);
+        void moveForward(float val);
+        void rotate(float val);
     protected:
     private:
         float _posX;

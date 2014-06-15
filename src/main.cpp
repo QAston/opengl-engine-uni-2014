@@ -17,6 +17,7 @@
 #include "scenepos.h"
 #include "sceneloader.h"
 #include "objectmanagerglut.h"
+#include "mover.h"
 
 using namespace std;
 
@@ -63,6 +64,9 @@ int main(int argc, char** argv)
 
   objectManager->registerObject(scene);
 
+  shared_ptr<Mover> collidingMover = make_shared<Mover>(scene.get());
+
+  inputManager->registerObject(collidingMover);
 
   for(shared_ptr<Drawable> obj: objects)
   {

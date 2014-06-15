@@ -6,7 +6,6 @@
     "models": [
         "objFiles/arrow.obj"
     ],
-    "animation": "objFiles/keyframes.json",
     "objs": [
         {
             "name": "green",
