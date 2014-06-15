@@ -27,7 +27,7 @@ class LoadedObject : public Drawable, public BoundedObject
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
         void draw();
-        std::array<double,6> getBounds(glm::mat4 trans) override;
+        BoundInfo getBounds(glm::mat4 trans) override;
     protected:
     private:
         vector<array<GLdouble,3>> _vertici;

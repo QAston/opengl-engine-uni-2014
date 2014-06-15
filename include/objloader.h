@@ -17,7 +17,7 @@
  * @param path Path to .obj file.
  * @return loaded objects.
  */
-vector<shared_ptr<Drawable>> loadObjFile(const char* path);
+vector<shared_ptr<LoadedObject>> loadObjFile(const char* path);
 
 /**
  * Helper function. Extracts vertexIndex, textureCoordIndex and normalIndex from line

@@ -117,7 +117,7 @@ struct SceneHandler {
 	    // can now build sceneobject
         SceneData* data = objs.top();
         objs.pop();
-        vector<shared_ptr<Drawable>> models;
+        vector<shared_ptr<LoadedObject>> models;
         for (auto& m: data->models)
         {
             for(auto d: loadObjFile(m.c_str()))

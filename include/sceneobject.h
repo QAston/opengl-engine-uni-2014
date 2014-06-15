@@ -10,9 +10,11 @@
 #include "scenepos.h"
 #include "gameobject.h"
 #include "animator.h"
+#include "loadedobject.h"
 #include "glm/mat4x4.hpp"
 #include "inputlistener.h"
 #include "movable.h"
+#include "boundedobject.h"
 
 
 using namespace std;
@@ -20,7 +22,7 @@ using namespace std;
 class SceneObject : public Drawable, public GameObject, public Movable
 {
     public:
-        SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<Drawable>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
+        SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<LoadedObject>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
         {
             this->_name = name;
             this->pos = pos;
@@ -40,7 +42,7 @@ class SceneObject : public Drawable, public GameObject, public Movable
         ScenePos pos = ScenePos(0, 0, 0, 0, 0, 0);
         ScenePos movementTransposition = ScenePos(0, 0, 0, 90, 0, -90);
         array<GLdouble, 3> scale;
-        vector<shared_ptr<Drawable>> models;
+        vector<shared_ptr<LoadedObject>> models;
         vector<shared_ptr<SceneObject>> subObjects;
         unique_ptr<Animator> _animator;
 };

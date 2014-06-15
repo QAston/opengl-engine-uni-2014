@@ -8,13 +8,13 @@
 
 using namespace std;
 
-vector<shared_ptr<Drawable>> loadObjFile(const char* path)
+vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
 {
     fstream objFile;
     objFile.open(path, ios::in);
 
     /// Structure containing all loaded objects.
-    vector<shared_ptr<Drawable>> objects;
+    vector<shared_ptr<LoadedObject>> objects;
 
     if (!objFile.is_open())
     {

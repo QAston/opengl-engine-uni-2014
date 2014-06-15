@@ -47,11 +47,14 @@ LoadedObject::~LoadedObject()
     //dtor
 }
 
-std::array<double,6> LoadedObject::getBounds(glm::mat4 trans)
+BoundInfo LoadedObject::getBounds(glm::mat4 trans)
 {
     std::array<double,6> ret{0,0,0,0,0,0};
+    BoundInfo retObj;
+
     if (_normals.size() > 0)
     {
+        retObj.hasBounds = true;
         // init with first point
         {
             auto it=_vertici.begin();
@@ -82,8 +85,14 @@ std::array<double,6> LoadedObject::getBounds(glm::mat4 trans)
                 ret[5] = point[2];
         }
     }
+    else
+    {
+        retObj.hasBounds = false;
+    }
 
-    return ret;
+    retObj.bounds = ret;
+
+    return retObj;
 }
 
 void LoadedObject::draw()
