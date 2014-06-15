@@ -68,12 +68,18 @@ std::array<double,6> LoadedObject::getBounds(glm::mat4 trans)
         {
             glm::vec4 pos = glm::vec4(glm:: vec3((*it)[0], (*it)[1], (*it)[2]), 1.0f);
             glm::vec4 point = trans * pos;
-            ret[0] = std::min(point[0], ret[0]);
-            ret[1] = std::min(point[1], ret[1]);
-            ret[2] = std::min(point[2], ret[2]);
-            ret[3] = std::max(point[0], ret[3]);
-            ret[4] = std::max(point[1], ret[4]);
-            ret[5] = std::max(point[2], ret[5]);
+            if (point[0] <= ret[0])
+                ret[0] = point[0];
+            if (point[1] <= ret[1])
+                ret[1] = point[1];
+            if (point[2] <= ret[2])
+                ret[2] = point[2];
+            if (point[0] >= ret[3])
+                ret[3] = point[0];
+            if (point[1] >= ret[4])
+                ret[4] = point[1];
+            if (point[2] >= ret[5])
+                ret[5] = point[2];
         }
     }
 
