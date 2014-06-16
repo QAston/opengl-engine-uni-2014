@@ -50,3 +50,8 @@ void SceneObject::draw()
     glPopMatrix();
 }
 
+void SceneObject::setBoundingBoxVisible(bool option)
+{
+    _bboxVisible = option;
+}
+

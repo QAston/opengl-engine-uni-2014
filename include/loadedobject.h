@@ -40,6 +40,8 @@ class LoadedObject : public Drawable, public BoundedObject
         GLubyte *_textureImage = NULL;
         int _texWidth = 0, _texHeight = 0;
         bool _smooth;
+
+        array<double,24> calculateAABB();
 };
 
 #endif // LOADEDOBJECT_H
