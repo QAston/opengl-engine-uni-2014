@@ -30,12 +30,14 @@ class SceneObject : public Drawable, public GameObject, public Movable
             this->models = models;
             this->subObjects = subObjects;
             this->_animator = std::move(animator);
+            this->_bboxVisible = true;
         }
         virtual ~SceneObject();
         void draw() override;
         void update(int) override;
         ScenePos getMovementTransposition() override { return movementTransposition; }
         void moveTo(ScenePos pos) override {movementTransposition = pos;}
+        void setBoundingBoxVisible(bool option);
     protected:
     private:
         string _name = string("<noname>");
@@ -45,6 +47,7 @@ class SceneObject : public Drawable, public GameObject, public Movable
         vector<shared_ptr<LoadedObject>> models;
         vector<shared_ptr<SceneObject>> subObjects;
         unique_ptr<Animator> _animator;
+        bool _bboxVisible;
 };
 
 #endif // SCENEOBJECT_H
