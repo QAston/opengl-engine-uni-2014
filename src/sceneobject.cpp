@@ -1,6 +1,8 @@
 #include "sceneobject.h"
 #include <GL/gl.h>
 
+#include "glm/gtc/matrix_transform.hpp"
+
 SceneObject::~SceneObject()
 {
     //dtor
@@ -66,6 +68,8 @@ BoundInfo mergeBounds(BoundInfo a, BoundInfo b)
 
 BoundInfo SceneObject::getBounds(glm::mat4 trans)
 {
+    trans = trans * pos.getWorldMatrix();
+    trans = glm::scale(trans, glm::vec3(scale[0], scale[1], scale[2]));
     BoundInfo ret;
     ret.hasBounds = false;
     for(auto mItr = models.begin(); mItr != models.end(); ++mItr)

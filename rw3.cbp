@@ -49,18 +49,29 @@
 			<Add library="openal" />
 			<Add library="libpng" />
 		</Linker>
+		<Unit filename="include/aabbcollisionmgr.h" />
+		<Unit filename="include/animator.h" />
+		<Unit filename="include/boundedobject.h" />
+		<Unit filename="include/boundinfo.h" />
 		<Unit filename="include/camera.h" />
+		<Unit filename="include/collidingobject.h" />
 		<Unit filename="include/constanimator.h" />
 		<Unit filename="include/cube.h" />
 		<Unit filename="include/displaymanager.h" />
 		<Unit filename="include/displaymanagerglut.h" />
 		<Unit filename="include/drawable.h" />
 		<Unit filename="include/fpscamera.h" />
+		<Unit filename="include/gameobject.h" />
 		<Unit filename="include/inputlistener.h" />
 		<Unit filename="include/inputmanager.h" />
 		<Unit filename="include/inputmanagerglut.h" />
+		<Unit filename="include/keyframe.h" />
 		<Unit filename="include/linearanimator.h" />
 		<Unit filename="include/loadedobject.h" />
+		<Unit filename="include/movable.h" />
+		<Unit filename="include/mover.h" />
+		<Unit filename="include/objectdesc.h" />
+		<Unit filename="include/objectmanager.h" />
 		<Unit filename="include/objectmanagerglut.h" />
 		<Unit filename="include/objloader.h" />
 		<Unit filename="include/sceneloader.h" />
@@ -69,18 +80,24 @@
 		<Unit filename="include/soundsource.h" />
 		<Unit filename="include/soundsourceglut.h" />
 		<Unit filename="include/unique.h" />
+		<Unit filename="include/worldobject.h" />
+		<Unit filename="src/aabbcollisionmgr.cpp" />
 		<Unit filename="src/cube.cpp" />
 		<Unit filename="src/displaymanagerglut.cpp" />
 		<Unit filename="src/fpscamera.cpp" />
 		<Unit filename="src/inputmanagerglut.cpp" />
+		<Unit filename="src/keyframe.cpp" />
 		<Unit filename="src/linearanimator.cpp" />
 		<Unit filename="src/loadedobject.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/mover.cpp" />
 		<Unit filename="src/objectmanagerglut.cpp" />
 		<Unit filename="src/objloader.cpp" />
 		<Unit filename="src/sceneloader.cpp" />
 		<Unit filename="src/sceneobject.cpp" />
+		<Unit filename="src/scenepos.cpp" />
 		<Unit filename="src/soundsourceglut.cpp" />
+		<Unit filename="src/worldobject.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
