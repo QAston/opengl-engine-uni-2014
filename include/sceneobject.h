@@ -20,7 +20,7 @@
 
 using namespace std;
 
-class SceneObject : public Drawable, public GameObject, public Movable, public BoundedObject
+class SceneObject : public Drawable, public GameObject, public BoundedObject
 {
     public:
         SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<LoadedObject>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
@@ -31,27 +31,20 @@ class SceneObject : public Drawable, public GameObject, public Movable, public B
             this->models = models;
             this->subObjects = subObjects;
             this->_animator = std::move(animator);
-            this->_bboxVisible = true;
         }
         virtual ~SceneObject();
         void draw() override;
         void update(int) override;
-        ScenePos getMovementTransposition() override { return movementTransposition; }
-        void moveTo(ScenePos pos) override {movementTransposition = pos;}
-        void setBoundingBoxVisible(bool option);
-
         BoundInfo getBounds(glm::mat4 trans) override;
 
     protected:
     private:
         string _name = string("<noname>");
         ScenePos pos = ScenePos(0, 0, 0, 0, 0, 0);
-        ScenePos movementTransposition = ScenePos(0, 0, 0, 90, 0, -90);
         array<GLdouble, 3> scale;
         vector<shared_ptr<LoadedObject>> models;
         vector<shared_ptr<SceneObject>> subObjects;
         unique_ptr<Animator> _animator;
-        bool _bboxVisible;
 };
 
 #endif // SCENEOBJECT_H

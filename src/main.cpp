@@ -19,6 +19,7 @@
 #include "objectmanagerglut.h"
 #include "mover.h"
 #include "aabbcollisionmgr.h"
+#include "worldobject.h"
 
 using namespace std;
 
@@ -44,12 +45,7 @@ int main(int argc, char** argv)
   ALuint alert = loadAudioFile("alert.wav");
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
-  list<shared_ptr<Drawable>> objects;
   shared_ptr<SceneObject> scene{ loadScene("objFiles/arrows.json")};
-  ScenePos posCube1 = ScenePos(0, 0, 0, 0, 0);
-   objects.push_back(scene);
-  //objects.push_back(make_shared<Cube>(posCube1));
-  //cubeSound->setPosition(posCube1);
 
   shared_ptr<Cube::Input> cubeSoundInput = make_shared<Cube::Input>(nullptr, cubeSound.get());
 
@@ -65,15 +61,14 @@ int main(int argc, char** argv)
 
   objectManager->registerObject(scene);
 
-  shared_ptr<Mover> collidingMover = make_shared<Mover>(scene.get());
+  shared_ptr<WorldObject> wobj = make_shared<WorldObject>(scene);
+
+  shared_ptr<Mover> collidingMover = make_shared<Mover>(wobj.get());
 
   inputManager->registerObject(collidingMover);
 
   AABBCollisionMgr* collisionMgr = AABBCollisionMgr::get();
-  for(shared_ptr<Drawable> obj: objects)
-  {
-        displayManager->registerObject(obj);
-  }
+  displayManager->registerObject(wobj);
   glutMainLoop();
   alutExit();
 
