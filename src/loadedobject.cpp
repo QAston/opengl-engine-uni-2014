@@ -165,7 +165,7 @@ glShadeModel(GL_SMOOTH);
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
 
-    glm::mat4x4 m(0.0f);
+    glm::mat4x4 m(1.0f);
     BoundInfo bounds = this->getBounds(m);
     if (bounds.hasBounds)
     {
@@ -180,14 +180,14 @@ glShadeModel(GL_SMOOTH);
                                   1, 1, 1,
                                   0, 1, 1};*/
 
-        GLubyte frontIndices[4] = {4, 5, 6, 7};
-        GLubyte rightIndices[4] = {1, 2, 6, 5};
-        GLubyte bottomIndices[4] = {0, 1, 5, 4};
-        GLubyte backIndices[4] = {0, 3, 2, 1};
-        GLubyte leftIndices[4] = {0, 4, 7, 3};
-        GLubyte topIndices[4] = {2, 3, 7, 6};
+        GLubyte frontIndices[4] = {0,1,2,3};
+        GLubyte rightIndices[4] = {1,3,7,5};
+        GLubyte bottomIndices[4] = {1,5,0,4};
+        GLubyte backIndices[4] = {4,5,6,7};
+        GLubyte leftIndices[4] = {0,4,2,6};
+        GLubyte topIndices[4] = {2,3,6,7};
 
-        glPolygonMode(GL_FRONT, GL_FILL);
+        glPolygonMode(GL_FRONT, GL_LINE);
         glPolygonMode(GL_BACK, GL_LINE);
         glFrontFace(GL_CCW);
 
@@ -212,7 +212,7 @@ glShadeModel(GL_SMOOTH);
 
 array<double,24> LoadedObject::calculateAABB()
 {
-    glm::mat4x4 m(0.0f);
+    glm::mat4x4 m(1.0f);
     BoundInfo bounds = this->getBounds(m);
     array<double,24> boundBoxVertices;
     if (bounds.hasBounds)
