@@ -15,11 +15,12 @@
 #include "inputlistener.h"
 #include "movable.h"
 #include "boundedobject.h"
+#include "collidingobject.h"
 
 
 using namespace std;
 
-class SceneObject : public Drawable, public GameObject, public Movable
+class SceneObject : public Drawable, public GameObject, public Movable, public BoundedObject
 {
     public:
         SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<LoadedObject>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
@@ -38,6 +39,9 @@ class SceneObject : public Drawable, public GameObject, public Movable
         ScenePos getMovementTransposition() override { return movementTransposition; }
         void moveTo(ScenePos pos) override {movementTransposition = pos;}
         void setBoundingBoxVisible(bool option);
+
+        BoundInfo getBounds(glm::mat4 trans) override;
+
     protected:
     private:
         string _name = string("<noname>");

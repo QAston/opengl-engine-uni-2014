@@ -55,3 +55,35 @@ void SceneObject::setBoundingBoxVisible(bool option)
     _bboxVisible = option;
 }
 
+BoundInfo mergeBounds(BoundInfo a, BoundInfo b)
+{
+    if (!a.hasBounds && !b.hasBounds)
+        return a;
+    if (!b.hasBounds)
+        return a;
+    if (!a.hasBounds)
+        return b;
+
+    BoundInfo ret;
+    ret.hasBounds = true;
+    for(int i = 0; i < 3; ++i)
+        ret.bounds[i] = std::min(a.bounds[i], b.bounds[i]);
+    for(int i = 3; i < 6; ++i)
+        ret.bounds[i] = std::max(a.bounds[i], b.bounds[i]);
+    return ret;
+}
+
+BoundInfo SceneObject::getBounds(glm::mat4 trans)
+{
+    BoundInfo ret;
+    ret.hasBounds = false;
+    for(auto mItr = models.begin(); mItr != models.end(); ++mItr)
+    {
+        mergeBounds((*mItr)->getBounds(trans), ret);
+    }
+    for(auto sItr = subObjects.begin(); sItr != subObjects.end(); ++sItr)
+    {
+        mergeBounds((*sItr)->getBounds(trans), ret);
+    }
+    return ret;
+}
