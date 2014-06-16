@@ -18,6 +18,7 @@
 #include "sceneloader.h"
 #include "objectmanagerglut.h"
 #include "mover.h"
+#include "aabbcollisionmgr.h"
 
 using namespace std;
 
@@ -68,12 +69,14 @@ int main(int argc, char** argv)
 
   inputManager->registerObject(collidingMover);
 
+  AABBCollisionMgr* collisionMgr = AABBCollisionMgr::get();
   for(shared_ptr<Drawable> obj: objects)
   {
         displayManager->registerObject(obj);
   }
   glutMainLoop();
   alutExit();
+
   return EXIT_SUCCESS;
 }
 
