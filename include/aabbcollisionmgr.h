@@ -1,7 +1,7 @@
 #ifndef AABBCOLLISIONMGR_H
 #define AABBCOLLISIONMGR_H
 
-#include "boundedobject.h"
+#include "collidingobject.h"
 #include <memory>
 #include <list>
 
@@ -11,14 +11,14 @@ class AABBCollisionMgr
         AABBCollisionMgr();
         virtual ~AABBCollisionMgr();
 
-        bool isColliding() { return true; }
+        bool isColliding(shared_ptr<CollidingObject> what);
 
-        void registerObject(shared_ptr<BoundedObject>);
-        void unregisterObject(shared_ptr<BoundedObject>);
+        void registerObject(shared_ptr<CollidingObject>);
+        void unregisterObject(shared_ptr<CollidingObject>);
         static AABBCollisionMgr* get();
     protected:
     private:
-        list<shared_ptr<BoundedObject>> _objects;
+        list<shared_ptr<CollidingObject>> _objects;
 };
 
 #endif // AABBCOLLISIONMGR_H
