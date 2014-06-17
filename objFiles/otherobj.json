@@ -1,0 +1,19 @@
+{
+    "name": "scene",
+    "pos": [2,2,2],
+    "rot": [0,0,0],
+    "scale": [3,3,3],
+    "objs": [
+        {
+            "name": "obj2",
+            "pos": [-1,0,-1],
+            "rot": [0,-90,0],
+            "scale": [1,1,1],
+            "models": [
+                "objFiles/arrow_blue.obj"
+
+            ]
+        }
+    ]
+    
+}

@@ -46,6 +46,7 @@ int main(int argc, char** argv)
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
   shared_ptr<SceneObject> scene{ loadScene("objFiles/arrows.json")};
+  shared_ptr<SceneObject> object2{ loadScene("objFiles/otherobj.json")};
 
   shared_ptr<Cube::Input> cubeSoundInput = make_shared<Cube::Input>(nullptr, cubeSound.get());
 
@@ -61,7 +62,7 @@ int main(int argc, char** argv)
 
   objectManager->registerObject(scene);
 
-  shared_ptr<WorldObject> wobj1 = make_shared<WorldObject>(scene);
+  shared_ptr<WorldObject> wobj1 = make_shared<WorldObject>(object2);
 
   shared_ptr<WorldObject> wobj2 = make_shared<WorldObject>(scene);
   ScenePos pos2 = ScenePos(0, 0, 0, -90, 0, 90);
