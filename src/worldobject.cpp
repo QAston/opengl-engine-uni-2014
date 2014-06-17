@@ -13,11 +13,6 @@ WorldObject::~WorldObject()
 
 void WorldObject::draw()
 {
-    glTranslatef(movementTransposition.getPosX(), movementTransposition.getPosY(), movementTransposition.getPosZ());
-    glRotatef(movementTransposition.getRotZ(), 0,0,1);
-    glRotatef(movementTransposition.getRotX(), 1,0,0);
-    glRotatef(movementTransposition.getRotZP(), 0,0,1);
-
     BoundInfo bounds = getBounds();
     if (bounds.hasBounds)
     {
@@ -37,7 +32,7 @@ void WorldObject::draw()
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer (3, GL_DOUBLE, 0, (double*)boundBoxVertices.data());
 
-        glColor3f(1.0f, 0.0f, 0.0f);
+        glColor3f(1.0f, 1.0f, 1.0f);
 
         glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frontIndices);
         glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, rightIndices);
@@ -48,6 +43,9 @@ void WorldObject::draw()
 
         glDisableClientState(GL_VERTEX_ARRAY);
     }
-
+    glTranslatef(movementTransposition.getPosX(), movementTransposition.getPosY(), movementTransposition.getPosZ());
+    glRotatef(movementTransposition.getRotZ(), 0,0,1);
+    glRotatef(movementTransposition.getRotX(), 1,0,0);
+    glRotatef(movementTransposition.getRotZP(), 0,0,1);
     _object->draw();
 }
