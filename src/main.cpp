@@ -64,11 +64,16 @@ int main(int argc, char** argv)
   shared_ptr<WorldObject> wobj1 = make_shared<WorldObject>(scene);
 
   shared_ptr<WorldObject> wobj2 = make_shared<WorldObject>(scene);
-  wobj2->moveTo(ScenePos(3, 0, 3, 0, 0, 0));
+  ScenePos pos2 = ScenePos(0, 0, 0, -90, 0, 90);
+  pos2.moveForward(3);
+  wobj2->moveTo(pos2);
 
-  shared_ptr<Mover> collidingMover = make_shared<Mover>(wobj1.get());
+  shared_ptr<Mover> collidingMover1 = make_shared<Mover>(wobj1.get(), 'w', 's', 'a', 'd');
 
-  inputManager->registerObject(collidingMover);
+  shared_ptr<Mover> collidingMover2 = make_shared<Mover>(wobj2.get(), 'i', 'k', 'j', 'l');
+
+  inputManager->registerObject(collidingMover1);
+  inputManager->registerObject(collidingMover2);
 
   AABBCollisionMgr* collisionMgr = AABBCollisionMgr::get();
 

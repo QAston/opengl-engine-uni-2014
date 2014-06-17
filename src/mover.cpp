@@ -19,21 +19,16 @@ void Mover::keyboard(unsigned char key, int /*x*/, int /*y*/)
 
   ScenePos pos = _object->getMovementTransposition();
 
-    switch(key)
-    {
-    case 'w':
+    if(key == _up)
         pos.moveForward(deltaPos);
-        break;
-    case 's':
+    else if(key == _down)
         pos.moveForward(-deltaPos);
-        break;
-    case 'a':
+    else if(key == _left)
         pos.rotate(-deltaRot);
-        break;
-    case 'd':
+    else if(key==_right)
         pos.rotate(deltaRot);
-        break;
-    }
+    else
+        return;
 
     _object->moveTo(pos);
 
