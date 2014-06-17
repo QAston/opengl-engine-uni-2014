@@ -103,8 +103,8 @@ void LoadedObject::draw()
         glNormalPointer (GL_DOUBLE, 0, _normals.data());
     }
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
 
     glEnableClientState (GL_VERTEX_ARRAY);
     glVertexPointer (3, GL_DOUBLE, 0, (double*)_vertici.data());
@@ -162,6 +162,6 @@ glShadeModel(GL_SMOOTH);
         glDisable(GL_TEXTURE_2D);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
-    glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
+    //glDisable(GL_LIGHTING);
+    //glDisable(GL_LIGHT0);
 }

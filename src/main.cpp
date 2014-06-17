@@ -45,11 +45,11 @@ int main(int argc, char** argv)
   ALuint alert = loadAudioFile("alert.wav");
 
   unique_ptr<SoundSource> cubeSound = make_unique<SoundSourceGLUT>(alert);
-  shared_ptr<SceneObject> scene{ loadScene("objFiles/arrows.json")};
+  shared_ptr<SceneObject> scene{ loadScene("objFiles/szczala.json")};
 
   shared_ptr<Cube::Input> cubeSoundInput = make_shared<Cube::Input>(nullptr, cubeSound.get());
 
-  shared_ptr<FPSCamera> camera = make_shared<FPSCamera>(0, 0, 10, 0, 0);
+  shared_ptr<FPSCamera> camera = make_shared<FPSCamera>(10, 0, 0, 0, 90);
   InputManager* inputManager = InputManagerGLUT::get();
   DisplayManager* displayManager = DisplayManagerGLUT::get();
   ObjectManager* objectManager = ObjectManagerGLUT::get();
@@ -62,6 +62,8 @@ int main(int argc, char** argv)
   objectManager->registerObject(scene);
 
   shared_ptr<WorldObject> wobj1 = make_shared<WorldObject>(scene);
+  ScenePos pos1 = ScenePos(0, 0, 0, -90, 0, 90);
+  wobj1->moveTo(pos1);
 
   shared_ptr<WorldObject> wobj2 = make_shared<WorldObject>(scene);
   ScenePos pos2 = ScenePos(0, 0, 0, -90, 0, 90);
