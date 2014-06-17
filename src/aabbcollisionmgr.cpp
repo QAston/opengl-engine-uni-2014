@@ -50,7 +50,7 @@ bool AABBCollisionMgr::isColliding(CollidingObject* what) {
     for (auto itr = _objects.begin(); itr != _objects.end();++itr)
     {
         shared_ptr<CollidingObject> with = *itr;
-        if (with->get() == what)
+        if (with.get() == what)
             continue;
 
         BoundInfo otherBounds = with->getBounds();
@@ -59,7 +59,7 @@ bool AABBCollisionMgr::isColliding(CollidingObject* what) {
             continue;
 
         if (boundsCrossing(myBounds, otherBounds))
-            continue;
+            return true;
     }
     return false;
 }
