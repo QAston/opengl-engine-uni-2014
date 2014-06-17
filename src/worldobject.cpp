@@ -33,12 +33,12 @@ void WorldObject::draw()
     {
         array<double,24> boundBoxVertices = bounds.calculateBox();
 
-        GLubyte frontIndices[4] = {0,1,2,3};
+        GLubyte frontIndices[4] = {1,3,2,0};
         GLubyte rightIndices[4] = {1,3,7,5};
-        GLubyte bottomIndices[4] = {1,5,0,4};
-        GLubyte backIndices[4] = {4,5,6,7};
-        GLubyte leftIndices[4] = {0,4,2,6};
-        GLubyte topIndices[4] = {2,3,6,7};
+        GLubyte bottomIndices[4] = {5,1,0,4};
+        GLubyte backIndices[4] = {5,4,6,7};
+        GLubyte leftIndices[4] = {4,0,2,6};
+        GLubyte topIndices[4] = {3,2,6,7};
 
         glPolygonMode(GL_FRONT, GL_LINE);
         glPolygonMode(GL_BACK, GL_LINE);
