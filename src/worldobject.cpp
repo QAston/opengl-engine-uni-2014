@@ -1,6 +1,8 @@
 #include "worldobject.h"
 
 #include <iostream>
+#include "aabbcollisionmgr.h"
+
 WorldObject::WorldObject(shared_ptr<SceneObject> object)
 {
     _object = object;
@@ -9,6 +11,19 @@ WorldObject::WorldObject(shared_ptr<SceneObject> object)
 WorldObject::~WorldObject()
 {
     //dtor
+}
+
+void WorldObject::moveTo(ScenePos pos)
+{
+    ScenePos oldPos = this->movementTransposition;
+
+    movementTransposition = pos;
+
+    AABBCollisionMgr*mgr =  AABBCollisionMgr::get();
+
+    // it's colliding - move to old pos
+    if (mgr->isColliding(this))
+        movementTransposition = oldPos;
 }
 
 void WorldObject::draw()

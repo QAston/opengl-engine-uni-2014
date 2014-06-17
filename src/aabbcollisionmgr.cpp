@@ -43,13 +43,15 @@ bool boundsCrossing(BoundInfo myBounds, BoundInfo otherBounds)
               otherBounds.bounds[2] < myBounds.bounds[5]);
 }
 
-bool AABBCollisionMgr::isColliding(shared_ptr<CollidingObject> what) {
+bool AABBCollisionMgr::isColliding(CollidingObject* what) {
     BoundInfo myBounds = what->getBounds();
     if (!myBounds.hasBounds)
         return false;
     for (auto itr = _objects.begin(); itr != _objects.end();++itr)
     {
         shared_ptr<CollidingObject> with = *itr;
+        if (with->get() == what)
+            continue;
 
         BoundInfo otherBounds = with->getBounds();
 

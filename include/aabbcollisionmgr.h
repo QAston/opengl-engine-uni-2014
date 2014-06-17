@@ -11,7 +11,7 @@ class AABBCollisionMgr
         AABBCollisionMgr();
         virtual ~AABBCollisionMgr();
 
-        bool isColliding(shared_ptr<CollidingObject> what);
+        bool isColliding(CollidingObject* what);
 
         void registerObject(shared_ptr<CollidingObject>);
         void unregisterObject(shared_ptr<CollidingObject>);

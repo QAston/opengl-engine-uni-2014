@@ -10,7 +10,7 @@ class WorldObject : public CollidingObject, public Movable, public Drawable, pub
         virtual ~WorldObject();
 
         ScenePos getMovementTransposition() override { return movementTransposition; }
-        void moveTo(ScenePos pos) override {movementTransposition = pos;}
+        void moveTo(ScenePos pos) override;
         void setBoundingBoxVisible(bool option) {_bboxVisible = option;};
 
         void draw() override;
