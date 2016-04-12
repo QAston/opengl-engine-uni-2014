@@ -23,7 +23,7 @@ class LinearAnimator : public Animator
 public:
     explicit LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries);
     virtual ~LinearAnimator();
-    virtual ObjectDesc getStateFor(int ms);
+    ObjectDesc getStateFor(int ms) override;
 protected:
 private:
     unique_ptr<vector<SimpleAnimEntry>> _entries;

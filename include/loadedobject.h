@@ -26,7 +26,7 @@ class LoadedObject : public Drawable, public BoundedObject
         );
         LoadedObject(float x, float y, float z, float rX, float rY);
         virtual ~LoadedObject();
-        void draw();
+        void draw() override;
         BoundInfo getBounds(glm::mat4 trans) override;
     protected:
     private:

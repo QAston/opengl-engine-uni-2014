@@ -13,10 +13,10 @@ class DisplayManagerGLUT : public DisplayManager
 {
     public:
         static DisplayManagerGLUT* get();
-        void init(shared_ptr<Camera>);
-        void registerObject(shared_ptr<Drawable>);
-        void unregisterObject(shared_ptr<Drawable>);
-        void render();
+        void init(shared_ptr<Camera>) override;
+        void registerObject(shared_ptr<Drawable>)override;
+        void unregisterObject(shared_ptr<Drawable>) override;
+        void render() override;
 
         ~DisplayManagerGLUT();
     protected:

@@ -10,8 +10,8 @@ class ObjectManagerGLUT : public ObjectManager
     public:
         static ObjectManagerGLUT* get();
         ~ObjectManagerGLUT();
-        void registerObject(shared_ptr<GameObject>);
-        void unregisterObject(shared_ptr<GameObject>);
+        void registerObject(shared_ptr<GameObject>) override;
+        void unregisterObject(shared_ptr<GameObject>) override;
     protected:
     private:
         ObjectManagerGLUT();

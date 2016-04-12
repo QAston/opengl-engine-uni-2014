@@ -132,6 +132,8 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
                 isSmooth = false;
             break;
         case 'f':
+        {
+
             // faces: Gdy nie ma vt i vn
             // cztery int z numerem wierzcho³ka.
             // "f 5 6 2 1"
@@ -157,6 +159,11 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
             faces.push_back(face);
             if (normalIndex > 0)
                 objnormals.push_back(normals[normalIndex-1]);
+        }
+        break;
+        default:
+            assert(false && "INVALID CASE VALUE");
+            break;
         }
         cout << line << endl;
     }

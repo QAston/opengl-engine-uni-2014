@@ -45,7 +45,7 @@ void WorldObject::draw()
         glFrontFace(GL_CCW);
 
         glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer (3, GL_DOUBLE, 0, (double*)boundBoxVertices.data());
+        glVertexPointer (3, GL_DOUBLE, 0, boundBoxVertices.data());
 
         glColor3f(1.0f, 1.0f, 1.0f);
 

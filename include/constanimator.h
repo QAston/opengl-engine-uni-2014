@@ -11,7 +11,7 @@ class ConstAnimator : public Animator
             this->_desc = desc;
         }
         virtual ~ConstAnimator() {}
-        virtual ObjectDesc getStateFor(int ms)
+        ObjectDesc getStateFor(int ms) override
         {
             return _desc;
         }

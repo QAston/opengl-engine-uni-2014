@@ -11,7 +11,7 @@ class Cube : public Drawable
     public:
         explicit Cube(ScenePos);
         virtual ~Cube();
-        void draw();
+        void draw() override;
     protected:
         float _posX;
         float _posY;

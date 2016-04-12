@@ -95,7 +95,7 @@ int main(int argc, char** argv)
 
 void reshape (int w, int h)
 {
-    glViewport (0, 0, (GLsizei) w, (GLsizei) h);
+    glViewport (0, 0, w, h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(90.0, w/(float)h, 0.1, 100.0);

@@ -84,5 +84,8 @@ void Cube::Input::keyboard(unsigned char key, int /*x*/, int /*y*/)
     {
     case ' ':
         _sound->play();
+    default:
+        // do nothing
+        break;
     }
 }
