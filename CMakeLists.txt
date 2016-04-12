@@ -24,3 +24,11 @@ target_link_libraries(main ${GLUT_LIBRARIES} ${PNG_LIBRARIES} ${ALUT_LIBRARIES})
 #rapidjson - header only
 #glm - header only
 #tinyobjx  - needs fixing, because not header only
+
+#build + run
+#mkdir build
+#cd build
+#cmake .. -G"MinGW Makefiles"
+#mingw32-make
+#cd ..
+#build/main

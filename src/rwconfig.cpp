@@ -1,6 +1,6 @@
 #include "rwconfig.h"
 
-// assume data dir is inside working dir
+// assume data dir is inside working dir, needs to run from workdir
 std::string resourcePath(const std::string & p)
 {
     return "data/" + p;
