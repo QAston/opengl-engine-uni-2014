@@ -23,7 +23,7 @@ using namespace std;
 class SceneObject : public Drawable, public GameObject, public BoundedObject
 {
     public:
-        SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<LoadedObject>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
+        explicit SceneObject(string name, ScenePos pos, array<GLdouble, 3> scale, vector<shared_ptr<LoadedObject>> models, vector<shared_ptr<SceneObject>> subObjects, unique_ptr<Animator> animator)
         {
             this->_name = name;
             this->pos = pos;

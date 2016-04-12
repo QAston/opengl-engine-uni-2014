@@ -7,7 +7,7 @@
 class SoundSourceGLUT : public SoundSource
 {
     public:
-        SoundSourceGLUT(ALuint audioBuffer);
+        explicit SoundSourceGLUT(ALuint audioBuffer);
         virtual ~SoundSourceGLUT();
         void play() override;
         void setPosition(ScenePos) override;

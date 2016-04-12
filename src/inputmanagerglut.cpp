@@ -16,10 +16,10 @@ InputManagerGLUT* InputManagerGLUT::get()
 
 InputManagerGLUT::InputManagerGLUT()
 {
-  glutKeyboardFunc(InputManagerGLUT::_keyboard);
-  glutSpecialFunc(InputManagerGLUT::_specialInput);
-  glutMotionFunc(InputManagerGLUT::_mouseMotion);
-  glutPassiveMotionFunc(InputManagerGLUT::_mousePassive);
+    glutKeyboardFunc(InputManagerGLUT::_keyboard);
+    glutSpecialFunc(InputManagerGLUT::_specialInput);
+    glutMotionFunc(InputManagerGLUT::_mouseMotion);
+    glutPassiveMotionFunc(InputManagerGLUT::_mousePassive);
 }
 
 InputManagerGLUT::~InputManagerGLUT()

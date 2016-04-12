@@ -14,7 +14,6 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
-					<Add directory="dep/glm" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -33,16 +32,17 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wmissing-include-dirs" />
-			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
+			<Add option="-Wno-unused-parameter" />
 			<Add directory="dep/glm" />
 			<Add directory="dep/tinyobjloader" />
-			<Add directory="dep/rapidjson/include/rapidjson" />
+			<Add directory="dep/rapidjson/include" />
 		</Compiler>
 		<Linker>
-			<Add library="glut" />
+			<Add library="freeglut" />
 			<Add library="opengl32" />
 			<Add library="GLU32" />
 			<Add library="alut" />
@@ -74,6 +74,9 @@
 		<Unit filename="include/objectmanager.h" />
 		<Unit filename="include/objectmanagerglut.h" />
 		<Unit filename="include/objloader.h" />
+		<Unit filename="include/rwconfig.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include/sceneloader.h" />
 		<Unit filename="include/sceneobject.h" />
 		<Unit filename="include/scenepos.h" />
@@ -93,6 +96,7 @@
 		<Unit filename="src/mover.cpp" />
 		<Unit filename="src/objectmanagerglut.cpp" />
 		<Unit filename="src/objloader.cpp" />
+		<Unit filename="src/rwconfig.cpp" />
 		<Unit filename="src/sceneloader.cpp" />
 		<Unit filename="src/sceneobject.cpp" />
 		<Unit filename="src/scenepos.cpp" />

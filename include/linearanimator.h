@@ -20,13 +20,13 @@ struct SimpleAnimEntry
 
 class LinearAnimator : public Animator
 {
-    public:
-        LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries);
-        virtual ~LinearAnimator();
-        virtual ObjectDesc getStateFor(int ms);
-    protected:
-    private:
-        unique_ptr<vector<SimpleAnimEntry>> _entries;
+public:
+    explicit LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries);
+    virtual ~LinearAnimator();
+    virtual ObjectDesc getStateFor(int ms);
+protected:
+private:
+    unique_ptr<vector<SimpleAnimEntry>> _entries;
 };
 
 unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename);

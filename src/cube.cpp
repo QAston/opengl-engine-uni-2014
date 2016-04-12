@@ -11,7 +11,7 @@ Cube::Cube(ScenePos pos)
     this->_posY = pos.getPosY();
     this->_posZ = pos.getPosZ();
 
-  // init colors
+    // init colors
     std::mt19937 generator;
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
     std::uniform_real_distribution<float> distribution(0.0, 1.0);
@@ -34,7 +34,8 @@ void Cube::draw()
     {
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer (2, GL_FLOAT, 0, texturePoints);
-    } else */{
+    } else */
+    {
         glEnableClientState (GL_COLOR_ARRAY);
         glColorPointer (3, GL_FLOAT, 0, cubeColors);
     }
@@ -79,9 +80,9 @@ void Cube::Input::mouseMotion(int x, int y)
 
 void Cube::Input::keyboard(unsigned char key, int /*x*/, int /*y*/)
 {
-  switch (key)
-  {
+    switch (key)
+    {
     case ' ':
-      _sound->play();
-  }
+        _sound->play();
+    }
 }

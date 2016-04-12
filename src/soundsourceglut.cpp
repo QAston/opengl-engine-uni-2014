@@ -2,10 +2,10 @@
 
 SoundSourceGLUT::SoundSourceGLUT(ALuint audioBuffer)
 {
-  /* Generate a single source, attach the buffer to it and start playing. */
-  alGenSources (1, &alsource);
-  alSourcei (alsource, AL_BUFFER, audioBuffer);
-  alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
+    /* Generate a single source, attach the buffer to it and start playing. */
+    alGenSources (1, &alsource);
+    alSourcei (alsource, AL_BUFFER, audioBuffer);
+    alSourcei (alsource, AL_SOURCE_RELATIVE, AL_TRUE);
 }
 
 SoundSourceGLUT::~SoundSourceGLUT()

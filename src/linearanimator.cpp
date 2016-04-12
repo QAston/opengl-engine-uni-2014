@@ -1,8 +1,9 @@
 #include "linearanimator.h"
-#include "reader.h"
-#include "document.h"
-#include "filestream.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/document.h"
+#include "rapidjson/filestream.h"
 #include <iostream>
+#include "rwconfig.h"
 
 LinearAnimator::LinearAnimator(unique_ptr<vector<SimpleAnimEntry>> entries)
 {
@@ -172,6 +173,8 @@ struct AnimLoader {
 
 unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename)
 {
+    std::string s = resourcePath(filename);
+    filename = s.c_str();
     AnimLoader handler;
     FILE* file = fopen(filename, "r");
     if (file == nullptr)

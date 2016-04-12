@@ -9,7 +9,7 @@
 class Cube : public Drawable
 {
     public:
-        Cube(ScenePos);
+        explicit Cube(ScenePos);
         virtual ~Cube();
         void draw();
     protected:

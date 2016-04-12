@@ -1,8 +1,11 @@
+#include "tiny_obj_loader.cpp"
 #include "loadedobject.h"
 #include <iostream>
 #include "objloader.h"
 #include <glm/glm.hpp>
 #include <algorithm>
+#include <string>
+#include "rwconfig.h"
 
 using namespace std;
 
@@ -18,7 +21,7 @@ LoadedObject::LoadedObject(
 
     _vertici = vertici;
 
-    for (fit=faces.begin(); fit != faces.end(); fit++)
+    for (fit=faces.begin(); fit != faces.end(); ++fit)
     {
         array<GLubyte,4> tmp;
         tmp[0] = (GLubyte)(*fit)[0];
@@ -33,9 +36,10 @@ LoadedObject::LoadedObject(
 
     if (_material.diffuse_texname != "")
     {
-        _textureImage = loadPngImage(_material.diffuse_texname.c_str(), _texWidth, _texHeight);
+        std::string s = resourcePath("/png/" + _material.diffuse_texname);
+        _textureImage = loadPngImage(s.c_str(), _texWidth, _texHeight);
         if (_textureImage == NULL)
-            cerr << "Unable to load png file :" << _material.diffuse_texname << endl;
+            cerr << "Unable to load png file :" << s << endl;
         else
             cout << "Image loaded. Width: " << _texWidth << " Height: " << _texHeight << endl;
     }
@@ -67,7 +71,7 @@ BoundInfo LoadedObject::getBounds(glm::mat4 trans)
             ret[4] = point[1];
             ret[5] = point[2];
         }
-        for (auto it=_vertici.begin(); it != _vertici.end(); it++)
+        for (auto it=_vertici.begin(); it != _vertici.end(); ++it)
         {
             glm::vec4 pos = glm::vec4(glm:: vec3((*it)[0], (*it)[1], (*it)[2]), 1.0f);
             glm::vec4 point = trans * pos;
@@ -119,7 +123,7 @@ void LoadedObject::draw()
     //glTranslatef(_posX, _posY, _posZ);
     //glRotatef(rotateX, 0,1,0);
     //glRotatef(rotateY, 1,0,0);
-glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_SMOOTH);
     glMaterialfv(GL_FRONT, GL_AMBIENT, _material.ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, _material.diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, _material.specular);
@@ -144,7 +148,7 @@ glShadeModel(GL_SMOOTH);
         glEnable(GL_TEXTURE_2D);
     }
 
-    for (auto facesIterator = _faces.begin(); facesIterator != _faces.end(); facesIterator++)
+    for (auto facesIterator = _faces.begin(); facesIterator != _faces.end(); ++facesIterator)
     {
         glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, facesIterator->data());
     }

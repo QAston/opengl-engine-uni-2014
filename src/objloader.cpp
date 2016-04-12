@@ -4,7 +4,8 @@
 #include <sstream>
 #include <vector>
 #include <array>
-#include "tiny_obj_loader.cpp"
+#include "tiny_obj_loader.h"
+#include "rwconfig.h"
 
 using namespace std;
 
@@ -49,109 +50,113 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
     fstream mtlFile;
 
     tinyobj::material_t material;
-    bool isMaterialSet = false;
 
     while (getline(objFile, line))
     {
         switch(line[0])
         {
-            case '#':
-            // komentarz zaczynajÄ…cy siÄ™ na '#'
-                continue;
-                break;
-            case 'm': {
+        case '#':
+            // komentarz zaczynaj¹cy siê na '#'
+            continue;
+        case 'm':
+        {
             // "mtllib path"
-                    string mtlFileName = line.substr(7);
-                    mtlFile.open("objFiles/" + mtlFileName, ios::in);
-                    string err = tinyobj::LoadMtl(material_map, mtlFile);
-                    if (err != "")
-                        cerr << "Error with loading mtl file" + err << endl;
-                    mtlFile.close();
-                }
-                break;
-            case 'o':
-            // "o [nazwa_obiektu]", po tej linijce opisywane sÄ… wierzchoÅ‚ki
-                // Do nothing on first occurence of 'o'.
-                if (!verts.empty())
-                {
-                    shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, objnormals,
-                        material, objtexCoords, isSmooth);
-                    objects.push_back(obj);
-                    vertexIndexDiff += verts.size();
-                    verts.clear();
-                    faces.clear();
-                    objnormals.clear();
-                    objtexCoords.clear();
-                }
-                break;
-            case 'v':
-                if (line[1] == ' ')
-                {
-                    // wierzchoÅ‚ki
-                    // "v 1.000000 -1.000000 -1.000000"
-                    string v, v1, v2, v3;
-                    stringstream sstr(line);
-                    sstr >> v >> v1 >> v2 >> v3;
-                    array<double,3> coords;
-                    coords[0] = stod(v1);
-                    coords[1] = stod(v2);
-                    coords[2] = stod(v3);
-                    verts.push_back(coords);
-                }
-                else if (line[1] == 'n')
-                {
-                    // normal vectors
-                    // "vn "
-                    normals.push_back(extractNormal(line));
-                }
-                else {
-                    // texture coordinates
-                    texCoords.push_back(extractTextureCoords(line));
-                }
-                break;
-            case 'u': {
+            string mtlFileName = line.substr(7);
+            mtlFile.open(resourcePath("objFiles/" + mtlFileName), ios::in);
+            string err = tinyobj::LoadMtl(material_map, mtlFile);
+            if (err != "")
+                cerr << "Error with loading mtl file" + err << endl;
+            mtlFile.close();
+        }
+        break;
+        case 'o':
+            // "o [nazwa_obiektu]", po tej linijce opisywane s¹ wierzcho³ki
+            // Do nothing on first occurence of 'o'.
+            if (!verts.empty())
+            {
+                shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(verts, faces, objnormals,
+                                               material, objtexCoords, isSmooth);
+                objects.push_back(obj);
+                vertexIndexDiff += verts.size();
+                verts.clear();
+                faces.clear();
+                objnormals.clear();
+                objtexCoords.clear();
+            }
+            break;
+        case 'v':
+            if (line[1] == ' ')
+            {
+                // wierzcho³ki
+                // "v 1.000000 -1.000000 -1.000000"
+                string v, v1, v2, v3;
+                stringstream sstr(line);
+                sstr >> v >> v1 >> v2 >> v3;
+                array<double,3> coords;
+                coords[0] = stod(v1);
+                coords[1] = stod(v2);
+                coords[2] = stod(v3);
+                verts.push_back(coords);
+            }
+            else if (line[1] == 'n')
+            {
+                // normal vectors
+                // "vn "
+                normals.push_back(extractNormal(line));
+            }
+            else
+            {
+                // texture coordinates
+                texCoords.push_back(extractTextureCoords(line));
+            }
+            break;
+        case 'u':
+        {
             // "usemtl [material]"
-                string namebuf = line.substr(7);
-                if (material_map.find(namebuf) != material_map.end()) {
-                    material = material_map[namebuf];
-                    isMaterialSet = true;
-                } else {
-                    cerr << "Error: material " + namebuf + "not found" << endl;
-                    tinyobj::InitMaterial(material);
-                }}
-                break;
-            case 's':
+            string namebuf = line.substr(7);
+            if (material_map.find(namebuf) != material_map.end())
+            {
+                material = material_map[namebuf];
+            }
+            else
+            {
+                cerr << "Error: material " + namebuf + " not found" << endl;
+                tinyobj::InitMaterial(material);
+            }
+        }
+        break;
+        case 's':
             // smooth shade model
             // "s [off]"
-                if (line == "s off")
-                    isSmooth = false;
-                break;
-            case 'f':
+            if (line == "s off")
+                isSmooth = false;
+            break;
+        case 'f':
             // faces: Gdy nie ma vt i vn
-            // cztery int z numerem wierzchoÅ‚ka.
+            // cztery int z numerem wierzcho³ka.
             // "f 5 6 2 1"
             // W przeciwnym wypadku "f vertexIndex/texcoordindex/normalindex ..."
-                array<string,5> f;
-                stringstream sstr(line);
-                sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
-                array<int, 4> face;
-                int normalIndex = -1;
-                for (int i=0; i<4; ++i)
+            array<string,5> f;
+            stringstream sstr(line);
+            sstr >> f[0] >> f[1] >> f[2] >> f[3] >> f[4];
+            array<int, 4> face;
+            int normalIndex = -1;
+            for (int i=0; i<4; ++i)
+            {
+                if (f[i+1] != "")
                 {
-                    if (f[i+1] != "")
-                    {
-                        array<int,3> vals = stripFaceIndex(f[i+1]);
-                        face[i] = vals[0] - vertexIndexDiff - 1;
-                        if (vals[1] > 0)
-                            objtexCoords.push_back(texCoords[vals[1]-1]);
-                        normalIndex = vals[2];
-                    }
-                    else
-                        face[i] = face[i-1];
+                    array<int,3> vals = stripFaceIndex(f[i+1]);
+                    face[i] = vals[0] - vertexIndexDiff - 1;
+                    if (vals[1] > 0)
+                        objtexCoords.push_back(texCoords[vals[1]-1]);
+                    normalIndex = vals[2];
                 }
-                faces.push_back(face);
-                if (normalIndex > 0)
-                    objnormals.push_back(normals[normalIndex-1]);
+                else
+                    face[i] = face[i-1];
+            }
+            faces.push_back(face);
+            if (normalIndex > 0)
+                objnormals.push_back(normals[normalIndex-1]);
         }
         cout << line << endl;
     }
@@ -160,7 +165,7 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
     {
         objects.push_back(make_shared<LoadedObject>(verts, faces, objnormals, material, objtexCoords, isSmooth));
     }
-    //cout << "IloÅ›Ä‡ wczytanych obiektÃ³w: " << objects.size() << endl;
+    //cout << "Iloœæ wczytanych obiektów: " << objects.size() << endl;
     objFile.close();
     return objects;
 }
@@ -216,7 +221,8 @@ array<double,2> extractTextureCoords(string input)
     return extracted;
 }
 
-GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight) {
+GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
+{
     GLubyte *outData = NULL;
     png_structp png_ptr;
     png_infop info_ptr;
@@ -235,7 +241,8 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight) {
      */
     png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
-    if (png_ptr == NULL) {
+    if (png_ptr == NULL)
+    {
         fclose(fp);
         return NULL;
     }
@@ -243,7 +250,8 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight) {
     /* Allocate/initialize the memory
      * for image information.  REQUIRED. */
     info_ptr = png_create_info_struct(png_ptr);
-    if (info_ptr == NULL) {
+    if (info_ptr == NULL)
+    {
         fclose(fp);
         png_destroy_read_struct(&png_ptr, NULL, NULL);
         return NULL;
@@ -254,7 +262,8 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight) {
      * REQUIRED unless you  set up your own error handlers in
      * the png_create_read_struct() earlier.
      */
-    if (setjmp(png_jmpbuf(png_ptr))) {
+    if (setjmp(png_jmpbuf(png_ptr)))
+    {
         /* Free all of the memory associated
          * with the png_ptr and info_ptr */
         png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
@@ -298,7 +307,8 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight) {
 
     png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 
-    for (int i = 0; i < outHeight; i++) {
+    for (int i = 0; i < outHeight; i++)
+    {
         /* note that png is ordered top to bottom, but OpenGL expect it bottom to top
         so the order or swapped */
         memcpy(outData+(row_bytes * (outHeight-1-i)), row_pointers[i], row_bytes);

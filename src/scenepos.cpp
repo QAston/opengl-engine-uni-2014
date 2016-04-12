@@ -11,7 +11,6 @@ void ScenePos::translate(float x, float y, float z)
 
 void ScenePos::rotate(float val)
 {
-    glm::mat4 world = getWorldMatrix();
     _rotX -=  val;
 }
 

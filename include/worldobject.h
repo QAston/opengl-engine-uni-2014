@@ -6,7 +6,7 @@
 class WorldObject : public CollidingObject, public Movable, public Drawable, public GameObject
 {
     public:
-        WorldObject(shared_ptr<SceneObject>);
+        explicit WorldObject(shared_ptr<SceneObject>);
         virtual ~WorldObject();
 
         ScenePos getMovementTransposition() override { return movementTransposition; }

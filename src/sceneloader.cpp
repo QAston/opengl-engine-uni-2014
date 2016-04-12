@@ -1,8 +1,8 @@
 #include "sceneloader.h"
 #include "objloader.h"
-#include "reader.h"
-#include "document.h"
-#include "filestream.h"
+#include "rapidjson/reader.h"
+#include "rapidjson/document.h"
+#include "rapidjson/filestream.h"
 #include <fstream>
 #include <cassert>
 #include <stack>
@@ -10,6 +10,7 @@
 #include <iostream>
 #include "linearanimator.h"
 #include "constanimator.h"
+#include "rwconfig.h"
 
 using namespace rapidjson;
 
@@ -83,17 +84,17 @@ struct SceneHandler {
         }
         else if(objs.top()->readingObject && objs.top()->currentFieldName == "name")
         {
-            objs.top()->objectName = string(str, len);
+            objs.top()->objectName = resourcePath(string(str, len));
             objs.top()->nextReadFieldName = true;
         }
         else if(objs.top()->readingObject && objs.top()->currentFieldName == "animation")
         {
-            objs.top()->animationFile = string(str, len);
+            objs.top()->animationFile = resourcePath(string(str, len));
             objs.top()->nextReadFieldName = true;
         }
         else if(!objs.top()->readingObject && objs.top()->currentFieldName == "models")
         {
-            objs.top()->models.push_back(string(str, len));
+            objs.top()->models.push_back(resourcePath(string(str, len)));
         }
         else
         {
@@ -186,6 +187,8 @@ struct SceneHandler {
 
 SceneObject* loadScene(const char* filename)
 {
+    std::string s = resourcePath(filename);
+    filename = s.c_str();
     SceneHandler handler;
     FILE* file = fopen(filename, "r");
     if (file == nullptr)

@@ -6,7 +6,7 @@
 class ConstAnimator : public Animator
 {
     public:
-        ConstAnimator(ObjectDesc desc)
+        explicit ConstAnimator(ObjectDesc desc)
         {
             this->_desc = desc;
         }

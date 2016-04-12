@@ -22,7 +22,7 @@ class FPSCamera : public Camera
         class Input : public InputListener
         {
         public:
-            Input(shared_ptr<FPSCamera> camera);
+            explicit Input(shared_ptr<FPSCamera> camera);
             void specialInput(int key, int /*x*/, int /*y*/) override;
             void keyboard(unsigned char key, int /*x*/, int /*y*/) override;
             void mousePassive(int x, int y) override;

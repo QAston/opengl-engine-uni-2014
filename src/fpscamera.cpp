@@ -36,15 +36,15 @@ glm::mat4 FPSCamera::getWorldMatrix()
 // checks ascii input
 void FPSCamera::Input::keyboard(unsigned char key, int /*x*/, int /*y*/)
 {
-  switch (key)
-  {
+    switch (key)
+    {
     case '\x1B':
-      exit(EXIT_SUCCESS);
-      break;
+        exit(EXIT_SUCCESS);
+        break;
     default:
         return;
-  }
-  glutPostRedisplay();
+    }
+    glutPostRedisplay();
 }
 
 FPSCamera::Input::Input(shared_ptr<FPSCamera> camera)
@@ -56,30 +56,30 @@ FPSCamera::Input::Input(shared_ptr<FPSCamera> camera)
 // checks raw keyboard input
 void FPSCamera::Input::specialInput(int key, int /*x*/, int /*y*/)
 {
-  const float deltaPos = 0.1;
+    const float deltaPos = 0.1;
 
-  glm::mat4 world = _camera->getWorldMatrix();
-  switch(key)
-  {
+    glm::mat4 world = _camera->getWorldMatrix();
+    switch(key)
+    {
     case GLUT_KEY_UP:
         _camera->_posX -= world[2][0] * deltaPos;
         _camera->_posZ -= world[2][2] * deltaPos;
-      break;
+        break;
     case GLUT_KEY_DOWN:
         _camera->_posX += world[2][0] * deltaPos;
         _camera->_posZ += world[2][2] * deltaPos;
-      break;
+        break;
     case GLUT_KEY_LEFT:
         _camera->_posX -= world[0][0] * deltaPos;
         _camera->_posZ -= world[0][2] * deltaPos;
-      break;
+        break;
     case GLUT_KEY_RIGHT:
         _camera->_posX += world[0][0] * deltaPos;
         _camera->_posZ += world[0][2] * deltaPos;
-      break;
+        break;
     default:
         return;
-  }
+    }
 
     positionChanged();
 }
@@ -104,22 +104,20 @@ void FPSCamera::Input::mousePassive(int y, int x)
 
 void FPSCamera::Input::mouseMotion(int x, int y)
 {
-
     mousePassive(x, y);
-
 }
 
 void FPSCamera::Input::positionChanged()
 {
-      glm::mat4 world = _camera->getWorldMatrix();
-      alListener3f(AL_POSITION, _camera->_posX,  _camera->_posY,  _camera->_posZ);
+    glm::mat4 world = _camera->getWorldMatrix();
+    alListener3f(AL_POSITION, _camera->_posX,  _camera->_posY,  _camera->_posZ);
 
-      _listenerOrientation[0] = world[2][0];
-      _listenerOrientation[1] = world[2][1];
-      _listenerOrientation[2] = world[2][2];
-      _listenerOrientation[3] = world[1][0];
-      _listenerOrientation[4] = world[1][1];
-      _listenerOrientation[5] = world[1][2];
-     alListenerfv(AL_ORIENTATION, _listenerOrientation);
-     glutPostRedisplay();
+    _listenerOrientation[0] = world[2][0];
+    _listenerOrientation[1] = world[2][1];
+    _listenerOrientation[2] = world[2][2];
+    _listenerOrientation[3] = world[1][0];
+    _listenerOrientation[4] = world[1][1];
+    _listenerOrientation[5] = world[1][2];
+    alListenerfv(AL_ORIENTATION, _listenerOrientation);
+    glutPostRedisplay();
 }
