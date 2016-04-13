@@ -15,9 +15,9 @@ Cube::Cube(ScenePos pos)
     std::mt19937 generator;
     generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
     std::uniform_real_distribution<float> distribution(0.0, 1.0);
-    for(int i = 0; i < 24; ++i)
+    for(float & cubeColor : cubeColors)
     {
-        cubeColors[i] = distribution(generator);
+        cubeColor = distribution(generator);
     }
 }
 
@@ -61,20 +61,20 @@ void Cube::draw()
     glDisableClientState (GL_VERTEX_ARRAY);
 }
 
-Cube::Input::Input(Cube* cube, SoundSource* sound)
+Cube::Input::Input(Cube*  /*cube*/, SoundSource* sound)
 {
     this->_sound = sound;
 }
 
-void Cube::Input::specialInput(int key, int /*x*/, int /*y*/)
+void Cube::Input::specialInput(int  /*key*/, int /*x*/, int /*y*/)
 {
 }
 
-void Cube::Input::mousePassive(int x, int y)
+void Cube::Input::mousePassive(int  /*x*/, int  /*y*/)
 {
 }
 
-void Cube::Input::mouseMotion(int x, int y)
+void Cube::Input::mouseMotion(int  /*x*/, int  /*y*/)
 {
 }
 

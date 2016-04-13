@@ -39,8 +39,8 @@ struct SceneHandler {
     stack<SceneData*> objs;
     SceneObject* loadedObject = nullptr;
 
-	void Null() { assert(false&& "invalid null in json file"); }
-	void Bool(bool) { assert(false&& "invalid bool in json file"); }
+	void Null() { assert(false); }
+	void Bool(bool /*unused*/) { assert(false); }
 	void Int(int n) { Num(n); }
 	void Uint(unsigned n) { Num(n); }
 	void Int64(int64_t n) { Num(n); }
@@ -65,17 +65,17 @@ struct SceneHandler {
             }
             else
             {
-                assert(false&& "invalid number in json file");
+                assert(false);
             }
 	    }
 	    else
         {
-            assert(false && "invalid number in json file");
+            assert(false);
         }
         objs.top()->nextReadFieldName = objs.top()->readingObject;
 	}
 
-	void String(const Ch* str, int len, bool alloc)
+	void String(const Ch* str, int len, bool  /*alloc*/)
 	{
 	    if (objs.top()->readingObject && objs.top()->nextReadFieldName)
         {
@@ -98,7 +98,7 @@ struct SceneHandler {
         }
         else
         {
-            assert(false&& "invalid string in json file");
+            assert(false);
         }
 	}
 	void StartObject()
@@ -109,10 +109,10 @@ struct SceneHandler {
         }
         else
         {
-            assert(false&& "invalid object in json file");
+            assert(false);
         }
 	}
-	void EndObject(int s)
+	void EndObject(int  /*s*/)
 	{
 	    // object and it's children are all ready
 	    // can now build sceneobject
@@ -167,7 +167,7 @@ struct SceneHandler {
 	void StartArray() {
 	    if (!objs.top()->readingObject)
         {
-            assert(false&& "invalid nested array in json file");
+            assert(false);
         }
         objs.top()->readingObject = false;
 	    if (objs.top()->currentFieldName == "objs")
@@ -179,10 +179,10 @@ struct SceneHandler {
         }
         else
         {
-            assert(false&& "invalid array in json file");
+            assert(false);
         }
 	 }
-	void EndArray(int s) { objs.top()->readingObject = true; objs.top()->nextReadFieldName = true;}
+	void EndArray(int  /*s*/) { objs.top()->readingObject = true; objs.top()->nextReadFieldName = true;}
 };
 
 SceneObject* loadScene(const char* filename)
@@ -191,8 +191,9 @@ SceneObject* loadScene(const char* filename)
     filename = s.c_str();
     SceneHandler handler;
     FILE* file = fopen(filename, "r");
-    if (file == nullptr)
+    if (file == nullptr) {
         return nullptr;
+}
 
 	FileStream inputStream(file);
 

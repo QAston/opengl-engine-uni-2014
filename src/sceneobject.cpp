@@ -13,9 +13,9 @@ void SceneObject::update(int msElapsed)
     ObjectDesc desc = _animator->getStateFor(msElapsed);
     this->pos = desc.pos;
     this->scale = desc.scale;
-    for(auto sItr = subObjects.begin(); sItr != subObjects.end(); ++sItr)
+    for(auto & subObject : subObjects)
     {
-        (*sItr)->update(msElapsed);
+        subObject->update(msElapsed);
     }
     glutPostRedisplay();
 }
@@ -30,39 +30,44 @@ void SceneObject::draw()
     glScalef(scale[0], scale[1], scale[2]);
 
     glPushMatrix();
-    for(auto mItr = models.begin(); mItr != models.end(); ++mItr)
+    for(auto & model : models)
     {
         // restore calculated matrix
         glPopMatrix();
         glPushMatrix();
-        (*mItr)->draw();
+        model->draw();
     }
 
-    for(auto sItr = subObjects.begin(); sItr != subObjects.end(); ++sItr)
+    for(auto & subObject : subObjects)
     {
         // restore calculated matrix
         glPopMatrix();
         glPushMatrix();
-        (*sItr)->draw();
+        subObject->draw();
     }
     glPopMatrix();
 }
 
 BoundInfo mergeBounds(BoundInfo a, BoundInfo b)
 {
-    if (!a.hasBounds && !b.hasBounds)
+    if (!a.hasBounds && !b.hasBounds) {
         return a;
-    if (!b.hasBounds)
+}
+    if (!b.hasBounds) {
         return a;
-    if (!a.hasBounds)
+}
+    if (!a.hasBounds) {
         return b;
+}
 
     BoundInfo ret;
     ret.hasBounds = true;
-    for(int i = 0; i < 3; ++i)
+    for(int i = 0; i < 3; ++i) {
         ret.bounds[i] = std::min(a.bounds[i], b.bounds[i]);
-    for(int i = 3; i < 6; ++i)
+}
+    for(int i = 3; i < 6; ++i) {
         ret.bounds[i] = std::max(a.bounds[i], b.bounds[i]);
+}
     return ret;
 }
 
@@ -72,13 +77,13 @@ BoundInfo SceneObject::getBounds(glm::mat4 trans)
     trans = glm::scale(trans, glm::vec3(scale[0], scale[1], scale[2]));
     BoundInfo ret;
     ret.hasBounds = false;
-    for(auto mItr = models.begin(); mItr != models.end(); ++mItr)
+    for(auto & model : models)
     {
-        ret = mergeBounds((*mItr)->getBounds(trans), ret);
+        ret = mergeBounds(model->getBounds(trans), ret);
     }
-    for(auto sItr = subObjects.begin(); sItr != subObjects.end(); ++sItr)
+    for(auto & subObject : subObjects)
     {
-        ret = mergeBounds((*sItr)->getBounds(trans), ret);
+        ret = mergeBounds(subObject->getBounds(trans), ret);
     }
     return ret;
 }

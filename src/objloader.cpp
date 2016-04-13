@@ -64,8 +64,9 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
             string mtlFileName = line.substr(7);
             mtlFile.open(resourcePath("objFiles/" + mtlFileName), ios::in);
             string err = tinyobj::LoadMtl(material_map, mtlFile);
-            if (err != "")
+            if (err != "") {
                 cerr << "Error with loading mtl file" + err << endl;
+}
             mtlFile.close();
         }
         break;
@@ -128,8 +129,9 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
         case 's':
             // smooth shade model
             // "s [off]"
-            if (line == "s off")
+            if (line == "s off") {
                 isSmooth = false;
+}
             break;
         case 'f':
         {
@@ -149,20 +151,23 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char* path)
                 {
                     array<int,3> vals = stripFaceIndex(f[i+1]);
                     face[i] = vals[0] - vertexIndexDiff - 1;
-                    if (vals[1] > 0)
+                    if (vals[1] > 0) {
                         objtexCoords.push_back(texCoords[vals[1]-1]);
+}
                     normalIndex = vals[2];
                 }
-                else
+                else {
                     face[i] = face[i-1];
+}
             }
             faces.push_back(face);
-            if (normalIndex > 0)
+            if (normalIndex > 0) {
                 objnormals.push_back(normals[normalIndex-1]);
+}
         }
         break;
         default:
-            assert(false && "INVALID CASE VALUE");
+            assert(false);
             break;
         }
         cout << line << endl;
@@ -184,21 +189,25 @@ array<int,3> stripFaceIndex(string input)
     /// vertexIndex
     values[0] = stoi(input.substr(0, slashPos));
     // no more values found
-    if (slashPos == -1)
+    if (slashPos == -1) {
         return values;
+}
 
     input = input.substr(slashPos+1);
     int nextslashPos = input.find('/');
     /// textureCoordIndex
-    if (input.substr(0, nextslashPos) != "")
+    if (input.substr(0, nextslashPos) != "") {
         values[1] = stoi(input.substr(0, nextslashPos));
+}
 
     // no more values found
-    if (nextslashPos == -1)
+    if (nextslashPos == -1) {
         return values;
+}
     /// normalIndex
-    if (input.substr(nextslashPos+1) != "")
+    if (input.substr(nextslashPos+1) != "") {
         values[2] = stoi(input.substr(nextslashPos+1));
+}
     return values;
 }
 
@@ -230,15 +239,16 @@ array<double,2> extractTextureCoords(string input)
 
 GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
 {
-    GLubyte *outData = NULL;
+    GLubyte *outData = nullptr;
     png_structp png_ptr;
     png_infop info_ptr;
     unsigned int sig_read = 0;
     int color_type, interlace_type;
     FILE *fp;
 
-    if ((fp = fopen(name, "rb")) == NULL)
-        return NULL;
+    if ((fp = fopen(name, "rb")) == nullptr) {
+        return nullptr;
+}
 
     /* Create and initialize the png_struct with the desired error handler
      * functions.  If you want to use the default stderr and longjump method,
@@ -246,22 +256,22 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
      * the compiler header file version, so that we know if the application
      * was compiled with a compatible version of the library.  REQUIRED
      */
-    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
 
-    if (png_ptr == NULL)
+    if (png_ptr == nullptr)
     {
         fclose(fp);
-        return NULL;
+        return nullptr;
     }
 
     /* Allocate/initialize the memory
      * for image information.  REQUIRED. */
     info_ptr = png_create_info_struct(png_ptr);
-    if (info_ptr == NULL)
+    if (info_ptr == nullptr)
     {
         fclose(fp);
-        png_destroy_read_struct(&png_ptr, NULL, NULL);
-        return NULL;
+        png_destroy_read_struct(&png_ptr, nullptr, nullptr);
+        return nullptr;
     }
 
     /* Set error handling if you are using the setjmp/longjmp method
@@ -273,11 +283,11 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
     {
         /* Free all of the memory associated
          * with the png_ptr and info_ptr */
-        png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+        png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
         fclose(fp);
         /* If we get here, we had a
          * problem reading the file */
-        return NULL;
+        return nullptr;
     }
 
     /* Set up the output control if you are using standard C streams */
@@ -299,12 +309,12 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
      * PNG_TRANSFORM_PACKING  forces 8 bit
      * PNG_TRANSFORM_EXPAND forces to expand a palette into RGB
      */
-    png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_EXPAND, NULL);
+    png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_EXPAND, nullptr);
 
     png_uint_32 width, height;
     int bit_depth;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type,
-                 &interlace_type, NULL, NULL);
+                 &interlace_type, nullptr, nullptr);
     outWidth = width;
     outHeight = height;
 
@@ -322,7 +332,7 @@ GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight)
     }
 
     /* Clean up after the read, and free any memory allocated */
-    png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+    png_destroy_read_struct(&png_ptr, &info_ptr, nullptr);
 
     /* Close the file */
     fclose(fp);
@@ -341,10 +351,10 @@ GLubyte* initTexture(const char* filename)
     int width, height;
     GLubyte *textureImage;
     textureImage = loadPngImage(filename, width, height);
-    if (textureImage == NULL)
+    if (textureImage == nullptr)
     {
         cerr << "Unable to load png file :" << filename << endl;
-        return NULL;
+        return nullptr;
     }
     cout << "Image loaded. Width: " << width << " Height: " << height << endl;
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

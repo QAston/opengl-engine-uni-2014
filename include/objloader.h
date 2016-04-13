@@ -40,7 +40,7 @@ array<double,2> extractTextureCoords(string input);
 GLubyte* loadPngImage(const char *name, int &outWidth, int &outHeight);
 
 /// Loads texture. Invoked by objects loaded from obj files.
-GLubyte* initTexture(const char *name);
+GLubyte* initTexture(const char *filename);
 
 
 #endif // OBJLOADER_H

@@ -22,8 +22,9 @@ void WorldObject::moveTo(ScenePos pos)
     AABBCollisionMgr*mgr =  AABBCollisionMgr::get();
 
     // it's colliding - move to old pos
-    if (mgr->isColliding(this))
+    if (mgr->isColliding(this)) {
         movementTransposition = oldPos;
+}
 }
 
 void WorldObject::draw()

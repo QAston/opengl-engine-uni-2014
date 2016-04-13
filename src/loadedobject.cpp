@@ -38,10 +38,11 @@ LoadedObject::LoadedObject(
     {
         std::string s = resourcePath("/png/" + _material.diffuse_texname);
         _textureImage = loadPngImage(s.c_str(), _texWidth, _texHeight);
-        if (_textureImage == NULL)
+        if (_textureImage == nullptr) {
             cerr << "Unable to load png file :" << s << endl;
-        else
+        } else {
             cout << "Image loaded. Width: " << _texWidth << " Height: " << _texHeight << endl;
+}
     }
     _smooth = smooth;
 }
@@ -53,10 +54,10 @@ LoadedObject::~LoadedObject()
 
 BoundInfo LoadedObject::getBounds(glm::mat4 trans)
 {
-    std::array<double,6> ret{0,0,0,0,0,0};
+    std::array<double,6> ret{{0,0,0,0,0,0}};
     BoundInfo retObj;
 
-    if (_normals.size() > 0)
+    if (!_normals.empty())
     {
         retObj.hasBounds = true;
         // init with first point
@@ -71,22 +72,28 @@ BoundInfo LoadedObject::getBounds(glm::mat4 trans)
             ret[4] = point[1];
             ret[5] = point[2];
         }
-        for (auto it=_vertici.begin(); it != _vertici.end(); ++it)
+        for (auto & it : _vertici)
         {
-            glm::vec4 pos = glm::vec4(glm:: vec3((*it)[0], (*it)[1], (*it)[2]), 1.0f);
+            glm::vec4 pos = glm::vec4(glm:: vec3(it[0], it[1], it[2]), 1.0f);
             glm::vec4 point = trans * pos;
-            if (point[0] <= ret[0])
+            if (point[0] <= ret[0]) {
                 ret[0] = point[0];
-            if (point[1] <= ret[1])
+}
+            if (point[1] <= ret[1]) {
                 ret[1] = point[1];
-            if (point[2] <= ret[2])
+}
+            if (point[2] <= ret[2]) {
                 ret[2] = point[2];
-            if (point[0] >= ret[3])
+}
+            if (point[0] >= ret[3]) {
                 ret[3] = point[0];
-            if (point[1] >= ret[4])
+}
+            if (point[1] >= ret[4]) {
                 ret[4] = point[1];
-            if (point[2] >= ret[5])
+}
+            if (point[2] >= ret[5]) {
                 ret[5] = point[2];
+}
         }
     }
     else
@@ -101,7 +108,7 @@ BoundInfo LoadedObject::getBounds(glm::mat4 trans)
 
 void LoadedObject::draw()
 {
-    if (_normals.size() > 0)
+    if (!_normals.empty())
     {
         glEnableClientState (GL_NORMAL_ARRAY);
         glNormalPointer (GL_DOUBLE, 0, _normals.data());
@@ -133,7 +140,7 @@ void LoadedObject::draw()
 
     glColor3fv(_material.diffuse);
 
-    if(_textureImage != NULL)
+    if(_textureImage != nullptr)
     {
         glEnableClientState (GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer (2, GL_DOUBLE, 0, _texCoords.data());
@@ -148,19 +155,20 @@ void LoadedObject::draw()
         glEnable(GL_TEXTURE_2D);
     }
 
-    for (auto facesIterator = _faces.begin(); facesIterator != _faces.end(); ++facesIterator)
+    for (auto & _face : _faces)
     {
-        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, facesIterator->data());
+        glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, _face.data());
     }
 
     //glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-    if (_normals.size() > 0)
+    if (!_normals.empty()) {
         glDisableClientState(GL_NORMAL_ARRAY);
+}
 
 
     // set GL state for non-textured objects
-    if(_textureImage != NULL)
+    if(_textureImage != nullptr)
     {
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);

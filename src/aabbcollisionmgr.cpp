@@ -45,21 +45,24 @@ bool boundsCrossing(BoundInfo myBounds, BoundInfo otherBounds)
 
 bool AABBCollisionMgr::isColliding(CollidingObject* what) {
     BoundInfo myBounds = what->getBounds();
-    if (!myBounds.hasBounds)
+    if (!myBounds.hasBounds) {
         return false;
-    for (auto itr = _objects.begin(); itr != _objects.end();++itr)
+}
+    for (auto with : _objects)
     {
-        shared_ptr<CollidingObject> with = *itr;
-        if (with.get() == what)
+        if (with.get() == what) {
             continue;
+}
 
         BoundInfo otherBounds = with->getBounds();
 
-        if (!otherBounds.hasBounds)
+        if (!otherBounds.hasBounds) {
             continue;
+}
 
-        if (boundsCrossing(myBounds, otherBounds))
+        if (boundsCrossing(myBounds, otherBounds)) {
             return true;
+}
     }
     return false;
 }

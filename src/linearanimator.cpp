@@ -77,8 +77,8 @@ struct AnimLoader {
     vector<SimpleAnimEntry> entries;
     SimpleAnimEntry current;
 
-	void Null() { assert(false&& "invalid null in json file"); }
-	void Bool(bool) { assert(false&& "invalid bool in json file"); }
+	void Null() { assert(false); }
+	void Bool(bool /*unused*/) { assert(false); }
 	void Int(int n) { Integer(n); }
 	void Uint(unsigned n) { Integer(n); }
 	void Int64(int64_t n) { Integer(n); }
@@ -105,7 +105,7 @@ struct AnimLoader {
         }
         else
         {
-            assert(false&& "invalid number in json file");
+            assert(false);
         }
         nextReadFieldName = true;
 	}
@@ -126,12 +126,12 @@ struct AnimLoader {
         }
         else
         {
-            assert(false&& "invalid number in json file");
+            assert(false);
         }
         nextReadFieldName = true;
 	}
 
-	void String(const Ch* str, int len, bool alloc)
+	void String(const Ch* str, int len, bool  /*alloc*/)
 	{
 	    if (nextReadFieldName)
         {
@@ -140,7 +140,7 @@ struct AnimLoader {
         }
         else
         {
-            assert(false&& "invalid string in json file");
+            assert(false);
         }
 	}
 	void StartObject()
@@ -150,7 +150,7 @@ struct AnimLoader {
         current.scale = {{1,1,1}};
         current.time = 0;
 	}
-	void EndObject(int s)
+	void EndObject(int  /*s*/)
 	{
 	    nextReadFieldName = true;
 	    entries.push_back(current);
@@ -165,10 +165,10 @@ struct AnimLoader {
         }
         else
         {
-            assert(false&& "invalid array in json file");
+            assert(false);
         }
 	 }
-	void EndArray(int s) { nextReadFieldName = true;}
+	void EndArray(int  /*s*/) { nextReadFieldName = true;}
 };
 
 unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename)
@@ -177,8 +177,9 @@ unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char* filename)
     filename = s.c_str();
     AnimLoader handler;
     FILE* file = fopen(filename, "r");
-    if (file == nullptr)
+    if (file == nullptr) {
         return nullptr;
+}
 
 	FileStream inputStream(file);
 
