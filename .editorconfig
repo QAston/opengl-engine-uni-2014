@@ -1,0 +1,14 @@
+root = true
+
+[*]
+end_of_line = crlf
+charset = utf-8
+[src/*.cpp]
+indent_style = space
+indent_size = 2
+[include/*.h]
+indent_style = space
+indent_size = 2
+[*]
+indent_style = space
+indent_size = 4

@@ -6,10 +6,9 @@
 
 using namespace std;
 
-struct ObjectDesc
-{
-    ScenePos pos;
-    std::array<double, 3> scale;
+struct ObjectDesc {
+  ScenePos pos;
+  std::array<double, 3> scale;
 };
 
 #endif // OBJECTDESC_H

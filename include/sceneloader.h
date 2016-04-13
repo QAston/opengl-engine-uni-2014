@@ -3,6 +3,6 @@
 
 #include "sceneobject.h"
 
-SceneObject* loadScene(const char* filename);
+SceneObject *loadScene(const char *filename);
 
 #endif

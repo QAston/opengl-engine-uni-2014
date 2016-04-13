@@ -27,7 +27,7 @@ else()
 	endif()
 	# set default values for cached variables here
 	if ((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
-		set(CMAKE_CXX_FLAGS "-Wextra -Wall -Wno-unused-parameter -Wuninitialized -Wswitch-default -Wfloat-equal -Wcast-qual -Wcast-align -fexceptions ${DEFAULT_FLAGS}" CACHE STRING "" FORCE)
+		set(CMAKE_CXX_FLAGS "-Wextra -Wall -Wuninitialized -Wswitch-default -Wfloat-equal -Wcast-qual -Wcast-align -fexceptions ${DEFAULT_FLAGS}" CACHE STRING "" FORCE)
 	endif()
 	if (CMAKE_BUILD_TYPE STREQUAL "")
 		set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
@@ -51,6 +51,9 @@ add_custom_target(clang-check COMMAND clang-check -analyze -p "${CMAKE_BINARY_DI
 
 #clang-tidy target
 add_custom_target(clang-tidy COMMAND clang-tidy -p "${CMAKE_BINARY_DIR}/compile_commands.json" -fix "-checks=readability*,performance*,misc*,modernize*,cppcore*,cert-*"  ${SRC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS fix-compile-cmds)
+
+#clang-format target
+add_custom_target(clang-format COMMAND clang-format -style=file -i -sort-includes  ${SRC_FILES} ${INC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS)
 
 
 

@@ -5,15 +5,15 @@
 using namespace std;
 #include "gameobject.h"
 
-class ObjectManager
-{
-    public:
-        ObjectManager() {}
-        virtual ~ObjectManager(){};
-        virtual void registerObject(shared_ptr<GameObject> o ) = 0;
-        virtual void unregisterObject(shared_ptr<GameObject> o ) = 0;
-    protected:
-    private:
+class ObjectManager {
+public:
+  ObjectManager() {}
+  virtual ~ObjectManager(){};
+  virtual void registerObject(shared_ptr<GameObject> o) = 0;
+  virtual void unregisterObject(shared_ptr<GameObject> o) = 0;
+
+protected:
+private:
 };
 
 #endif // OBJECTMANAGER_H
