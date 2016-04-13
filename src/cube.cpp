@@ -70,7 +70,7 @@ void Cube::Input::specialInput(int key, int /*x*/, int /*y*/)
 {
 }
 
-void Cube::Input::mousePassive(int y, int x)
+void Cube::Input::mousePassive(int x, int y)
 {
 }
 

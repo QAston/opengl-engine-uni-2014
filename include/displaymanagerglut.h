@@ -25,8 +25,6 @@ class DisplayManagerGLUT : public DisplayManager
         static void display();
         shared_ptr<Camera> camera;
         list<shared_ptr<Drawable>> objects;
-        int _framerate = 15;
-
 };
 
 #endif // DISPLAYMANAGERGLUT_H
