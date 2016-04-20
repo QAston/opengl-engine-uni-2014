@@ -27,7 +27,7 @@ else()
 	endif()
 	# set default values for cached variables here
 	if ((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
-		set(CMAKE_CXX_FLAGS "-Wextra -Wall -Wuninitialized -Wswitch-default -Wfloat-equal -Wcast-qual -Wcast-align -fexceptions ${DEFAULT_FLAGS}" CACHE STRING "" FORCE)
+		set(CMAKE_CXX_FLAGS "-Wextra -Wall -Wuninitialized -Wswitch-default -Wfloat-equal -Wcast-qual -Wcast-align -Wno-unused-parameter -fexceptions ${DEFAULT_FLAGS}" CACHE STRING "" FORCE)
 	endif()
 	if (CMAKE_BUILD_TYPE STREQUAL "")
 		set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
@@ -53,8 +53,15 @@ add_custom_target(clang-check COMMAND clang-check -analyze -p "${CMAKE_BINARY_DI
 add_custom_target(clang-tidy COMMAND clang-tidy -p "${CMAKE_BINARY_DIR}/compile_commands.json" -fix "-checks=readability*,performance*,misc*,modernize*,cppcore*,cert-*"  ${SRC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS fix-compile-cmds)
 
 #clang-format target
-add_custom_target(clang-format COMMAND clang-format -style=file -i -sort-includes  ${SRC_FILES} ${INC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS)
+add_custom_target(clang-format COMMAND clang-format -style=file -i ${SRC_FILES} ${INC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS)
 
+#GPROF
+option(WITH_GPROF "GPROF BUILD FLAGS" OFF)
+if(WITH_GPROF)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg")
+	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+	SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
+endif()
 
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${GLUT_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${glm_INCLUDE_DIR} ${rapidjson_INCLUDE_DIR} ${tinyobjloader_INCLUDE_DIR} ${ALUT_INCLUDE_DIR})
@@ -74,6 +81,7 @@ target_link_libraries(main ${GLUT_LIBRARIES} ${PNG_LIBRARIES} ${ALUT_LIBRARIES})
 #mingw32-make
 #cd ..
 #build/main
+#profiling: build with WITH_GPROF, run, then: gprof ./executable_name
 
 set(DEFAULTS_INITIALIZED True CACHE STRING "If default cache values have already been set(ignore this value)" FORCE)
 mark_as_advanced(DEFAULTS_INITIALIZED)
