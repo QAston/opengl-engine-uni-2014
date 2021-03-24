@@ -1,5 +1,6 @@
 #include "objloader.h"
 #include "rwconfig.h"
+#define TINYOBJLOADER_IMPLEMENTATION 1
 #include "tiny_obj_loader.h"
 #include <array>
 #include <fstream>
@@ -45,7 +46,8 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
 
   bool isSmooth = true;
 
-  std::map<std::string, tinyobj::material_t> material_map;
+  std::map<std::string, int> material_map;
+  std::vector<tinyobj::material_t> materials;
   fstream mtlFile;
 
   tinyobj::material_t material;
@@ -53,20 +55,22 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
   while (getline(objFile, line)) {
     switch (line[0]) {
     case '#':
-      // komentarz zaczynaj¹cy siê na '#'
+      // komentarz zaczynajï¿½cy siï¿½ na '#'
       continue;
     case 'm': {
       // "mtllib path"
       string mtlFileName = line.substr(7);
       mtlFile.open(resourcePath("objFiles/" + mtlFileName), ios::in);
-      string err = tinyobj::LoadMtl(material_map, mtlFile);
+      string err;
+      string warn;
+      tinyobj::LoadMtl(&material_map, &materials, &mtlFile, &warn, &err);
       if (err != "") {
         cerr << "Error with loading mtl file" + err << endl;
       }
       mtlFile.close();
     } break;
     case 'o':
-      // "o [nazwa_obiektu]", po tej linijce opisywane s¹ wierzcho³ki
+      // "o [nazwa_obiektu]", po tej linijce opisywane sï¿½ wierzchoï¿½ki
       // Do nothing on first occurence of 'o'.
       if (!verts.empty()) {
         shared_ptr<LoadedObject> obj = make_shared<LoadedObject>(
@@ -81,7 +85,7 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
       break;
     case 'v':
       if (line[1] == ' ') {
-        // wierzcho³ki
+        // wierzchoï¿½ki
         // "v 1.000000 -1.000000 -1.000000"
         string v, v1, v2, v3;
         stringstream sstr(line);
@@ -104,10 +108,11 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
       // "usemtl [material]"
       string namebuf = line.substr(7);
       if (material_map.find(namebuf) != material_map.end()) {
-        material = material_map[namebuf];
+        int id = material_map[namebuf];
+        material = materials[id];
       } else {
         cerr << "Error: material " + namebuf + " not found" << endl;
-        tinyobj::InitMaterial(material);
+        tinyobj::InitMaterial(&material);
       }
     } break;
     case 's':
@@ -120,7 +125,7 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
     case 'f': {
 
       // faces: Gdy nie ma vt i vn
-      // cztery int z numerem wierzcho³ka.
+      // cztery int z numerem wierzchoï¿½ka.
       // "f 5 6 2 1"
       // W przeciwnym wypadku "f vertexIndex/texcoordindex/normalindex ..."
       array<string, 5> f;
@@ -156,7 +161,7 @@ vector<shared_ptr<LoadedObject>> loadObjFile(const char *path) {
     objects.push_back(make_shared<LoadedObject>(
         verts, faces, objnormals, material, objtexCoords, isSmooth));
   }
-  // cout << "Iloœæ wczytanych obiektów: " << objects.size() << endl;
+  // cout << "Iloï¿½ï¿½ wczytanych obiektï¿½w: " << objects.size() << endl;
   objFile.close();
   return objects;
 }

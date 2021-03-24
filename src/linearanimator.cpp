@@ -1,6 +1,6 @@
 #include "linearanimator.h"
 #include "rapidjson/document.h"
-#include "rapidjson/filestream.h"
+#include "rapidjson/filereadstream.h"
 #include "rapidjson/reader.h"
 #include "rwconfig.h"
 #include <iostream>
@@ -71,15 +71,29 @@ struct AnimLoader {
   vector<SimpleAnimEntry> entries;
   SimpleAnimEntry current;
 
-  void Null() { assert(false); }
-  void Bool(bool /*unused*/) { assert(false); }
-  void Int(int n) { Integer(n); }
-  void Uint(unsigned n) { Integer(n); }
-  void Int64(int64_t n) { Integer(n); }
-  void Uint64(uint64_t n) { Integer(n); }
-  void Double(double n) { Num(n); }
+  bool Null() {
+    assert(false);
+    return false;
+  }
+  bool Bool(bool /*unused*/) {
+    assert(false);
+    return false;
+  }
+  bool Int(int n) { return Integer(n); }
+  bool Uint(unsigned n) { return Integer(n); }
+  bool Int64(int64_t n) { return Integer(n); }
+  bool Uint64(uint64_t n) { return Integer(n); }
+  bool Double(double n) { return Num(n); }
 
-  void Integer(uint64_t n) {
+  bool Key(const Ch *str, SizeType len, bool copy) {
+    return String(str, len, copy);
+  }
+
+  bool RawNumber(const Ch *str, SizeType len, bool copy) {
+    return String(str, len, copy);
+  }
+
+  bool Integer(uint64_t n) {
     if (currentFieldName == "pos") {
       current.pos[numberArrayIndex++] = n;
     } else if (currentFieldName == "rot") {
@@ -90,11 +104,13 @@ struct AnimLoader {
       current.time = n;
     } else {
       assert(false);
+      return false;
     }
     nextReadFieldName = true;
+    return true;
   }
 
-  void Num(double n) {
+  bool Num(double n) {
     if (currentFieldName == "pos") {
       current.pos[numberArrayIndex++] = n;
     } else if (currentFieldName == "rot") {
@@ -103,38 +119,49 @@ struct AnimLoader {
       current.scale[numberArrayIndex++] = n;
     } else {
       assert(false);
+      return false;
     }
     nextReadFieldName = true;
+    return true;
   }
 
-  void String(const Ch *str, int len, bool /*alloc*/) {
+  bool String(const Ch *str, int len, bool /*alloc*/) {
     if (nextReadFieldName) {
       currentFieldName = string(str, len);
       nextReadFieldName = false;
     } else {
       assert(false);
+      return false;
     }
+    return true;
   }
-  void StartObject() {
+  bool StartObject() {
     current.pos = {{0, 0, 0}};
     current.rot = {{0, 0, 0}};
     current.scale = {{1, 1, 1}};
     current.time = 0;
+    return true;
   }
-  void EndObject(int /*s*/) {
+  bool EndObject(int /*s*/) {
     nextReadFieldName = true;
     entries.push_back(current);
+    return true;
   }
-  void StartArray() {
+  bool StartArray() {
     if (currentFieldName == "") {
     } else if (currentFieldName == "pos" || currentFieldName == "rot" ||
                currentFieldName == "scale") {
       numberArrayIndex = 0;
     } else {
       assert(false);
+      return false;
     }
+    return true;
   }
-  void EndArray(int /*s*/) { nextReadFieldName = true; }
+  bool EndArray(int /*s*/) {
+    nextReadFieldName = true;
+    return true;
+  }
 };
 
 unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char *filename) {
@@ -146,13 +173,14 @@ unique_ptr<vector<SimpleAnimEntry>> loadAnimEntries(const char *filename) {
     return nullptr;
   }
 
-  FileStream inputStream(file);
+  char buffer[2000];
+  FileReadStream inputStream(file, buffer, 2000);
 
   Reader reader;
 
   if (!reader.Parse<0>(inputStream, handler)) {
     std::cerr << "Error: failed to open anim file: " << filename << std::endl;
-    std::cerr << reader.GetParseError() << std::endl;
+    std::cerr << reader.GetParseErrorCode() << std::endl;
 
     exit(0);
     return nullptr;

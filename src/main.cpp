@@ -19,7 +19,6 @@
 #include "sceneloader.h"
 #include "scenepos.h"
 #include "soundsourceglut.h"
-#include "unique.h"
 #include "worldobject.h"
 #include <memory>
 

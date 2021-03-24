@@ -1,0 +1,13 @@
+{
+  "name": "freealut",
+  "version-string": "1.1.0",
+  "port-version": 0,
+  "description": [
+    "freealut"
+  ],
+  "dependencies": [
+    "openal-soft"
+  ],
+  "homepage": "https://github.com/vancegroup/freealut",
+  "supports": "(x64) & (linux | osx | windows)"
+}

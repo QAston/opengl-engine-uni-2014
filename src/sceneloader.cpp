@@ -3,7 +3,7 @@
 #include "linearanimator.h"
 #include "objloader.h"
 #include "rapidjson/document.h"
-#include "rapidjson/filestream.h"
+#include "rapidjson/filereadstream.h"
 #include "rapidjson/reader.h"
 #include "rwconfig.h"
 #include <cassert>
@@ -38,15 +38,30 @@ struct SceneHandler {
   stack<SceneData *> objs;
   SceneObject *loadedObject = nullptr;
 
-  void Null() { assert(false); }
-  void Bool(bool /*unused*/) { assert(false); }
-  void Int(int n) { Num(n); }
-  void Uint(unsigned n) { Num(n); }
-  void Int64(int64_t n) { Num(n); }
-  void Uint64(uint64_t n) { Num(n); }
-  void Double(double n) { Num(n); }
+  bool Null() {
+    assert(false);
+    return false;
+  }
+  bool Bool(bool /*unused*/) {
+    assert(false);
+    return false;
+  }
+  bool Int(int n) { return Num(n); }
+  bool Uint(unsigned n) { return Num(n); }
+  bool Int64(int64_t n) { return Num(n); }
+  bool Uint64(uint64_t n) { return Num(n); }
+  bool Double(double n) { return Num(n); }
 
-  void Num(double n) {
+  bool Key(const Ch *str, SizeType len, bool copy) {
+    return String(str, len, copy);
+  }
+
+  bool RawNumber(const Ch *str, SizeType len, bool copy) {
+    return String(str, len, copy);
+  }
+
+
+  bool Num(double n) {
     if (!objs.top()->readingObject) {
       if (objs.top()->currentFieldName == "pos") {
         objs.top()->pos[objs.top()->numberArrayIndex++] = n;
@@ -56,14 +71,17 @@ struct SceneHandler {
         objs.top()->scale[objs.top()->numberArrayIndex++] = n;
       } else {
         assert(false);
+        return false;
       }
     } else {
       assert(false);
+      return false;
     }
     objs.top()->nextReadFieldName = objs.top()->readingObject;
+    return true;
   }
 
-  void String(const Ch *str, int len, bool /*alloc*/) {
+  bool String(const Ch *str, int len, bool /*alloc*/) {
     if (objs.top()->readingObject && objs.top()->nextReadFieldName) {
       objs.top()->currentFieldName = string(str, len);
       objs.top()->nextReadFieldName = false;
@@ -80,17 +98,21 @@ struct SceneHandler {
       objs.top()->models.push_back(resourcePath(string(str, len)));
     } else {
       assert(false);
+      return false;
     }
+    return true;
   }
-  void StartObject() {
+  bool StartObject() {
     if (objs.empty() || (objs.top()->currentFieldName == "objs" &&
                          !objs.top()->readingObject)) {
       objs.push(new SceneData());
     } else {
       assert(false);
+      return false;
     }
+    return true;
   }
-  void EndObject(int /*s*/) {
+  bool EndObject(int /*s*/) {
     // object and it's children are all ready
     // can now build sceneobject
     SceneData *data = objs.top();
@@ -133,10 +155,12 @@ struct SceneHandler {
       objs.top()->nextReadFieldName = objs.top()->readingObject;
     }
     delete data;
+    return true;
   }
-  void StartArray() {
+  bool StartArray() {
     if (!objs.top()->readingObject) {
       assert(false);
+      return false;
     }
     objs.top()->readingObject = false;
     if (objs.top()->currentFieldName == "objs") {
@@ -147,11 +171,13 @@ struct SceneHandler {
       objs.top()->numberArrayIndex = 0;
     } else {
       assert(false);
+      return false;
     }
   }
-  void EndArray(int /*s*/) {
+  bool EndArray(int /*s*/) {
     objs.top()->readingObject = true;
     objs.top()->nextReadFieldName = true;
+    return true;
   }
 };
 
@@ -164,7 +190,9 @@ SceneObject *loadScene(const char *filename) {
     return nullptr;
   }
 
-  FileStream inputStream(file);
+  char buffer[2000];
+
+  FileReadStream inputStream(file, buffer, 2000);
 
   Reader reader;
 

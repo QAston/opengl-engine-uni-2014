@@ -1,0 +1,17 @@
+{
+    "name": "rw",
+    "version-string": "0.1.0",
+    "dependencies": [
+      "freeglut",
+      "freealut",
+      "libpng",
+      "rapidjson",
+      "glm",
+      "tinyobjloader"
+    ],
+    "builtin-baseline": "2bc10eae2fb0b8c7c098325c4e9d82aa5d0329d9",
+    "overrides": [
+        { "name": "tinyobjloader", "version": "1.0.7"},
+        { "name": "freealut", "version": "1.1.0"}
+    ]
+}

@@ -1,87 +1,80 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.12)
 
-project (rw CXX)
-SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakeModules)
+project (rw VERSION 0.1
+    DESCRIPTION "opengl training project"
+    LANGUAGES CXX)
 
-set(glm_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/dep/glm)
-set(rapidjson_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/dep/rapidjson/include)
-set(tinyobjloader_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/dep/tinyobjloader)
-
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-find_package(GLUT REQUIRED)
-find_package(PNG REQUIRED)
-find_package(ALUT REQUIRED)
+add_executable(main src/aabbcollisionmgr.cpp
+src/cube.cpp
+src/displaymanagerglut.cpp
+src/fpscamera.cpp
+src/inputmanagerglut.cpp
+src/keyframe.cpp
+src/linearanimator.cpp
+src/loadedobject.cpp
+src/main.cpp
+src/mover.cpp
+src/objectmanagerglut.cpp
+src/objloader.cpp
+src/rwconfig.cpp
+src/sceneloader.cpp
+src/sceneobject.cpp
+src/scenepos.cpp
+src/soundsourceglut.cpp
+src/worldobject.cpp
+include/aabbcollisionmgr.h
+include/animator.h
+include/boundedobject.h
+include/boundinfo.h
+include/camera.h
+include/collidingobject.h
+include/constanimator.h
+include/cube.h
+include/displaymanager.h
+include/displaymanagerglut.h
+include/drawable.h
+include/fpscamera.h
+include/gameobject.h
+include/inputlistener.h
+include/inputmanager.h
+include/inputmanagerglut.h
+include/keyframe.h
+include/linearanimator.h
+include/loadedobject.h
+include/movable.h
+include/mover.h
+include/objectdesc.h
+include/objectmanager.h
+include/objectmanagerglut.h
+include/objloader.h
+include/rwconfig.h
+include/sceneloader.h
+include/sceneobject.h
+include/scenepos.h
+include/soundsource.h
+include/soundsourceglut.h
+include/worldobject.h)
+target_include_directories(main PUBLIC include)
 
-if(DEFAULTS_INITIALIZED)
-else()
-	message("initializing default config values...")
+find_package(FreeGLUT REQUIRED)
+target_link_libraries(main PRIVATE FreeGLUT::freeglut)
 
-	set(DEFAULT_FLAGS "${PNG_DEFINITIONS} ${CMAKE_CXX_FLAGS}")
-	if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-		set(DEFAULT_FLAGS "-Wsuggest-override  -Wlogical-op -Wuseless-cast ${DEFAULT_FLAGS}" )
-	endif()
-	if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-		set(DEFAULT_FLAGS "-std=c++11 ${DEFAULT_FLAGS}" )
-	endif()
-	# set default values for cached variables here
-	if ((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") OR (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
-		set(CMAKE_CXX_FLAGS "-Wextra -Wall -Wuninitialized -Wswitch-default -Wfloat-equal -Wcast-qual -Wcast-align -Wno-unused-parameter -fexceptions ${DEFAULT_FLAGS}" CACHE STRING "" FORCE)
-	endif()
-	if (CMAKE_BUILD_TYPE STREQUAL "")
-		set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
-	endif()
-	message("default config values done.")
-endif()
+find_package(glm CONFIG REQUIRED)
+target_include_directories(main PRIVATE ${glm_INCLUDE_DIRS})
 
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-file(GLOB INC_FILES ${PROJECT_SOURCE_DIR}/include/*.h)
+find_package(libpng CONFIG REQUIRED)
+target_link_libraries(main PRIVATE png)
 
-#CLANG TOOLS STUFF:
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES 0) # needed by clang-check because it can't parse @response files
-#fix-compile-cmds target
-add_custom_target(fix-compile-cmds
-    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_SOURCE_DIR}/cmakeModules/fix_compile_cmds.cmake"
-)
+find_package(RapidJSON CONFIG REQUIRED)
+target_include_directories(main PRIVATE ${RAPIDJSON_INCLUDE_DIRS})
 
-#clang-check target
-add_custom_target(clang-check COMMAND clang-check -analyze -p "${CMAKE_BINARY_DIR}/compile_commands.json" ${SRC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS fix-compile-cmds)
+find_package(tinyobjloader CONFIG REQUIRED)
+target_link_libraries(main PRIVATE tinyobjloader::tinyobjloader)
 
-#clang-tidy target
-add_custom_target(clang-tidy COMMAND clang-tidy -p "${CMAKE_BINARY_DIR}/compile_commands.json" -fix "-checks=readability*,performance*,misc*,modernize*,cppcore*,cert-*"  ${SRC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS fix-compile-cmds)
-
-#clang-format target
-add_custom_target(clang-format COMMAND clang-format -style=file -i ${SRC_FILES} ${INC_FILES} WORKING_DIRECTORY ${CMAKE_BINARY_DIR} DEPENDS)
-
-#GPROF
-option(WITH_GPROF "GPROF BUILD FLAGS" OFF)
-if(WITH_GPROF)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg")
-	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
-	SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
-endif()
-
-
-include_directories(${PROJECT_SOURCE_DIR}/include ${GLUT_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${glm_INCLUDE_DIR} ${rapidjson_INCLUDE_DIR} ${tinyobjloader_INCLUDE_DIR} ${ALUT_INCLUDE_DIR})
-add_executable(main ${SRC_FILES} ${INC_FILES})
-target_link_libraries(main ${GLUT_LIBRARIES} ${PNG_LIBRARIES} ${ALUT_LIBRARIES})
-
-#deps
-#rapidjson - header only
-#glm - header only
-#tinyobjx  - needs fixing, because not header only
-
-#build + run
-#mkdir build
-#cd build
-#cmake .. -G"MinGW Makefiles" # for G++
-#cmake .. -G"CodeBlocks - MinGW Makefiles" -DCMAKE_CXX_COMPILER=clang++ # zmienia toolchain
-#mingw32-make
-#cd ..
-#build/main
-#profiling: build with WITH_GPROF, run, then: gprof ./executable_name
-
-set(DEFAULTS_INITIALIZED True CACHE STRING "If default cache values have already been set(ignore this value)" FORCE)
-mark_as_advanced(DEFAULTS_INITIALIZED)
+include(FindPkgConfig)
+pkg_check_modules(ALUT REQUIRED IMPORTED_TARGET freealut)
+target_link_libraries(main PRIVATE PkgConfig::ALUT)

@@ -1,7 +1,7 @@
 #include "loadedobject.h"
 #include "objloader.h"
 #include "rwconfig.h"
-#include "tiny_obj_loader.cpp"
+#include "tiny_obj_loader.h"
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <iostream>
