@@ -173,6 +173,7 @@ struct SceneHandler {
       assert(false);
       return false;
     }
+    return true;
   }
   bool EndArray(int /*s*/) {
     objs.top()->readingObject = true;

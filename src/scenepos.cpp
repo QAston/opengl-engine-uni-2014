@@ -20,8 +20,8 @@ void ScenePos::moveForward(float val) {
 glm::mat4 ScenePos::getWorldMatrix() {
   glm::mat4 trans = glm::translate(glm::mat4(1.0f),
                                    glm::vec3(getPosX(), getPosY(), getPosZ()));
-  glm::mat4 rotZ = glm::rotate(trans, getRotZ(), glm::vec3(0.0f, 0.0f, 1.0f));
-  glm::mat4 rotX = glm::rotate(rotZ, getRotX(), glm::vec3(1.0f, 0.0f, 0.0f));
-  glm::mat4 rotZ1 = glm::rotate(rotX, getRotZP(), glm::vec3(0.0f, 0.0f, 1.0f));
+  glm::mat4 rotZ = glm::rotate(trans, glm::radians(getRotZ()), glm::vec3(0.0f, 0.0f, 1.0f));
+  glm::mat4 rotX = glm::rotate(rotZ, glm::radians(getRotX()), glm::vec3(1.0f, 0.0f, 0.0f));
+  glm::mat4 rotZ1 = glm::rotate(rotX, glm::radians(getRotZP()), glm::vec3(0.0f, 0.0f, 1.0f));
   return rotZ1;
 }

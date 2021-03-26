@@ -23,11 +23,13 @@ void FPSCamera::glLoadRevWorldMatrix() {
 }
 
 glm::mat4 FPSCamera::getWorldMatrix() {
-  glm::mat4 trans =
+  glm::mat4 result =
       glm::translate(glm::mat4(1.0f), glm::vec3(_posX, _posY, _posZ));
-  glm::mat4 rotX = glm::rotate(trans, _rotX, glm::vec3(1.0f, 0.0f, 0.0f));
-  glm::mat4 rotY = glm::rotate(rotX, _rotY, glm::vec3(0.0f, 1.0f, 0.0f));
-  return rotY;
+  result =
+      glm::rotate(result, glm::radians(_rotY), glm::vec3(0.0f, 1.0f, 0.0f));
+  result =
+      glm::rotate(result, glm::radians(_rotX), glm::vec3(1.0f, 0.0f, 0.0f));
+  return result;
 }
 
 // checks ascii input

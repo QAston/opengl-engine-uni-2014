@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 
   shared_ptr<WorldObject> wobj1 = make_shared<WorldObject>(object2);
   ScenePos pos1 = ScenePos(0, 0, 0, -90, 0, 90);
-  pos1.moveForward(3);
+  pos1.moveForward(-3);
   wobj1->moveTo(pos1);
 
   shared_ptr<WorldObject> wobj2 = make_shared<WorldObject>(scene);
