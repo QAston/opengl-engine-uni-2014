@@ -61,20 +61,15 @@ include/worldobject.h)
 target_include_directories(main PUBLIC include)
 
 find_package(FreeGLUT REQUIRED)
-target_link_libraries(main PRIVATE FreeGLUT::freeglut)
-
 find_package(glm CONFIG REQUIRED)
-target_include_directories(main PRIVATE ${glm_INCLUDE_DIRS})
-
 find_package(libpng CONFIG REQUIRED)
-target_link_libraries(main PRIVATE png)
-
 find_package(RapidJSON CONFIG REQUIRED)
-target_include_directories(main PRIVATE ${RAPIDJSON_INCLUDE_DIRS})
-
 find_package(tinyobjloader CONFIG REQUIRED)
-target_link_libraries(main PRIVATE tinyobjloader::tinyobjloader)
+find_package(FreeALUT CONFIG REQUIRED)
 
-include(FindPkgConfig)
-pkg_check_modules(ALUT REQUIRED IMPORTED_TARGET freealut)
-target_link_libraries(main PRIVATE PkgConfig::ALUT)
+target_link_libraries(main PRIVATE FreeALUT::alut glm::glm tinyobjloader::tinyobjloader png FreeGLUT::freeglut glu32 INTERFACE RapidJSON::rapidjson )
+
+# static build
+#target_compile_definitions(main PUBLIC ALUT_BUILD_STATIC)
+#target_link_libraries(main PRIVATE glm::glm tinyobjloader::tinyobjloader png_static FreeGLUT::freeglut_static PkgConfig::ALUT INTERFACE RapidJSON::rapidjson)
+
