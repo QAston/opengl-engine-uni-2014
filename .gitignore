@@ -6,3 +6,6 @@ rw3.layout
 build
 **/Thumbs.db
 vcpkg_installed
+/out
+/.vs
+/.vscode
