@@ -67,13 +67,7 @@ find_package(RapidJSON CONFIG REQUIRED)
 find_package(tinyobjloader CONFIG REQUIRED)
 find_package(FreeALUT CONFIG REQUIRED)
 
-target_link_libraries(main PRIVATE glm::glm tinyobjloader::tinyobjloader INTERFACE RapidJSON::rapidjson )
-
-if (TARGET FreeALUT::alut_static)
-    target_link_libraries(main PRIVATE FreeALUT::alut_static)
-elseif (TARGET FreeALUT::alut)
-    target_link_libraries(main PRIVATE FreeALUT::alut)
-endif()
+target_link_libraries(main PRIVATE glm::glm tinyobjloader::tinyobjloader FreeALUT::alut INTERFACE RapidJSON::rapidjson )
 
 if (TARGET FreeGLUT::freeglut_static)
     target_link_libraries(main PRIVATE FreeGLUT::freeglut_static)
