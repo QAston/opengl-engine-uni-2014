@@ -25,3 +25,9 @@ cd build-mingw
 cmake -DVCPKG_OVERLAY_PORTS=../port_overlays -DVCPKG_FEATURE_FLAGS=versions,manifests -DVCPKG_TARGET_TRIPLET=x64-mingw-dynamic -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja ..
 ninja
 ```
+4. Build using presets (linux)
+```
+cmake -S . --preset=default
+make --build --preset=default
+```
+
